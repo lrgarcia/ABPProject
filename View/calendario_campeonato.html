@@ -1,0 +1,274 @@
+
+<html lang="en">
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+
+  <!-- Strylesheet de esta pagina -->
+  <link href="../View/css/stylesheet.css" rel="stylesheet" type="text/css">
+ <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <a class="navbar-brand" href="#">Meeting</a>
+      <button class="navbar-toggler" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+          
+        </ul>
+        <a class="nav-link">dlojea</a>
+        <a class="btn btn-outline-danger ml-2" href="#" role="button">Desconetar</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="jumbotron">
+    <div class="container">
+      <h1>Ver encuesta</h1>
+    </div>
+  </div>
+
+
+
+<div class="container">
+	<div class="row">
+			<div class="col-md-10">
+					<h2>Encuesta 1</h2>
+			</div>
+			<div class="col-md-2">
+        <!-- Nombre de la variable de sesion=tablestate -->
+					<button class="btn btn-outline-success" id="edit-input" type="submit" onclick="getFirstStateTable();" href="#">Editar</button>
+          <button class="btn btn-outline-primary mr-2" id="edit-input" type="submit">Volver</button>
+			</div>
+		</div>
+
+	<table id="blueTable" class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col" id="noBorder"></th>
+      <th scope="col">20/11</th>
+      <th scope="col">21/11</th>
+      <th scope="col">22/11</th>
+      <th scope="col">23/11</th>
+      <th scope="col">24/11</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Dani (dlojea)</th>
+      <td class="selectable"></td>
+      <td class="selectable"></td>
+      <td class="selectable"></td>
+      <td class="selectable"></td>
+      <td class="selectable"></td>
+    </tr>
+    <tr class="offline">
+      <th scope="row">Juan (jmdiaz)</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="offline">
+      <th scope="row">Luis (lrgarcia)</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+<button class="btn btn-outline-primary mr-2" onclick="getFirstStateTable();" id="editAll-input" type="submit" value="EDIT">Guardar cambios</button>
+
+</div>
+
+
+
+      <script type="text/javascript" charset="utf-8">
+       
+          // Create table dragging functionality
+          var isMouseDown = false;
+          var highlighted
+          $(".table-bordered td.selectable")
+            .mousedown(function () {
+              isMouseDown = true;
+              highlighted = $(this).hasClass('highlighted')
+              var childNodes =  $(this).childNodes;
+              if ( highlighted ) {
+                $(this).removeClass('highlighted')
+      
+
+              } else {
+                $(this).addClass('highlighted')
+             
+      
+              }
+              return false; // prevent text selection
+            })
+ 
+
+
+          $(document)
+              .mouseup(function () {
+              isMouseDown = false
+          })
+        
+
+
+
+
+        function getAllStateTable(){
+          var table = document.getElementById("blueTable");
+          var tableState=[];
+          var index=0;
+          var toret="";
+
+          /*Para la tabla entera*/
+          for(var i = 1; i < table.rows.length; i++){
+
+            for(var j = 1; j < table.rows[i].cells.length; j++)
+                  {
+                    //Row index actua a nivel de fila, por eso desde la celda hay que acceder a la la fila mediante parentElement
+                        rIndex =  table.rows[i].cells[j].parentElement.rowIndex;
+                        //Cell Index actuara desde la celda a partir de su fila padre, por lo tanto indicará que posicion ocupa en la fila correspondiente
+                        cIndex =  table.rows[i].cells[j].cellIndex;
+                        console.log("Row : "+rIndex+" , Cell : "+cIndex);
+
+                    user = table.rows[rIndex].cells[0].innerText;
+                        date = table.rows[0].cells[cIndex].innerText;
+                        isHighlighted= $(table.rows[i].cells[j]).hasClass("highlighted");
+                        console.log(isHighlighted);
+
+                    tableState[index]={"user":user,"date":date, "available":isHighlighted};
+                    
+                    for(var key in tableState[index]){
+                      /*
+                      console.log("***********************");
+                      console.log(" -RECORRIDO DEL ARRAY- "+key);
+                      console.log("Clave: "+key+" Valor "+tableState[index][key]);
+                      console.log("***********************");*/
+                      toret+=""+key+": "+tableState[index][key]+", "
+
+
+                    }
+                    index++;
+                    toret = toret.substring(0, toret.length-2);
+                    toret+="\n";
+                    
+
+                  } 
+
+            
+
+
+          }
+       
+        console.log(toret);
+          return toret;
+        }
+
+          function getFirstStateTable(){
+
+          var table = document.getElementById("blueTable");
+          var tableState=[];
+          var index=0;
+          var toret="";
+
+
+            for(var j = 1; j < table.rows[1].cells.length; j++)
+                  {
+                    //Row index actua a nivel de fila, por eso desde la celda hay que acceder a la la fila mediante parentElement
+                        rIndex =  table.rows[1].cells[j].parentElement.rowIndex;
+                        //Cell Index actuara desde la celda a partir de su fila padre, por lo tanto indicará que posicion ocupa en la fila correspondiente
+                        cIndex =  table.rows[1].cells[j].cellIndex;
+                        console.log("Row : "+rIndex+" , Cell : "+cIndex);
+
+                    user = table.rows[rIndex].cells[0].innerText;
+                        date = table.rows[0].cells[cIndex].innerText;
+                        isHighlighted= $(table.rows[1].cells[j]).hasClass("highlighted");
+                        console.log(isHighlighted);
+
+
+                    tableState[index]={"user":user,"date":date, "available":isHighlighted};
+                    
+                    for(var key in tableState[index]){
+                      /*
+                      console.log("***********************");
+                      console.log(" -RECORRIDO DEL ARRAY- "+key);
+                      console.log("Clave: "+key+" Valor "+tableState[index][key]);
+                      console.log("***********************");*/
+                      toret+=""+key+": "+tableState[index][key]+", "
+
+
+                    }
+                    index++;
+                    toret = toret.substring(0, toret.length-2);
+                    toret+="\n";
+                    
+
+                  } 
+             
+
+              
+            ajaxSend(tableState);
+                     
+       
+        console.log(toret);
+          return toret;
+
+   
+        }
+
+
+        function ajaxSend(tableState){
+                  $.ajax({ 
+                    type: "POST", 
+                    url: "http://127.0.0.1/Meeting%202.0/Controller/calendario_Controller.php", 
+                    data: { tableArray : tableState},
+                    timeout: 15000,
+                    success: function(){ 
+                    alert('success!');
+                    }
+                
+                    
+                    });
+
+        }
+
+       </script>
+
+
+
+
+
+
+
+
+
+      <footer class="footer">
+      <div class="container">
+        <span class="text-muted">©2018</span>
+      </div>
+</footer>
+<!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+</body>
+</html>
+
+
