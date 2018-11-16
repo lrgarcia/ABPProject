@@ -7,7 +7,7 @@ if (!IsAuthenticated()){
 	header('Location:./Controller/Login_Controller.php');
 }
 else{
-	header('Location:./Controller/calendario_Controller.php');
+	header('Location:./Controller/Main_Controller.php');
 }
 
 ?>

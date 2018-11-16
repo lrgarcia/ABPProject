@@ -1,4 +1,5 @@
 <?php
+// Cabecera presente en todas laas vistas
 include_once '../Functions/Authentication.php';
 if (!isset($_SESSION['idioma'])) {
 		$_SESSION['idioma'] = 'SPANISH';
@@ -34,6 +35,7 @@ if (!isset($_SESSION['idioma'])) {
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container">
 			<?php 
+			// Si está autenticado hará referencia a un controlador distinto
 			if (IsAuthenticated()) {
 			
 			echo '<a class="navbar-brand" href="../Controller/Calendario_Controller.php">Meeting</a>';
@@ -65,6 +67,7 @@ if (!isset($_SESSION['idioma'])) {
 					
 				</ul>
 				<?php 
+				// Si esta autenticado muestra el botón de desconectar
 				if (IsAuthenticated()) {	
 				?>
 
@@ -72,6 +75,7 @@ if (!isset($_SESSION['idioma'])) {
 					<a class="btn btn-outline-danger ml-2" href="../Functions/Disconnect.php" role="button"><?php echo $strings['Desconectar']?></a>
 
 				<?php 
+				// Sino muestra el login y el password
 				}else{
 				?>
 
@@ -80,7 +84,8 @@ if (!isset($_SESSION['idioma'])) {
 						<input class="form-control mr-2" type="password" name = 'password' placeholder="password">
 						<button class="btn btn-outline-success" type="submit" name='action' value='Login'><?php echo $strings['Iniciar sesion']?></button>
 					</form>
-					<a class="btn btn-outline-primary ml-2" href="../Controller/usuario_Controller.php?action=ADD" role="button"><?php echo $strings['Join']?></a>
+					<!-- Botón registrarse -->
+					<a class="btn btn-outline-primary ml-2" href="../Controller/User_Controller.php?action=ADD" role="button"><?php echo $strings['Join']?></a>
 
 				<?php
 				}
