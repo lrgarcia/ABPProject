@@ -146,29 +146,34 @@ var vanillaCalendar = {
 function generateModal($date){
 
 
-
+  var freeCourt;
   var $splitted = $date.split(" ");
   var $dayWeek=$splitted[0];
   var $month=$splitted[1];
   var $day=$splitted[2];
   var $year=$splitted[3];
+  var $arrayMonth=['Jan','Feb','Mar','Apr','May','Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var $numberMonth= $arrayMonth.indexOf($month)+1;
 
 jQuery.ajax({
     type: "POST",
     url: 'Function_Controller.php',
     dataType: 'json',
-    data: {functionname: 'getFreeCourt', arguments: [$day,$month,$year]},
+    data: {functionname: 'getFreeCourt', arguments: [$day,$numberMonth,$year]},
 
     success: function (obj, textstatus) {
                   if( !('error' in obj) ) {
-                      yourVariable = obj.result;
-                      console.log(yourVariable);
+                      freeCourt = obj.result;
+                      
                   }
                   else {
                       console.log(obj.error);
                   }
             }
 });
+
+console.log(freeCourt);
+alert(freeCourt);
 
 
 
@@ -180,7 +185,11 @@ var html= '<div id = "myModal" class="modal fade">';
     html+= ' <h4 class="modal-title">'+$day+' '+$month+'</h4>';
   html+=  '</div>';
    html+=   '<div class="modal-body">';
-   html+='<a>aaaaa</a>';
+   
+     for (court in freeCourt) {
+      console.log("dentro del for"+freeCourt);
+      html+='<a>'+$court+'</a>'; 
+      }
 
 
 
