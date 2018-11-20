@@ -21,5 +21,15 @@ class Promotion
         return $this->idGame;
     }
     
+    public function setIdPromotion($idPromotion)
+    {
+        $this->idPromotion = $idPromotion;
+    }
+
+    public function setIdGame($idGame)
+    {
+        $this->idGame = $idGame;
+    }
+    
 }
 ?>

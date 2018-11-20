@@ -55,5 +55,40 @@ class Match
     {
         return $this->idPair2;
     }
+    
+    public function setIdMatch($idMatch)
+    {
+        $this->idMatch = $idMatch;
+    }
+
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    public function setHour($hour)
+    {
+        $this->hour = $hour;
+    }
+
+    public function setResult($result)
+    {
+        $this->result = $result;
+    }
+
+    public function setIdGroup($idGroup)
+    {
+        $this->idGroup = $idGroup;
+    }
+
+    public function setIdPair1($idPair1)
+    {
+        $this->idPair1 = $idPair1;
+    }
+
+    public function setIdPair2($idPair2)
+    {
+        $this->idPair2 = $idPair2;
+    }
 
 }

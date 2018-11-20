@@ -65,7 +65,13 @@ class Championship_Model
     {
         $sql = "SELECT * FROM championship";
         $result = $this->mysqli->query($sql);
-        return $result;
+        
+        $array = array();
+        while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
+        {
+            $array[] = new Championship($row[idChampionship], $row[name], $row[dateStart], $row[dateInscriptions]);
+        }
+        return $array;
     }
     
     public function GETCATEGORIESBYID ($idChampionship){
@@ -73,7 +79,13 @@ class Championship_Model
         $sql = "SELECT * FROM category WHERE idCategory IN (SELECT idCategory FROM championship_category WHERE idChampionship='".$idChampionship."');";
         
         $result =$this->mysqli->query($sql);
-        return $result;
+        
+        $array = array();
+        while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
+        {
+            $array[] = new Category($row[idCategory], $row[category], $row[modality]);
+        }
+        return $array;
     }
     
     public function SETCATEGORIESBYID ($idCategories, $idChampionship)

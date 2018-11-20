@@ -53,13 +53,24 @@ class Promotion_Model
     {
         $sql = "SELECT * FROM promotion WHERE idPromotion ='" . $idPromotion . "';";
         $result = $this->mysqli->query($sql);
-        return $result;
+        
+        $array = mysqli_fetch_array($result, MYSQLI_BOTH);
+        
+        $promotion = new Promotion($array[idPromotion], $array[idGame]);
+        
+        return $promotion;
     }
     
     public function GETALL ()
     {
         $sql = "SELECT * FROM promotion";
         $result = $this->mysqli->query($sql);
-        return $result;
+       
+        $array = array();
+        while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
+        {
+            $array[] = new Promotion($row[idPromotion], $row[idGame]);
+        }
+        return $array;
     }
 }

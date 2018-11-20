@@ -1,6 +1,7 @@
 <?php
 
 require_once ('../Model/CategoryGroup.php');
+require_once ('../Model/Pair.php');
 require_once ('../Model/Access_DB.php');
 
 class CategoryGroup_Model
@@ -67,15 +68,37 @@ class CategoryGroup_Model
     {
         $sql = "SELECT * FROM categorygroup";
         $result = $this->mysqli->query($sql);
-        return $result;
+        
+        $array = array();
+        while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
+        {
+            $array[] = new CategoryGroup($row[idCategoryGroup], $row[idChampionship], $row[idCategory]);
+        }
+        return $array;
     }
     
     public function GETGROUPPAIRS($idCategoryGroup){
         
         $sql = "SELECT * FROM pair WHERE idPair IN (SELECT idPair FROM pair_categorygroup WHERE idCategoryGroup='".$idCategoryGroup."');";
-        
         $result =$this->mysqli->query($sql);
-        return $result;
+       
+        $array = array();
+        while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
+        {
+            $array[] = new Pair($row[idPair], $row[idCaptain], $row[idPartner]);
+        }
+        return $array;
+    }
+    
+    public function SETGROUPPAIR($idPair, $idCategoryGroup) 
+    {
+        $insert = "INSERT INTO pair_categorygroup (idPair, idCategoryGroup) VALUES ('".$idPair."', '".$idCategoryGroup."';";
+        if($this->mysqli->query($insert))
+        {
+            return "Se ha inscrito la pareja en el campeonato";    
+        } else{
+            return "Lo sentimos, no se ha podido inscribir a la pareja";
+        }
     }
 }
 ?>

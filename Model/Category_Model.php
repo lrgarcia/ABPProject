@@ -69,7 +69,8 @@ class Category_Model
         $result = $this->mysqli->query($sql);
         
         $array = array();
-        while( $row = mysqli_fetch_array($result, MYSQLI_BOTH)){
+        while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
+        {
             $array[] = new Category($row[idCategory], $row[category], $row[modality]);
         }
         return $array;

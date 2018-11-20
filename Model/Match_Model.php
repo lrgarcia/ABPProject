@@ -55,14 +55,25 @@ class Match_Model
     {
         $sql = "SELECT * FROM match WHERE idMatch ='" . $idMatch . "';";
         $result = $this->mysqli->query($sql);
-        return $result;
+        
+        $array = mysqli_fetch_array($result, MYSQLI_BOTH);
+        
+        $match = new Match($array[idMatch], $array[date], $array[result], $array[idGroup], $array[idPair1], $array[idPair2], $array[hour]);
+        
+        return $match;
     }
     
     public function GETALL ()
     {
         $sql = "SELECT * FROM match";
         $result = $this->mysqli->query($sql);
-        return $result;
+        
+        $array = array();
+        while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
+        {
+            $array[] = new Match($row[idMatch], $row[date], $row[hour], $row[result], $row[idGroup], $row[idPair1], $row[idPair2]);
+        }
+        return $array;
     }
     
 }

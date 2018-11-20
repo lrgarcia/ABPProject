@@ -34,6 +34,26 @@ class Group
     {
         return $this->letter;
     }
+    
+    public function setIdGroup($idGroup)
+    {
+        $this->idGroup = $idGroup;
+    }
+
+    public function setIdCategory($idCategory)
+    {
+        $this->idCategory = $idCategory;
+    }
+
+    public function setIdChampionship($idChampionship)
+    {
+        $this->idChampionship = $idChampionship;
+    }
+
+    public function setLetter($letter)
+    {
+        $this->letter = $letter;
+    }
 
 }
 ?>

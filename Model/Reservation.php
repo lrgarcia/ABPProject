@@ -40,6 +40,31 @@ class Reservation
     {
         return $this->hour;
     }
+    
+    public function setIdReservation($idReservation)
+    {
+        $this->idReservation = $idReservation;
+    }
+
+    public function setIdCourt($idCourt)
+    {
+        $this->idCourt = $idCourt;
+    }
+
+    public function setIdUser($idUser)
+    {
+        $this->idUser = $idUser;
+    }
+
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    public function setHour($hour)
+    {
+        $this->hour = $hour;
+    }
 
 }
 

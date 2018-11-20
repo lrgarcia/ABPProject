@@ -27,7 +27,7 @@ class Pair_Model
     {
         
         
-        $this->mysql = conectarBD();
+        $this->mysqli = conectarBD();
         $sql = "DELETE FROM pair WHERE idPair='" . $idPair . "';";
         if ($this->mysqli->query($sql)) {
             
@@ -53,14 +53,25 @@ class Pair_Model
     {
         $sql = "SELECT * FROM pair WHERE idPair ='" . $idPair . "';";
         $result = $this->mysqli->query($sql);
-        return $result;
+        
+        $array = mysqli_fetch_array($result, MYSQLI_BOTH);
+        
+        $pair = new Pair($array[idPair], $array[idCaptain], $array[idPartner]);
+        
+        return $pair;
     }
     
     public function GETALL ()
     {
         $sql = "SELECT * FROM pair";
         $result = $this->mysqli->query($sql);
-        return $result;
+        
+        $array = array();
+        while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
+        {
+            $array[] = new Pair($row[idPair], $row[idCaptain], $row[idPartner]);
+        }
+        return $array;
     }
 }
 ?>

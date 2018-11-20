@@ -63,5 +63,45 @@ class Game
         return $this->idUser4;
     }
 
+    public function setIdGame($idGame)
+    {
+        $this->idGame = $idGame;
+    }
+
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    public function setHour($hour)
+    {
+        $this->hour = $hour;
+    }
+
+    public function setIdCourt($idCourt)
+    {
+        $this->idCourt = $idCourt;
+    }
+
+    public function setIdUser1($idUser1)
+    {
+        $this->idUser1 = $idUser1;
+    }
+
+    public function setIdUser2($idUser2)
+    {
+        $this->idUser2 = $idUser2;
+    }
+
+    public function setIdUser3($idUser3)
+    {
+        $this->idUser3 = $idUser3;
+    }
+
+    public function setIdUser4($idUser4)
+    {
+        $this->idUser4 = $idUser4;
+    }
+
 }
 ?>

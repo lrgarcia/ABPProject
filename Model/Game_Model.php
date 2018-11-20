@@ -2,7 +2,6 @@
 
 require_once ('../Model/Game.php');
 require_once ('../Model/Access_DB.php');
-require_once ('../Functions/Tools.php');
 
 class Game_Model
 {
@@ -55,14 +54,25 @@ class Game_Model
     {
         $sql = "SELECT * FROM game WHERE idGame ='" . $idGame . "';";
         $result = $this->mysqli->query($sql);
-        return $result;
+        
+        $array = mysqli_fetch_array($result, MYSQLI_BOTH);
+        
+        $game = new Game($array[idGame], $array[date], $array[hour], $array[idCourt], $array[idUser1], $array[idUser2], $array[idUser3], $array[idUser4]);
+        
+        return $game;
     }
     
     public function GETALL ()
     {
         $sql = "SELECT * FROM game";
         $result = $this->mysqli->query($sql);
-        return $result;
+        
+        $array = array();
+        while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
+        {
+            $array[] = new Game($row[idGame], $row[date], $row[hour], $row[idCourt], $row[idUser1], $row[idUser2], $row[idUser3], $row[idUser4]);
+        }
+        return $array;
     }
     
     public function GETUSERGAMES($idUser) {

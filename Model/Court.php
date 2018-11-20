@@ -19,6 +19,16 @@ class Court
     {
         return $this->number;
     }
+    
+    public function setIdCourt($idCourt)
+    {
+        $this->idCourt = $idCourt;
+    }
 
+    public function setNumber($number)
+    {
+        $this->number = $number;
+    }
+    
 }
 ?>

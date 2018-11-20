@@ -53,22 +53,40 @@ class Group_Model
     {
         $sql = "SELECT * FROM group WHERE idGroup ='" . $idGroup . "';";
         $result = $this->mysqli->query($sql);
-        return $result;
+        
+        $array = mysqli_fetch_array($result, MYSQLI_BOTH);
+        
+        $group = new Group($array[idGroup], $array[idCategory], $array[idChampionship], $array[letter]);
+        
+        return $group;
     }
     
     public function GETALL ()
     {
         $sql = "SELECT * FROM group";
         $result = $this->mysqli->query($sql);
-        return $result;
+        
+        $array = array();
+        while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
+        {
+            $array[] = new Group($row[idGroup], $row[idCategory], $row[idChampionship], $row[letter]);
+        }
+        return $array;
     }
     
-    public function GETGROUPPAIRS($idGroup){
+    public function GETGROUPPAIRS($idGroup)
+    {
         
         $sql = "SELECT * FROM pair WHERE idPair IN (SELECT idPair FROM pair_group WHERE idGroup='".$idGroup."');";
         
         $result =$this->mysqli->query($sql);
         return $result;
+    }
+    
+    public function SETGROUPPAIRS($idPair, $idGroup)
+    {
+        $insert = "INSERT INTO pair_group (idPair, idGroup) VALUES ('".$idPair."', '".$idGroup."';";
+        $this->mysqli->query($insert);
     }
 }
 ?>

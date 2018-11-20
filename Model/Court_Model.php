@@ -52,14 +52,25 @@ class Court_Model
     {
         $sql = "SELECT * FROM court WHERE idCourt ='" . $idCourt . "';";
         $result = $this->mysqli->query($sql);
-        return $result;
+        
+        $array = mysqli_fetch_array($result, MYSQLI_BOTH);
+        
+        $court = new Court($array[idCourt], $array[number]);
+        
+        return $court;
     }
     
     public function GETALL ()
     {
         $sql = "SELECT * FROM court";
         $result = $this->mysqli->query($sql);
-        return $result;
+       
+        $array = array();
+        while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
+        {
+            $array[] = new Court($row[idCourt], $row[number]);
+        }
+        return $array;
     }
     
 }

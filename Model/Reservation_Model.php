@@ -1,5 +1,6 @@
 <?php
 require_once ('../Model/Reservation.php');
+require_once ('../Model/Court.php');
 require_once ('../Model/Access_DB.php');
 
 class Reservation_Model
@@ -53,14 +54,25 @@ class Reservation_Model
     {
         $sql = "SELECT * FROM reservation WHERE idReservation ='" . $idReservation . "';";
         $result = $this->mysqli->query($sql);
-        return $result;
+        
+        $array = mysqli_fetch_array($result, MYSQLI_BOTH);
+        
+        $reservation = new Reservation($array[idReservation], $array[idCourt], $array[idUser], $array[date], $array[hour]);
+        
+        return $reservation;
     }
     
     public function GETALL ()
     {
         $sql = "SELECT * FROM reservation";
         $result = $this->mysqli->query($sql);
-        return $result;
+        
+        $array = array();
+        while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
+        {
+            $array[] = new Reservation($row[idReservation], $row[idCourt], $row[idUser], $row[date], $row[hour]);
+        }
+        return $array;
     }
   
     public function GETBYDAY ($date){
@@ -76,7 +88,13 @@ class Reservation_Model
         $sql = "SELECT * FROM reservation WHERE idUser='".$idUser."';";
         
         $result = $this->mysqli->query($sql);
-        return $result;
+       
+        $array = array();
+        while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
+        {
+            $array[] = new Reservation($row[idReservation], $row[idCourt], $row[idUser], $row[date], $row[hour]);
+        }
+        return $array;
     }
        
     public function FREECOURTSBYHOUR($date, $hour){
@@ -84,7 +102,13 @@ class Reservation_Model
         $sql = "SELECT * FROM court WHERE idCourt NOT IN (SELECT idCourt FROM reservation WHERE hour='".$hour."' AND date='".$date."');";
         
         $result =$this->mysqli->query($sql);
-        return $result;
+        
+        $array = array();
+        while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
+        {
+            $array[] = new Court($row[idCourt], $row[idCourt], $row[number]);
+        }
+        return $array;
     }
 }
 

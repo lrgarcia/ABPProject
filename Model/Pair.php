@@ -24,6 +24,21 @@ class Pair {
     {
         return $this->idPartner;
     }
+    
+    public function setIdPair($idPair)
+    {
+        $this->idPair = $idPair;
+    }
+
+    public function setIdCaptain($idCaptain)
+    {
+        $this->idCaptain = $idCaptain;
+    }
+
+    public function setIdPartner($idPartner)
+    {
+        $this->idPartner = $idPartner;
+    }
 
 }
 ?>
