@@ -1,19 +1,25 @@
-var roomf = 1;
+var roomC = 1;
 var roomp = 1;
 function add_fields() {
- 
-    roomf++;
-    var objTo = document.getElementById('añadir_horario')
+
+if(roomC<=8){
+
+    roomC++;
+    var objTo = document.getElementById('addCategory');
     var divtest = document.createElement("div");
-    divtest.setAttribute("class", "rowf"+roomf);
-    var rdiv = 'row'+roomf;
-    divtest.innerHTML = '<div class="row"> <div class="col-sm-3 nopadding"><div class="form-group"><input type="date" class="form-control" id="dia" name="dia[]" value=""></div></div><div class="col-sm-3 nopadding"><div class="form-group"><input type="time" class="form-control" id="h_inicio" name="h_inicio[]" value=""></div></div><div class="col-sm-3 nopadding"><div class="form-group"><input type="time" class="form-control" id="h_fin" name="h_fin[]" value=""></div></div><div class="input-group-btn"> <button class="btn btn-danger" type="button" onclick="remove_fieldsf('+ roomf +');"> Eliminar </button></div></div></div></div></div>';
+    divtest.setAttribute("class", "rowC"+roomC);
+    var rdiv = 'row'+roomC;
     
-    objTo.appendChild(divtest)
+    divtest.innerHTML='<div class = "row"> <div class="col-sm-3 nopadding"> <div class="form-group"> <select required class="form-control" id="categoria[]" name="categoria[]"> <option>Masculino</option> <option>Femenino</option> <option>Mixto</option> </select> </div> </div> <div class="col-sm-3 nopadding"> <div class="form-group"> <select required class="form-control" id="modalidad[]" name="modalidad[]"> <option>1</option> <option>2</option> <option>3</option> </select> </div> </div> <div class="col-sm-3 nopadding"> <div class="input-group-btn"> <button class="btn btn-danger" type="button" onclick="remove_fieldsC('+ roomC +');"> Eliminar </button> </div> </div> </div>';   
+    objTo.appendChild(divtest);
+    
+}
 }
 
-function remove_fieldsf(rid) {
-   $('.rowf'+rid).remove();
+function remove_fieldsC(rid) {
+   $('.rowC'+rid).remove();
+   roomC--;
+
 }
 
 function add_participants() {
@@ -32,8 +38,8 @@ function remove_fieldsp(rid) {
     $('.rowp'+rid).remove();
 }
 
-function add_roomf(){
-    roomf++;
+function add_roomC(){
+    roomC++;
 }
 
 function add_roomp(){

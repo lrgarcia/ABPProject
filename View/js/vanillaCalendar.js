@@ -141,12 +141,10 @@ var vanillaCalendar = {
 
 
 
+function executeModal($date){
 
 
-function generateModal($date){
 
-
-  var freeCourt;
   var $splitted = $date.split(" ");
   var $dayWeek=$splitted[0];
   var $month=$splitted[1];
@@ -155,7 +153,7 @@ function generateModal($date){
   var $arrayMonth=['Jan','Feb','Mar','Apr','May','Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   var $numberMonth= $arrayMonth.indexOf($month)+1;
 
-jQuery.ajax({
+  jQuery.ajax({
     type: "POST",
     url: 'Function_Controller.php',
     dataType: 'json',
@@ -164,7 +162,10 @@ jQuery.ajax({
     success: function (obj, textstatus) {
                   if( !('error' in obj) ) {
                       freeCourt = obj.result;
-                      
+                      // console.log(freeCourt);
+                      // alert(freeCourt);
+
+                      generateModal($freeCourt);
                   }
                   else {
                       console.log(obj.error);
@@ -172,24 +173,25 @@ jQuery.ajax({
             }
 });
 
-console.log(freeCourt);
-alert(freeCourt);
 
+}
 
+function generateModal($freeCourt){
+console.log("Fuera de ajax"+$freeCourt);
 
 var html= '<div id = "myModal" class="modal fade">';
  html+='<div class="modal-dialog">';
  html+='<div class="modal-content">';
-  html+= '<div class="modal-header">';
-   html+= '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
-    html+= ' <h4 class="modal-title">'+$day+' '+$month+'</h4>';
-  html+=  '</div>';
-   html+=   '<div class="modal-body">';
+ html+= '<div class="modal-header">';
+ html+= '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+    // html+= ' <h4 class="modal-title">'+$day+' '+$month+'</h4>';
+ html+=  '</div>';
+ html+=   '<div class="modal-body">';
    
-     for (court in freeCourt) {
-      console.log("dentro del for"+freeCourt);
-      html+='<a>'+$court+'</a>'; 
-      }
+     // for ($court in $freeCourt) {
+     //  console.log("dentro del for"+$freeCourt)
+     //  html+='<a>'+$court+'</a>'; 
+     //  }
 
 
 
