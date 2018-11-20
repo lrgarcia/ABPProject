@@ -32,6 +32,25 @@ class Championship
     {
         return $this->dateInscriptions;
     }
+    
+    public function setIdChampionship($idChampionship)
+    {
+        $this->idChampionship = $idChampionship;
+    }
 
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function setDateStart($dateStart)
+    {
+        $this->dateStart = $dateStart;
+    }
+
+    public function setDateInscriptions($dateInscriptions)
+    {
+        $this->dateInscriptions = $dateInscriptions;
+    }
 }
 ?>

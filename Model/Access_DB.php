@@ -1,7 +1,7 @@
 <?php
 function ConnectDB()
 {
-    $mysqli = new mysqli("localhost", "root" , "" , "abp_database");
+    $mysqli = new mysqli("localhost", "root" , "" , "abp_project");
     	
 	if ($mysqli->connect_errno) {
 		include '../View/MESSAGE_View.php';

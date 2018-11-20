@@ -5,7 +5,7 @@ require_once ('../Model/Access_DB.php');
 class Championship_Model
 {
     var $championship;
-    var $mysqly;
+    var $mysqli;
     
     function __construct()
     {  
@@ -13,22 +13,22 @@ class Championship_Model
         $this->mysqli = ConnectDB();
     }
     
-    function ADD ($championship){
+    public function ADD ($championship){
      
         $insert = "INSERT INTO championship (name, dateStart, dateInscriptions) VALUES('" . $championship->getName() . "','" . $championship->getDateStart() . "','" . $championship->getDateInscriptions() . "');";
-        if ($this->mysql->query($insert)) {
+        if ($this->mysqli->query($insert)) {
             return "Se ha creado el campeonato";
         } else{
             return "Lo sentimos, no se ha podido crear el campeonato";
         }
     }
     
-    function DELETE ($idChampionship)
+    public function DELETE ($idChampionship)
     {
         
         $this->mysql = conectarBD();
         $sql = "DELETE FROM championship WHERE idChampionship='" . $idChampionship . "';";
-        if ($this->mysql->query($sql)) {
+        if ($this->mysqli->query($sql)) {
             
             return "Se ha eliminado correctamente el campeonato";
             
@@ -37,11 +37,11 @@ class Championship_Model
         }
     }
     
-    function EDIT ($championship)
+    public function EDIT ($championship)
     {
         $sql = "UPDATE championship SET name='" . $championship->getName() . "', dateStart='" . $championship->getDateStart() . "', dateInscriptions='" . $championship->getDateInscriptions() .
         "' WHERE idChampionship='" . $championship->getIdChampionship() . "';";
-        if ($this->mysql->query($sql)) {
+        if ($this->mysqli->query($sql)) {
             return "El campeonato ha sido modificado correctamente";
             
         } else {
@@ -49,26 +49,41 @@ class Championship_Model
         }
     }
     
-    function GETBYID ($idChampionship)
+    public function GETBYID ($idChampionship)
     {
         $sql = "SELECT * FROM championship WHERE idChampionship ='" . $idChampionship . "';";
+        $result = $this->mysqli->query($sql);
+        
+        $array = mysqli_fetch_array($result, MYSQLI_BOTH);
+        
+        $championship = new Championship($array[idChampionship], $array[name], $array[dateStart], $array[dateInscriptions]);
+        
+        return $championship;
+    }
+    
+    public function GETALL ()
+    {
+        $sql = "SELECT * FROM championship";
         $result = $this->mysqli->query($sql);
         return $result;
     }
     
-    function GETALL ()
-    {
-        $sql = "SELECT * FROM championship";
-        $result = $this->mysqly->query($sql);
-        return $result;
-    }
-    
-    function GETCATEGORIESBYID ($idChampionship){
+    public function GETCATEGORIESBYID ($idChampionship){
         
         $sql = "SELECT * FROM category WHERE idCategory IN (SELECT idCategory FROM championship_category WHERE idChampionship='".$idChampionship."');";
         
         $result =$this->mysqli->query($sql);
         return $result;
+    }
+    
+    public function SETCATEGORIESBYID ($idCategories, $idChampionship)
+    {
+        $lenght = count($idCategories);
+        for($i=0; $i<$lenght; $i++)
+        {
+            $insert = "INSERT INTO championship_category (idChampionship, idCategory) VALUES('".$idChampionship."', '".$idCategories[$i]."');";
+            $this->mysqli->query($insert);
+        }
     }
 }
 ?>
