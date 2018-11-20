@@ -51,6 +51,27 @@ else{
 		//end if
 
 	}
+
+
+	function getIdUser($login){
+		include_once '../Model/Access_DB.php';
+		$mysqli = ConnectDB();
+		$toret="";
+
+		$sql = "select * from user where login = '".$login."'";
+		$result = $mysqli->query($sql);
+
+		if ($result->num_rows == 1){ 
+			//Fetch to associative array
+			$tupla = $result->fetch_array();
+			$toret = $tupla['idUser'];
+			
+
+		}
+		return $toret;
+		//end if
+
+	}
 	
 	$respuesta = Login($_REQUEST['login'], $_REQUEST['password']);
 	
@@ -58,9 +79,11 @@ else{
 		session_start();
 		$_SESSION['login'] = $_REQUEST['login'];
 		$type= getPermission($_REQUEST['login']);
+		$idUser= getIdUser($_REQUEST['login']);
 
 		 $_SESSION['type'] = $type;
-		 var_dump($_SESSION['type']);
+		 $_SESSION['idUser'] = $idUser;
+		 
 		 //Redirige a index que a este punto se supone que el usuario esta logeado
 		header('Location:../index.php');
 	}

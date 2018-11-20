@@ -5,6 +5,8 @@ include '../Functions/Authentication.php';
 if (!IsAuthenticated()){
 	header('Location:../index.php');
 }
+include '../View/Championship_ADD_View.php';
+
 include '../Model/Championship_Model.php';
 include '../View/MESSAGE_View.php';
 
@@ -12,12 +14,10 @@ include '../View/MESSAGE_View.php';
 function get_data_championship(){
 	
 	$login_creator = $_SESSION['login'];
-	$nombre = $_REQUEST['nombre'];
-	$users = $_REQUEST['users'];
-	if(isset($_REQUEST['id'])){
-		$calendario = new calendario_Model($_REQUEST['id'], $login_creator, $nombre, $users);
-	}
-	else $calendario = new calendario_Model('', $login_creator, $nombre, $users);
+	$name = $_REQUEST['name'];
+	$dateStart = $_REQUEST['dateStart'];
+	$dateInscriptions = $_REQUEST['dateInscriptions'];
+    $championship = new calendario_Model($login_creator, $name, $dateStart,$dateInscriptions);
 	return $calendario;
 	
 }
@@ -36,15 +36,11 @@ Switch ($_REQUEST['action']){
 	case 'ADD':
 	// Si no se ha introducido el campeonato
 		if (!$_POST){
-			new calendario_ADD();
+			new Championship_ADD_View();
 		}
 		// Aqui se meterá que datos ha pillado una vez se ha hecho introducido los datos del campeonato
 		else{
-			$calendario = get_data_formC();
-			$id = rand(1,99999);
-			while(!$calendario->comprobarId($id)){
-				$id = rand(1,99999);
-			}
+			$championpionship= get_data_championship();
 			$calendario->setId($id);
 			$horario = get_data_formH($id);
 			foreach($horario as $h){

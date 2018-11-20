@@ -1,12 +1,32 @@
  <?php
-    header('Content-Type: application/json');
+ session_start(); 
+ header('Content-Type: application/json');
+
+require_once '../Model/Reservation.php';
+require_once '../Model/Reservation_Model.php';
+
+
+
+
+
+
+
 
 function getFreeCourt($day,$month,$year){
 
-  
- $toret=array();
+  $date=$day."/".$month."/".$year;
+  $reservation = new Reservation_Model();
+  $freeCourts=$reservation->FREECOURTSBYHOUR($date,"12:30");
+  $toret = array();
+  foreach ($freeCourts as $key => $value) {
+     $value['idUser']=$_SESSION['idUser'];
+     array_push($toret,$value);
+     
+   }
 
   return $toret;
+
+
 }
 
     $aResult = array();
