@@ -57,7 +57,7 @@ class Game_Model
         
         $array = mysqli_fetch_array($result, MYSQLI_BOTH);
         
-        $game = new Game($array[idGame], $array[date], $array[hour], $array[idCourt], $array[idUser1], $array[idUser2], $array[idUser3], $array[idUser4]);
+        $game = new Game($array['idGame'], $array['date'], $array['hour'], $array['idCourt'], $array['idUser1'], $array['idUser2'], $array['idUser3'], $array['idUser4']);
         
         return $game;
     }
@@ -70,7 +70,7 @@ class Game_Model
         $array = array();
         while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
         {
-            $array[] = new Game($row[idGame], $row[date], $row[hour], $row[idCourt], $row[idUser1], $row[idUser2], $row[idUser3], $row[idUser4]);
+            $array[] = new Game($row['idGame'], $row['date'], $row['hour'], $row['idCourt'], $row['idUser1'], $row['idUser2'], $row['idUser3'], $row['idUser4']);
         }
         return $array;
     }

@@ -55,7 +55,7 @@ class Court_Model
         
         $array = mysqli_fetch_array($result, MYSQLI_BOTH);
         
-        $court = new Court($array[idCourt], $array[number]);
+        $court = new Court($array['idCourt'], $array['number']);
         
         return $court;
     }
@@ -68,7 +68,7 @@ class Court_Model
         $array = array();
         while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
         {
-            $array[] = new Court($row[idCourt], $row[number]);
+            $array[] = new Court($row['idCourt'], $row['number']);
         }
         return $array;
     }

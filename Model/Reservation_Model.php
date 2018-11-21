@@ -57,7 +57,7 @@ class Reservation_Model
         
         $array = mysqli_fetch_array($result, MYSQLI_BOTH);
         
-        $reservation = new Reservation($array[idReservation], $array[idCourt], $array[idUser], $array[date], $array[hour]);
+        $reservation = new Reservation($array['idReservation'], $array['idCourt'], $array['idUser'], $array['date'], $array['hour']);
         
         return $reservation;
     }
@@ -70,7 +70,7 @@ class Reservation_Model
         $array = array();
         while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
         {
-            $array[] = new Reservation($row[idReservation], $row[idCourt], $row[idUser], $row[date], $row[hour]);
+            $array[] = new Reservation($row['idReservation'], $row['idCourt'], $row['idUser'], $row['date'], $row['hour']);
         }
         return $array;
     }
@@ -92,7 +92,7 @@ class Reservation_Model
         $array = array();
         while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
         {
-            $array[] = new Reservation($row[idReservation], $row[idCourt], $row[idUser], $row[date], $row[hour]);
+            $array[] = new Reservation($row['idReservation'], $row['idCourt'], $row['idUser'], $row['date'], $row['hour']);
         }
         return $array;
     }
@@ -106,7 +106,7 @@ class Reservation_Model
         $array = array();
         while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
         {
-            $array[] = new Court($row[idCourt], $row[idCourt], $row[number]);
+            $array[] = new Court($row['idCourt'], $row['idCourt'], $row['number']);
         }
         return $array;
     }

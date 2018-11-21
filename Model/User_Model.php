@@ -60,7 +60,7 @@ class User_Model {
 	    
 	    $array = mysqli_fetch_array($result, MYSQLI_BOTH);
 	    
-	    $user = new User($array[idUser], $array[login], $array[password], $array[name], $array[surname], $array[email], $array[type]);
+	    $user = new User($array['idUser'], $array['login'], $array['password'], $array['name'], $array['surname'], $array['email'], $array['type']);
 	    
 	    return $user;
 	}
@@ -73,7 +73,7 @@ class User_Model {
 	    $array = array();
 	    while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
 	    {
-	        $array[] = new User($row[idUser], $row[login], $row[password], $row[name], $row[surname], $row[email], $row[type]);
+	        $array[] = new User($row['idUser'], $row['login'], $row['password'], $row['name'], $row['surname'], $row['email'], $row['type']);
 	    }
 	    return $array;
 	}

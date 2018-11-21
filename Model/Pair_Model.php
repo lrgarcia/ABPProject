@@ -56,7 +56,7 @@ class Pair_Model
         
         $array = mysqli_fetch_array($result, MYSQLI_BOTH);
         
-        $pair = new Pair($array[idPair], $array[idCaptain], $array[idPartner]);
+        $pair = new Pair($array['idPair'], $array['idCaptain'], $array['idPartner']);
         
         return $pair;
     }
@@ -69,7 +69,7 @@ class Pair_Model
         $array = array();
         while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
         {
-            $array[] = new Pair($row[idPair], $row[idCaptain], $row[idPartner]);
+            $array[] = new Pair($row['idPair'], $row['idCaptain'], $row['idPartner']);
         }
         return $array;
     }

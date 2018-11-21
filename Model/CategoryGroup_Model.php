@@ -58,7 +58,7 @@ class CategoryGroup_Model
         
         $array = mysqli_fetch_array($result, MYSQLI_BOTH);
         
-        $categoryGroup = new CategoryGroup($array[idCategoryGroup], $array[idChampionship], $array[idCategory]);
+        $categoryGroup = new CategoryGroup($array['idCategoryGroup'], $array['idChampionship'], $array['idCategory']);
         
         return $categoryGroup;   
         
@@ -72,7 +72,7 @@ class CategoryGroup_Model
         $array = array();
         while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
         {
-            $array[] = new CategoryGroup($row[idCategoryGroup], $row[idChampionship], $row[idCategory]);
+            $array[] = new CategoryGroup($row['idCategoryGroup'], $row['idChampionship'], $row['idCategory']);
         }
         return $array;
     }
@@ -85,7 +85,7 @@ class CategoryGroup_Model
         $array = array();
         while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
         {
-            $array[] = new Pair($row[idPair], $row[idCaptain], $row[idPartner]);
+            $array[] = new Pair($row['idPair'], $row['idCaptain'], $row['idPartner']);
         }
         return $array;
     }

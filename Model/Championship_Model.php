@@ -56,7 +56,7 @@ class Championship_Model
         
         $array = mysqli_fetch_array($result, MYSQLI_BOTH);
         
-        $championship = new Championship($array[idChampionship], $array[name], $array[dateStart], $array[dateInscriptions]);
+        $championship = new Championship($array['idChampionship'], $array['name'], $array['dateStart'], $array['dateInscriptions']);
         
         return $championship;
     }
@@ -69,7 +69,7 @@ class Championship_Model
         $array = array();
         while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
         {
-            $array[] = new Championship($row[idChampionship], $row[name], $row[dateStart], $row[dateInscriptions]);
+            $array[] = new Championship($row['idChampionship'], $row['name'], $row['dateStart'], $row['dateInscriptions']);
         }
         return $array;
     }
@@ -83,7 +83,7 @@ class Championship_Model
         $array = array();
         while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
         {
-            $array[] = new Category($row[idCategory], $row[category], $row[modality]);
+            $array[] = new Category($row['idCategory'], $row['category'], $row['modality']);
         }
         return $array;
     }

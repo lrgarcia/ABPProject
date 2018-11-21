@@ -58,7 +58,7 @@ class Category_Model
         
         $array = mysqli_fetch_array($result, MYSQLI_BOTH);
         
-        $category = new Category($array[idCategory], $array[category], $array[modality]);
+        $category = new Category($array['idCategory'], $array['category'], $array['modality']);
         
         return $category;
     }
@@ -71,7 +71,7 @@ class Category_Model
         $array = array();
         while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
         {
-            $array[] = new Category($row[idCategory], $row[category], $row[modality]);
+            $array[] = new Category($row['idCategory'], $row['category'], $row['modality']);
         }
         return $array;
     }

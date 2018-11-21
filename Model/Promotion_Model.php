@@ -56,7 +56,7 @@ class Promotion_Model
         
         $array = mysqli_fetch_array($result, MYSQLI_BOTH);
         
-        $promotion = new Promotion($array[idPromotion], $array[idGame]);
+        $promotion = new Promotion($array['idPromotion'], $array['idGame']);
         
         return $promotion;
     }
@@ -69,7 +69,7 @@ class Promotion_Model
         $array = array();
         while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
         {
-            $array[] = new Promotion($row[idPromotion], $row[idGame]);
+            $array[] = new Promotion($row['idPromotion'], $row['idGame']);
         }
         return $array;
     }

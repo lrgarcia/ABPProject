@@ -56,7 +56,7 @@ class Group_Model
         
         $array = mysqli_fetch_array($result, MYSQLI_BOTH);
         
-        $group = new Group($array[idGroup], $array[idCategory], $array[idChampionship], $array[letter]);
+        $group = new Group($array['idGroup'], $array['idCategory'], $array['idChampionship'], $array['letter']);
         
         return $group;
     }
@@ -69,7 +69,7 @@ class Group_Model
         $array = array();
         while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
         {
-            $array[] = new Group($row[idGroup], $row[idCategory], $row[idChampionship], $row[letter]);
+            $array[] = new Group($row['idGroup'], $row['idCategory'], $row['idChampionship'], $row['letter']);
         }
         return $array;
     }
