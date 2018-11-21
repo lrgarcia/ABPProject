@@ -10,7 +10,7 @@ class Category
     {
         $this->category=$category;
         $this->idCategory=$idCategory;
-        $this->modaliy=$modality;
+        $this->modality=$modality;
     }
     
     public function getIdCategory()
