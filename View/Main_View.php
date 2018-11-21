@@ -23,7 +23,7 @@ class Main_View{
 				<?php
 				echo ('<h2>' . $strings['TituloPartido'] . '</h2>');
 				echo ('<p>' . $strings['TextoPartido'] . '</p>');
-				echo ('<a href="../Controller/Main_Controller.php?action=PROMOTEDMATCH">' . $strings['TituloPartido'] . '</a>');
+				echo ('<a href="../Controller/Main_Controller.php?action=PROMOTION">' . $strings['TituloPartido'] . '</a>');
 				?>
 			</div>
 			<div class="col-md-4">

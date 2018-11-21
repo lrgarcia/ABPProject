@@ -13,12 +13,9 @@ class Championship_SHOWALL_View{
 
 	<div class="jumbotron">
 		<div class="container">
-			<h1>VER TODAS LAS CAMPEONATOS</h1>
+			<h1>VER TODOS LOS CAMPEONATOS</h1>
 		</div>
 	</div>
-
-
-
 	<div class="container">
 
 	
