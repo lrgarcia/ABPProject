@@ -149,7 +149,7 @@ Switch ($_REQUEST['action']){
         $id_championship= $_REQUEST['id'];
         $championship_model= new Championship_Model();
         $championship= $championship_model->GETBYID($id_championship);
-        new Championship_SHOWCURRENT_View($championship);
+        new Championship_DELETE_View($championship);
         break;
 
 	default: 
