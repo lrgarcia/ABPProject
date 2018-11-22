@@ -52,7 +52,8 @@ class User_Model {
 	        return "Lo sentimos, no se ha podido modificar el usuario";
 	    }
 	}
-	
+
+
 	public function GETBYID ($idUser)
 	{
 	    $sql = "SELECT * FROM user WHERE idUser ='" . $idUser . "';";
