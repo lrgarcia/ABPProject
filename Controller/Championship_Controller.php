@@ -11,6 +11,14 @@ require_once '../Model/Championship.php';
 require_once '../Model/Championship_Model.php';
 require_once '../Model/CategoryGroup.php';
 require_once '../Model/CategoryGroup_Model.php';
+require_once '../Model/Group_Model.php';
+require_once '../Model/Group.php';
+require_once '../Model/Match.php';
+require_once '../Model/Match_Model.php';
+
+
+
+
 include '../View/MESSAGE_View.php';
 
 
@@ -61,11 +69,12 @@ Switch ($_REQUEST['action']){
         
         $categoryGroupModel=new CategoryGroup_Model();
         $groupModel= new Group_Model();
+        $matchModel= new Match_Model();
         $alphabet =array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
         $arrayCategoryGroups = $categoryGroupModel->GETCHAMPIONSHIPGROUPS($_REQUEST['idChampionship']);
         for($i=0;$i<count($arrayCategoryGroups);$i++){
             $arrayPair = $categoryGroupModel->GETGROUPPAIRS($arrayCategoryGroups[$i]->getIdCategoryGroup());
-            $numGroups = intdiv(count($arrayPair),12);
+            $numGroups = intdiv(count($arrayPair),8);
             
             for($j=0;$j<$numGroups;$j++){
                 $group = new Group(null, $arrayCategoryGroups[$i]->getIdCategory(), $_REQUEST['idChampionship'], 
@@ -76,6 +85,12 @@ Switch ($_REQUEST['action']){
                 for($k=$j*8;$k<$j*8+8;$k++){
                   $idPair[]=$arrayPair[$k]->getIdPair();
                     
+                }
+                for($k=0;$k<8;$k++){
+                    for($l=$k+1,$l<8){
+                        $match= new Match(null, null, null, $idGroup, $idPair[$k], $idPair[$l], null);
+                        $matchModel->ADD($match);
+                    }
                 }
                 $respuesta=$groupModel->SETGROUPPAIRS($idPair, $idGroup);
             }
