@@ -1,9 +1,11 @@
-<?php
+ <?php
  session_start(); 
  header('Content-Type: application/json');
 
 require_once '../Model/Reservation.php';
 require_once '../Model/Reservation_Model.php';
+require_once '../Model/Court.php';
+require_once '../Model/Court_Model.php';
 
 
 
@@ -14,19 +16,58 @@ function getFreeCourt($day,$month,$year){
 
   $date=$day."/".$month."/".$year;
   $reservation = new Reservation_Model();
-  $hour="12:30"
-  $freeCourts=$reservation->FREECOURTSBYHOUR($date,"hour");
-  $toret=array();
+  $hour=8;
+  $minutes=0;
+  $stringHour="12:30";
 
-  foreach($freeCourts as $freeCourt){
-    $i=0;
-    $idCourt=  $freeCourt->getIdCourt();
-    $numberCourt=  $freeCourt-> getNumber();
-    $toret[$i]['idCourt']=$idCourt;
-    $toret[$i]['numerCourt']=$idCourt;
-    $toret[$i]['hour']=$hour;
-    $i++;
-  }
+  
+  $toret=array();
+  $i=0;
+
+ while($hour<22){
+  if($minutes==60){
+    $minutes=0;
+    $hour+=1;
+  }//Fin if minutos
+  if($minutes==30){
+    $stringHour="".$hour.":".$minutes;
+  }else{
+  //En caso que lo minutos sean igual a 0, añado un 0 mas para que tenga dos digitos siempre
+    $stringHour="".$hour.":".$minutes."0";
+
+  }//Fin creacion de stringHour
+
+  $freeCourts = $reservation->FREECOURTSBYHOUR($date,$stringHour);
+  // if(sizeof($freeCourts)==0){
+  //   $toret[$stringHour]="OCCUPED";
+  // }else{
+  //   $toret[$stringHour]="FREE";
+  // }
+
+
+foreach($freeCourts as $freeCourt){
+  $idCourt = $freeCourt->getIdCourt();
+  $numberCourt = $freeCourt->getNumber();
+  $toret[$stringHour][$i]['idCourt'] = $idCourt;
+  $toret[$stringHour][$i]['numberCourt']=$numberCourt;
+ 
+  $i++;
+}//Fin foreach
+  $hour++;
+  $minutes+=30;
+}//Fin while
+
+
+  // foreach($freeCourts as $freeCourt){
+  //   $idCourt=  $freeCourt->getIdCourt();
+  //   $numberCourt=  $freeCourt-> getNumber();
+  //   $toret[$i]['idCourt']=$idCourt;
+  //   $toret[$i]['numberCourt']=$idCourt;
+  //   $toret[$i]['hour']=$hour;
+  //   $i++;
+    
+
+  // }
 
 
 

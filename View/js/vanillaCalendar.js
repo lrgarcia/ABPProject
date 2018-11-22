@@ -75,7 +75,7 @@ var vanillaCalendar = {
           '[data-calendar-label="picked"]'
         )[0]
 
-        generateModal(this.dataset.calendarDate)
+        executeAjax(this.dataset.calendarDate)
 
         picked.innerHTML = this.dataset.calendarDate
         
@@ -140,10 +140,7 @@ var vanillaCalendar = {
 
 
 
-
-function executeModal($date){
-
-
+function executeAjax($date){
 
   var $splitted = $date.split(" ");
   var $dayWeek=$splitted[0];
@@ -161,11 +158,11 @@ function executeModal($date){
 
     success: function (obj, textstatus) {
                   if( !('error' in obj) ) {
-                      freeCourt = obj.result;
+                    var freeCourt = obj.result;
                       // console.log(freeCourt);
                       // alert(freeCourt);
 
-                      generateModal($freeCourt);
+                      generateModal(freeCourt);
                   }
                   else {
                       console.log(obj.error);
@@ -174,10 +171,19 @@ function executeModal($date){
 });
 
 
+
 }
 
-function generateModal($freeCourt){
-console.log("Fuera de ajax"+$freeCourt);
+
+
+function generateModal(freeCourt){
+var court;
+var i;
+var hour=8;
+var minutes=0;
+var stringHour="";
+
+ console.log(freeCourt['9:30']);
 
 var html= '<div id = "myModal" class="modal fade">';
  html+='<div class="modal-dialog">';
@@ -188,10 +194,68 @@ var html= '<div id = "myModal" class="modal fade">';
  html+=  '</div>';
  html+=   '<div class="modal-body">';
    
-     // for ($court in $freeCourt) {
-     //  console.log("dentro del for"+$freeCourt)
-     //  html+='<a>'+$court+'</a>'; 
-     //  }
+ while(hour<22){
+
+  if(minutes==60){
+    minutes=0;
+    hour++;
+  }
+
+
+
+
+  if(minutes==30){
+    stringHour=""+hour+":"+minutes;
+  }else{
+  //En caso que lo minutos sean igual a 0, añado un 0 mas para que tenga dos digitos siempre
+    stringHour=""+hour+":"+minutes+"0";
+
+  }//Fin creacion de stringHour
+
+
+
+
+
+
+
+//Comprueba en este if cuantas pistas tiene en una hora determinada, si no tiene niguna quiere decirque esta petada
+  if(freeCourt[stringHour]!=null){
+
+    html+='<div class="row section" style="background-color:green">';
+  }else{
+     html+='<div class="row section" style="background-color:red">';
+  }  
+    html+='<div class="col-md-10">';
+    //En caso de que los minutos sean 30 no pasa nada
+    if(minutes==30){
+    html+='<a>Hora: '+hour+':'+minutes+'</a><br>'; 
+   }else{
+    //Pero si es igual a 0, añade un 0 mas en el string
+    html+='<a>Hora: '+hour+':'+minutes+'0</a><br>'; 
+   }
+
+    html+='</div>'
+    html+='</div>' 
+
+  hour++;
+  minutes=minutes+30;
+ }
+
+    //  for (i=0; i<freeCourt.length;i++) {
+    //   html+='<div class="row section">';
+    //   html+='<div class="col-md-10">';
+     
+   
+    //   console.log("dentro del for"+freeCourt[i]['hour']);
+    //   html+='<a>Hora Libre: '+freeCourt[i]['hour']+'                         </a><br>'; 
+    //   html+='<a>Numero de pista: '+freeCourt[i]['numberCourt']+'                </a><br>'; 
+    //   html+='</div>'
+    //   html+='</div>' 
+    // }
+
+
+
+
 
 
 
