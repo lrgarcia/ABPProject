@@ -1,4 +1,4 @@
- <?php
+<?php
  session_start(); 
  header('Content-Type: application/json');
 
@@ -10,19 +10,25 @@ require_once '../Model/Reservation_Model.php';
 
 
 
-
-
 function getFreeCourt($day,$month,$year){
 
   $date=$day."/".$month."/".$year;
   $reservation = new Reservation_Model();
-  $freeCourts=$reservation->FREECOURTSBYHOUR($date,"12:30");
-  $toret = array();
-  foreach ($freeCourts as $key => $value) {
-     $value['idUser']=$_SESSION['idUser'];
-     array_push($toret,$value);
-     
-   }
+  $hour="12:30"
+  $freeCourts=$reservation->FREECOURTSBYHOUR($date,"hour");
+  $toret=array();
+
+  foreach($freeCourts as $freeCourt){
+    $i=0;
+    $idCourt=  $freeCourt->getIdCourt();
+    $numberCourt=  $freeCourt-> getNumber();
+    $toret[$i]['idCourt']=$idCourt;
+    $toret[$i]['numerCourt']=$idCourt;
+    $toret[$i]['hour']=$hour;
+    $i++;
+  }
+
+
 
   return $toret;
 
