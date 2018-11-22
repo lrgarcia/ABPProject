@@ -17,7 +17,7 @@ class MESSAGE{
 
 		<div class="jumbotron">
 			<div class="container">
-				<h1><?php echo $strings[$this->string] ?></h1>
+				<h1><?php echo $this->string ?></h1>
 			</div>
 		</div>
 		
