@@ -12,6 +12,7 @@ include '../View/MESSAGE_View.php';
 function get_data_form(){
 
 
+
 	$name = $_REQUEST['name'];
 	$surname = $_REQUEST['apellidos'];
 	$login = $_REQUEST['login'];
