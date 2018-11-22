@@ -1,5 +1,6 @@
 <?php
 require_once ('../Model/Championship.php');
+require_once ('../Model/Category.php');
 require_once ('../Model/Access_DB.php');
 
 class Championship_Model
@@ -13,7 +14,7 @@ class Championship_Model
         $this->mysqli = ConnectDB();
     }
     
-    public function ADD ($login, $name, $dateStart, $dateInscription){
+    public function ADD ($championship){
      
         $insert = "INSERT INTO championship (name, dateStart, dateInscriptions) VALUES('" . $championship->getName() . "','" . $championship->getDateStart() . "','" . $championship->getDateInscriptions() . "');";
         if ($this->mysqli->query($insert)) {
@@ -65,13 +66,12 @@ class Championship_Model
     {
         $sql = "SELECT * FROM championship";
         $result = $this->mysqli->query($sql);
-
+        
         $array = array();
         while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
         {
             $array[] = new Championship($row['idChampionship'], $row['name'], $row['dateStart'], $row['dateInscriptions']);
         }
-
         return $array;
     }
     
@@ -97,6 +97,11 @@ class Championship_Model
             $insert = "INSERT INTO championship_category (idChampionship, idCategory) VALUES('".$idChampionship."', '".$idCategories[$i]."');";
             $this->mysqli->query($insert);
         }
+    }
+    
+    public function LASTID() 
+    {
+        return $this->mysqli->insert_id;
     }
 }
 ?>
