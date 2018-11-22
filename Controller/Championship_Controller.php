@@ -15,6 +15,7 @@ require_once '../Model/Group_Model.php';
 require_once '../Model/Group.php';
 require_once '../Model/Match.php';
 require_once '../Model/Match_Model.php';
+require_once '../View/Championship_SHOWCURRENT_View.php';
 
 
 
