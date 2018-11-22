@@ -6,21 +6,41 @@ if (!IsAuthenticated()){
 	header('Location:../index.php');
 }
 include '../View/Championship_ADD_View.php';
-require_once '../View/Championship_SHOWCURRENT_View.php';
-
-include '../Model/Championship_Model.php';
+require_once '../View/Championship_SHOWALL_View.php';
+require_once '../Model/Championship.php';
+require_once '../Model/Championship_Model.php';
+require_once '../Model/CategoryGroup.php';
+require_once '../Model/CategoryGroup_Model.php';
 include '../View/MESSAGE_View.php';
+
 
 // Agui se debe meter los atributos del campeonato que ha recibido de la vista para luego crear el objeto campeonato
 function get_data_championship(){
-
+	
 	$login_creator = $_SESSION['login'];
+	if(isset($_REQUEST['idChampionship']))
+	{
+	    $idChampionship = $_REQUEST['idChampionship'];
+	} else {
+	    $idChampionship = null;
+	}
+	
 	$name = $_REQUEST['name'];
 	$dateStart = $_REQUEST['dateStart'];
 	$dateInscriptions = $_REQUEST['dateInscriptions'];
-    $championship = new calendario_Model($login_creator, $name, $dateStart,$dateInscriptions);
-	return $calendario;
+    $championship = new Championship($idChampionship, $name, $dateStart,$dateInscriptions);
+ 
+    return $championship;
+	
+}
 
+function get_data_category() 
+{
+    $category = Array();
+    foreach($_REQUEST['category'] as $categoryIterator){
+        $category[] = $categoryIterator;
+    }
+    return $category;
 }
 
 
@@ -42,13 +62,18 @@ Switch ($_REQUEST['action']){
 		// Aqui se meterá que datos ha pillado una vez se ha hecho introducido los datos del campeonato
 		else{
 			$championpionship = get_data_championship();
-			$calendario->setId($id);
-			$horario = get_data_formH($id);
-			foreach($horario as $h){
-				$h->ADD();
+			$category = get_data_category();
+			$championship_model = new Championship_Model();
+			$categorygroup_model = new CategoryGroup_Model();
+			
+			$respuesta = $championship_model->ADD($championpionship);
+			$idChampionship = $championship_model->LASTID();
+			$respuesta = $championship_model->SETCATEGORIESBYID($_REQUEST['category'], $idChampionship);
+			for($i=0; $i<count($_REQUEST['category']); $i++)
+			{
+			    $categorygroup_model->ADD(new CategoryGroup(null, $idChampionship, $_REQUEST['category'][$i]));
 			}
-			$respuesta = $calendario->ADD();
-			new MESSAGE($respuesta, '../Controller/calendario_Controller.php');
+			new MESSAGE($respuesta, '../Controller/Championship_Controller.php');
 		}
 		break;	
 	case 'EDIT':		
@@ -58,24 +83,17 @@ Switch ($_REQUEST['action']){
 		else{
 			
 			$respuesta = $calendario->EDIT();
-			new MESSAGE($respuesta, '../Controller/calendario_Controller.php');
+			new MESSAGE($respuesta, '../Controller/Championship_Controller.php');
 		}
 		
 		break;
 
 	case 'SHOWCURRENT':
- 
-        $id_championship= $_REQUEST['id'];
-        $championship_model= new Championship_Model();
-        $championship=$championship_model->GETBYID($id_championship);
-        new Championship_SHOWCURRENT_View($championship);
-        
-
-    
 	
 		break;
 	default: 
-			$championship_model= new Championship_Model();
+		
+		$championship_model= new Championship_Model();
 		$championships= $championship_model->GETALL();
 		new Championship_SHOWALL_View($championships);
 		break;
