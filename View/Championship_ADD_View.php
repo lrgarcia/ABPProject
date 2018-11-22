@@ -24,7 +24,7 @@ class Championship_ADD_View{
 			<div class="col-sm-3 nopadding">
 				<div class="form-group">
 				<label>Nombre del campeonato:</label>
-				<input required type="text" class="form-control" id="nombre" name="nombre" value="">
+				<input required type="text" class="form-control" id="name" name="name" value="">
 				</div>
 			</div>
 		</div>

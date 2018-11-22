@@ -14,6 +14,8 @@ else{
 
 		$sql = "select * from user where login = '".$login."'";
 		$result = $mysqli->query($sql);
+
+
 		if ($result->num_rows == 1){ 
 			//Fetch to associative array
 			$tupla = $result->fetch_array();

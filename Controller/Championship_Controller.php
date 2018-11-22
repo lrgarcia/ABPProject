@@ -12,14 +12,14 @@ include '../View/MESSAGE_View.php';
 
 // Agui se debe meter los atributos del campeonato que ha recibido de la vista para luego crear el objeto campeonato
 function get_data_championship(){
-	
+
 	$login_creator = $_SESSION['login'];
 	$name = $_REQUEST['name'];
 	$dateStart = $_REQUEST['dateStart'];
 	$dateInscriptions = $_REQUEST['dateInscriptions'];
     $championship = new calendario_Model($login_creator, $name, $dateStart,$dateInscriptions);
 	return $calendario;
-	
+
 }
 
 
@@ -40,7 +40,7 @@ Switch ($_REQUEST['action']){
 		}
 		// Aqui se meterá que datos ha pillado una vez se ha hecho introducido los datos del campeonato
 		else{
-			$championpionship= get_data_championship();
+			$championpionship = get_data_championship();
 			$calendario->setId($id);
 			$horario = get_data_formH($id);
 			foreach($horario as $h){

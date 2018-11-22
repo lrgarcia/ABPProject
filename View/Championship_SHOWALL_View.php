@@ -24,30 +24,72 @@ class Championship_SHOWALL_View{
 				<a class="btn btn-outline-success" id="search-input" href="../Controller/Championship_Controller.php?action=ADD" role="button">Crear campeonato</a>
 			</div>
 		</div>
-<?php
-		
-		foreach ($this->championships as $championship) {	
-?>
+
 		<div class="row section">
 			<div class="col-md-10">
-				<h2><?php echo $championship['name'] ?></h2>
+				<h2>Campeonatos</h2>
 			</div>
-			<div class="col-md-2">
-				<a class="btn btn-outline-success" href="../Controller/Championship_Controller.php?action=SHOWCURRENT&id=<?php echo $championship['id'] ?>"><?php echo $strings['Ver']?></a>
-<?php
-			
-				echo('<a class="btn btn-outline-success" href="../Controller/Championship_Controller.php?action=EDIT&id=');
-				echo($championship["id"]);
-				echo('">' . $strings['Editar'] . '</a>');
-			
-?>			
-			</div>
-		</div>
-<?php
-		}
-?>
+        </div>
 
+        <div class="row">
+            <table id="championships">
+                <tr>
+                    <th width="40%">Campeonato</th>
+                    <th width="20%">Fecha de inicio</th>
+                    <th width="20%">Fecha de inscripción</th>
+                    <th width="20%"></th>
+                </tr>
+                <?php foreach ($this->championships as $championship) { ?>
+                <tr>
+                    <td>
+                        <a href='../Controller/Championship_Controller.php?action=SHOWCURRENT&id=<?php echo $championship->idChampionship ?>'>
+                        <div><?php echo $championship->name ?></div>
+                        </a>
+                    </td>
+                    <td>
+                        <a href='../Controller/Championship_Controller.php?action=SHOWCURRENT&id=<?php echo $championship->idChampionship ?>'>
+                            <div><?php echo $championship->dateStart ?></div>
+                        </a>
+                    </td>
+                    <td>
+                        <a href='../Controller/Championship_Controller.php?action=SHOWCURRENT&id=<?php echo $championship->idChampionship ?>'>
+                            <div><?php echo $championship->dateInscriptions ?></div>
+                        </a>
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="groupbuttons">
+                            <a class="btn btn-outline-success" href='../Controller/Championship_Controller.php?action=EDIT&id=<?php echo $championship->idChampionship ?>'>
+                                Editar
+                            </a>
+                            <a class="btn btn-outline-danger" href="#">
+                                Eliminar
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <?php } ?>
+            </table>
+        </div>
 
+<!--        /`-._      _,                               -->
+<!--        /      `-._(  \                             -->
+<!--        /           \\  \                           -->
+<!--        /             \\  \`-._                     -->
+<!--        /           .   \\  \    `-._               -->
+<!--        /           :).   \\  \        `-.          -->
+<!--        /           ./;.    \\  \         /         -->
+<!--        /           .;'       \\  \       /         -->
+<!--        /   .        .          \\  \     /         -->
+<!--        /  .; ):.   __________    \\  \   /         -->
+<!--        /   . :" '  |~~_~__ _  |    \\(_) /         -->
+<!--        /       '    ) (_=__=_) (     \(.`/         -->
+<!--        `-._         |-_________|         /         -->
+<!--              `-._                        /         -->
+<!--                    `-._                  /         -->
+<!--                          `-._            /         -->
+<!--                                `-._      /         -->
+<!--                                     `-.  /         -->
+<!--   La coca del Cendal                               -->
 
 	<?php
 	 include '../View/Footer.php';		

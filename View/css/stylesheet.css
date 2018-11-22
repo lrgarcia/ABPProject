@@ -79,3 +79,45 @@ h1 {
 #btn-left{
     float:left;
 }
+
+#championships {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+#championships td, #championships th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#championships tr th {
+    text-align: center;
+}
+
+#championships tr td, #championships tr td:last-child .row .col-sm-6 {
+    text-align: center;
+}
+
+#championships tr td a div, #championships tr td a:hover div{
+    width: 100%;
+    height: 100%;
+    color: black;
+}
+
+#championships tr td a:hover{
+    text-decoration: none;
+}
+
+#championships tr:nth-child(even){background-color: #f2f2f2;}
+
+#championships tr:hover {background-color: #ddd;}
+
+#championships th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}

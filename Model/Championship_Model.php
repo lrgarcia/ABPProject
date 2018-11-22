@@ -13,7 +13,7 @@ class Championship_Model
         $this->mysqli = ConnectDB();
     }
     
-    public function ADD ($championship){
+    public function ADD ($login, $name, $dateStart, $dateInscription){
      
         $insert = "INSERT INTO championship (name, dateStart, dateInscriptions) VALUES('" . $championship->getName() . "','" . $championship->getDateStart() . "','" . $championship->getDateInscriptions() . "');";
         if ($this->mysqli->query($insert)) {
@@ -65,12 +65,13 @@ class Championship_Model
     {
         $sql = "SELECT * FROM championship";
         $result = $this->mysqli->query($sql);
-        
+
         $array = array();
         while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
         {
             $array[] = new Championship($row['idChampionship'], $row['name'], $row['dateStart'], $row['dateInscriptions']);
         }
+
         return $array;
     }
     
