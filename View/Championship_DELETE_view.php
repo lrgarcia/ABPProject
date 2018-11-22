@@ -9,4 +9,3 @@
 
 asdfghjklñ
 sdfghjklñ.mnbvfcdfghjkl.,mnbvghjkl
-rstdyfugihojpkòiugftyrsxtcuvigohpj
