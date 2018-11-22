@@ -16,8 +16,9 @@ class User_Model {
 
 	function ADD($user)
 	{
-	    $insert = "INSERT INTO user (idUser, login, password, name, surname, email, type) VALUES ('" . $user->getIdUser() . "'," . $user->getLogin() . "','" . $user->getPassword() . "','"
+	    $insert = "INSERT INTO user (idUser, login, password, name, surname, email, type) VALUES ('" . $user->getIdUser() . "','" . $user->getLogin() . "','" . $user->getPassword() . "','"
 	        . $user->getName() . "','" . $user->getSurname() . "','" . $user->getEmail() . "','" . $user->getType() . "');";
+	       
 	    if ($this->mysqli->query($insert)) {
 	        return "Se ha creado el usuario";
 	    } else{
@@ -52,8 +53,7 @@ class User_Model {
 	        return "Lo sentimos, no se ha podido modificar el usuario";
 	    }
 	}
-
-
+	
 	public function GETBYID ($idUser)
 	{
 	    $sql = "SELECT * FROM user WHERE idUser ='" . $idUser . "';";
