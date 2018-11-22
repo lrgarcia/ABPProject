@@ -88,5 +88,9 @@ class Group_Model
         $insert = "INSERT INTO pair_group (idPair, idGroup) VALUES ('".$idPair."', '".$idGroup."';";
         $this->mysqli->query($insert);
     }
+    public function LASTID()
+    {
+        return $this->mysqli->insert_id;
+    }
 }
 ?>
