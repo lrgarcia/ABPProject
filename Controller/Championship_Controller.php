@@ -6,6 +6,7 @@ if (!IsAuthenticated()){
 	header('Location:../index.php');
 }
 include '../View/Championship_ADD_View.php';
+require_once '../View/Championship_SHOWCURRENT_View.php';
 
 include '../Model/Championship_Model.php';
 include '../View/MESSAGE_View.php';
@@ -63,12 +64,20 @@ Switch ($_REQUEST['action']){
 		break;
 
 	case 'SHOWCURRENT':
+ 
+        $id_championship= $_REQUEST['id'];
+        $championship_model= new Championship_Model();
+        $championship=$championship_model->GETBYID($id_championship);
+        new Championship_SHOWCURRENT_View($championship);
+        
+
+    
 	
 		break;
 	default: 
-		$calendario = new calendario_Model('','','','');
-		$datos = $calendario->yourSurveys($_SESSION['login']);
-		new Calendario_SHOWALL($datos);
+			$championship_model= new Championship_Model();
+		$championships= $championship_model->GETALL();
+		new Championship_SHOWALL_View($championships);
 		break;
 }
 ?>
