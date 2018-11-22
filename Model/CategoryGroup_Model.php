@@ -100,5 +100,19 @@ class CategoryGroup_Model
             return "Lo sentimos, no se ha podido inscribir a la pareja";
         }
     }
+    
+    public function GETCHAMPIONSHIPGROUPS($idChampionship)
+    {
+        $sql = "SELECT * FROM categorygroup WHERE idChampionship='".$idChampionship."';";
+        $result = $this->mysqli->query($sql);
+        
+        $array = array();
+        while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
+        {
+            $array[] = new CategoryGroup($row['idCategoryGroup'], $row['idChampionship'], $row['idCategory']);
+        }
+        return $array;
+        
+    }
 }
 ?>
