@@ -14,6 +14,10 @@ require_once '../Model/CategoryGroup_Model.php';
 include '../View/MESSAGE_View.php';
 
 
+
+
+
+
 // Agui se debe meter los atributos del campeonato que ha recibido de la vista para luego crear el objeto campeonato
 function get_data_championship(){
 	
@@ -53,7 +57,32 @@ if (!isset($_REQUEST['action'])){
 	$_REQUEST['action'] = '';
 }
 Switch ($_REQUEST['action']){
-	
+    case 'GENERATECHAMP':
+        
+        $categoryGroupModel=new CategoryGroup_Model();
+        $groupModel= new Group_Model();
+        $alphabet =array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
+        $arrayCategoryGroups = $categoryGroupModel->GETCHAMPIONSHIPGROUPS($_REQUEST['idChampionship']);
+        for($i=0;$i<count($arrayCategoryGroups);$i++){
+            $arrayPair = $categoryGroupModel->GETGROUPPAIRS($arrayCategoryGroups[$i]->getIdCategoryGroup());
+            $numGroups = intdiv(count($arrayPair),12);
+            
+            for($j=0;$j<$numGroups;$j++){
+                $group = new Group(null, $arrayCategoryGroups[$i]->getIdCategory(), $_REQUEST['idChampionship'], 
+                    $alphabet[$j]);
+                $groupModel->ADD($group);
+                $idGroup=$groupModel->LASTID();
+                $idPair=Array();
+                for($k=$j*8;$k<$j*8+8;$k++){
+                  $idPair[]=$arrayPair[$k]->getIdPair();
+                    
+                }
+                $respuesta=$groupModel->SETGROUPPAIRS($idPair, $idGroup);
+            }
+            new MESSAGE($respuesta, '../Controller/Championship_Controller.php');
+        }
+        break;
+    
 	case 'ADD':
 	// Si no se ha introducido el campeonato
 		if (!$_POST){
