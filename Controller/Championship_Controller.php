@@ -139,11 +139,18 @@ Switch ($_REQUEST['action']){
 	case 'SHOWCURRENT':
 	        $id_championship= $_REQUEST['id'];
         $championship_model= new Championship_Model();
-        $championship=$championship_model->GETBYID($id_championship);
+        $championship= $championship_model->GETBYID($id_championship);
+        require_once '../View/Championship_SHOWCURRENT_View.php';
         new Championship_SHOWCURRENT_View($championship);
-
-	
 		break;
+
+    case 'DELETE':
+        $id_championship= $_REQUEST['id'];
+        $championship_model= new Championship_Model();
+        $championship= $championship_model->GETBYID($id_championship);
+        new Championship_SHOWCURRENT_View($championship);
+        break;
+
 	default: 
 		
 		$championship_model= new Championship_Model();
