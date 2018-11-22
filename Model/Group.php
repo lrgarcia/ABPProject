@@ -7,10 +7,10 @@ class Group
     var $idChampionship;
     var $letter;
     
-    function __construct($idGroup=null, $idCategory=null, $idCahmpionship=null, $letter=null) 
+    function __construct($idGroup=null, $idCategory=null, $idChampionship=null, $letter=null) 
     {
         $this->idCategory=$idCategory;
-        $this->idChampionship=$idCahmpionship;
+        $this->idChampionship=$idChampionship;
         $this->idGroup=$idGroup;
         $this->letter;
     }
