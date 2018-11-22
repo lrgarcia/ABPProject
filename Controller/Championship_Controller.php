@@ -66,10 +66,14 @@ if (!isset($_REQUEST['action'])){
 }
 Switch ($_REQUEST['action']){
     case 'GENERATECHAMP':
+        if (!$_REQUEST['idChampionship']){
+            new Championship_ADD_View();
+        }
         
         $categoryGroupModel=new CategoryGroup_Model();
         $groupModel= new Group_Model();
         $matchModel= new Match_Model();
+       
         $alphabet =array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
         $arrayCategoryGroups = $categoryGroupModel->GETCHAMPIONSHIPGROUPS($_REQUEST['idChampionship']);
         for($i=0;$i<count($arrayCategoryGroups);$i++){
@@ -87,7 +91,7 @@ Switch ($_REQUEST['action']){
                     
                 }
                 for($k=0;$k<8;$k++){
-                    for($l=$k+1,$l<8){
+                    for($l=$k+1;$l<8;$l++){
                         $match= new Match(null, null, null, $idGroup, $idPair[$k], $idPair[$l], null);
                         $matchModel->ADD($match);
                     }
