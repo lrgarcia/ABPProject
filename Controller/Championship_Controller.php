@@ -16,11 +16,21 @@ require_once '../Model/Group.php';
 require_once '../Model/Match.php';
 require_once '../Model/Match_Model.php';
 require_once '../View/Championship_SHOWCURRENT_View.php';
+
+
+
+
 include '../View/MESSAGE_View.php';
+
+
+
+
+
+
 // Agui se debe meter los atributos del campeonato que ha recibido de la vista para luego crear el objeto campeonato
 function get_data_championship(){
 	
-	$login_creator = $_SESSION['login'];
+	//$login_creator = $_SESSION['login'];
 	if(isset($_REQUEST['idChampionship']))
 	{
 	    $idChampionship = $_REQUEST['idChampionship'];
@@ -36,6 +46,7 @@ function get_data_championship(){
     return $championship;
 	
 }
+
 function get_data_category() 
 {
     $category = Array();
@@ -44,9 +55,13 @@ function get_data_category()
     }
     return $category;
 }
-/* En REQUEST ACTION se extrae que acción ha seleccionado el usuario. Si no ha sido seleccionada ninguna acción 
+
+
+
+/* En REQUEST ACTION se extrae que acciÃ³n ha seleccionado el usuario. Si no ha sido seleccionada ninguna acciÃ³n 
 Hara un showcurrent por defecto
 */
+
 if (!isset($_REQUEST['action'])){
 	$_REQUEST['action'] = '';
 }
@@ -62,7 +77,6 @@ Switch ($_REQUEST['action']){
        
         $alphabet =array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
         $arrayCategoryGroups = $categoryGroupModel->GETCHAMPIONSHIPGROUPS($_REQUEST['idChampionship']);
-        
         for($i=0;$i<count($arrayCategoryGroups);$i++){
             
             $arrayPair = $categoryGroupModel->GETGROUPPAIRS($arrayCategoryGroups[$i]->getIdCategoryGroup());
@@ -80,10 +94,13 @@ Switch ($_REQUEST['action']){
                     $idPair[]=$arrayPair[$k]->getIdPair();
                     
                 }
-                for($k=0;$k<8;$k++){
-                    for($l=$k+1;$l<8;$l++){
-                        $match= new Match(null, null, null, $idGroup, $idPair[$k], $idPair[$l], null);
+                for($s=0;$s<8;$s++){
+                    for($l=$s+1;$l<8;$l++){
+                        
+                        $match= new Match(null, null, null, $idGroup, $idPair[$s], $idPair[$l], null);
+                        error_log("JvPoooooooooo: ".$idGroup. $idPair[$s]. $idPair[$l]);
                         $matchModel->ADD($match);
+                        
                     }
                 }
                 
@@ -98,7 +115,7 @@ Switch ($_REQUEST['action']){
 		if (!$_POST){
 			new Championship_ADD_View();
 		}
-		// Aqui se meterá que datos ha pillado una vez se ha hecho introducido los datos del campeonato
+		// Aqui se meterÃ¡ que datos ha pillado una vez se ha hecho introducido los datos del campeonato
 		else{
 			$championpionship = get_data_championship();
 			$category = get_data_category();
@@ -126,6 +143,7 @@ Switch ($_REQUEST['action']){
 		}
 		
 		break;
+
 	case 'SHOWCURRENT':
 	        $id_championship= $_REQUEST['id'];
         $championship_model= new Championship_Model();
@@ -133,12 +151,14 @@ Switch ($_REQUEST['action']){
         require_once '../View/Championship_SHOWCURRENT_View.php';
         new Championship_SHOWCURRENT_View($championship);
 		break;
+
     case 'DELETE':
         $id_championship= $_REQUEST['idChampionship'];
         $championship_model= new Championship_Model();
         $respuesta = $championship_model->DELETE($id_championship);
         new MESSAGE($respuesta, '../Controller/Main_Controller.php?action=CHAMPIONSHIP');
         break;
+
 	default: 
 		
 		$championship_model= new Championship_Model();
@@ -147,3 +167,4 @@ Switch ($_REQUEST['action']){
 		break;
 }
 ?>
+
