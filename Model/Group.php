@@ -12,7 +12,7 @@ class Group
         $this->idCategory=$idCategory;
         $this->idChampionship=$idChampionship;
         $this->idGroup=$idGroup;
-        $this->letter;
+        $this->letter=$letter;
     }
     
     public function getIdGroup()
