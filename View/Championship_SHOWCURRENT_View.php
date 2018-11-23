@@ -30,7 +30,7 @@ class Championship_SHOWCURRENT_View{
                 </div>
                 <div class="form-group">
                     <label>Usuario2:</label>
-                    <input required type="text" class="form-control" id="name" name="name" value="">
+                    <input required type="text" class="form-control" id="name2" name="name2" value="">
                 </div>
             </div>
             <div class="col-sm-6 nopadding">

@@ -13,7 +13,7 @@ class Main_View{
 
 	<div class="jumbotron">
 		<div class="container">
-			<h1><?php echo $strings['Unete']?></h1>
+			<h1> <?php echo 'Unete' ?> </h1>
 		</div>
 	</div>
 
@@ -40,6 +40,13 @@ class Main_View{
 				echo ('<a href="../Controller/Main_Controller.php?action=COURT">' . $strings['TituloReserva'] . '</a>');
 				?>
 			</div>
+            <div class="col-md-4">
+                <?php
+                echo ('<h2>' . 'Gestionar Resultados' . '</h2>');
+                echo ('<p>' . 'Permite la gestion de ressultados de los resultados de los partidos de un campeonato' . '</p>');
+                echo ('<a href="../Controller/Main_Controller.php?action=RESULTS">' .'Gestionar Resultados' . '</a>');
+                ?>
+            </div>
 	    </div>
 	</div>
 	
