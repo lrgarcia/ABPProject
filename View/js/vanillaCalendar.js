@@ -182,8 +182,12 @@ var i;
 var hour=8;
 var minutes=0;
 var stringHour="";
-
+var hourHTML=""
+var dateHTML="";
+var occuped=false;
  console.log(freeCourt['9:30']);
+
+ 
 
 var html= '<div id = "myModal" class="modal fade">';
  html+='<div class="modal-dialog">';
@@ -205,10 +209,10 @@ var html= '<div id = "myModal" class="modal fade">';
 
 
   if(minutes==30){
-    stringHour=""+hour+":"+minutes;
+    stringHour=hour+":"+minutes;
   }else{
   //En caso que lo minutos sean igual a 0, añado un 0 mas para que tenga dos digitos siempre
-    stringHour=""+hour+":"+minutes+"0";
+    stringHour=hour+":"+minutes+"0";
 
   }//Fin creacion de stringHour
 
@@ -220,12 +224,13 @@ var html= '<div id = "myModal" class="modal fade">';
 
 //Comprueba en este if cuantas pistas tiene en una hora determinada, si no tiene niguna quiere decirque esta petada
   if(freeCourt[stringHour]!=null){
-
-    html+='<div class="row section" style="background-color:green">';
+    occuped=false;
+    html+='<div class="row section" style="background-color:#32CD32">';
   }else{
      html+='<div class="row section" style="background-color:red">';
+     occuped=true;
   }  
-    html+='<div class="col-md-10">';
+    html+='<div class="col-md-8">';
     //En caso de que los minutos sean 30 no pasa nada
     if(minutes==30){
     html+='<a>Hora: '+hour+':'+minutes+'</a><br>'; 
@@ -233,9 +238,33 @@ var html= '<div id = "myModal" class="modal fade">';
     //Pero si es igual a 0, añade un 0 mas en el string
     html+='<a>Hora: '+hour+':'+minutes+'0</a><br>'; 
    }
+    html+='</div>';
+   html+= '<div class="col-md-2">';
 
-    html+='</div>'
-    html+='</div>' 
+
+   // console.log(freeCourt["1:00"][0]['date']);
+   // console.log(stringHour);
+   var dateFinal=freeCourt["1:00"][0]['date'];
+   var hourFinal=stringHour;
+   hourHTML=hourFinal.replace(/:/g,"%3A");
+   dateHTML=dateFinal.replace(/\//g,"%2F");
+   console.log(hourHTML);
+   console.log(dateHTML);
+
+
+
+   console.log('<a class="btn btn-outline-success" href="../Controller/Reservation_Controller.php?action=ADD&hour="'+hourHTML+'"&date="'+dateHTML+'">Reservar</a>');
+
+   if(!occuped){
+   html+='<a class="btn btn-outline-success" href="../Controller/Reservation_Controller.php?action=ADD&hour='+hourHTML+'&date='+dateHTML+'">Reservar</a>';
+
+   }
+
+
+   
+
+    html+='</div>';
+    html+='</div>';
 
   hour++;
   minutes=minutes+30;

@@ -15,12 +15,13 @@ class Group_Model
     
     public function ADD ($group){
         
-        $insert = "INSERT INTO group (idChampionship, letter, idCategory) VALUES('" . $group->getIdChampionship() . "','".$group->getLetter()."','". $group->getIdCategory() . "');";
+        $insert = "INSERT INTO `group` (idChampionship, letter, idCategory) VALUES('" . $group->getIdChampionship() . "','".$group->getLetter()."','". $group->getIdCategory() . "');";
         if ($this->mysqli->query($insert)) {
             return "Se ha creado el grupo";
         } else{
             return "Lo sentimos, no se ha podido crear el grupo";
         }
+        
     }
     
     public function DELETE ($idGroup)
@@ -85,9 +86,10 @@ class Group_Model
     
     public function SETGROUPPAIRS($idPair, $idGroup)
     {
-        $insert = "INSERT INTO pair_group (idPair, idGroup) VALUES ('".$idPair."', '".$idGroup."';";
+        $insert = "INSERT INTO pair_group (idPair, idGroup) VALUES ('".$idPair."', '".$idGroup."');";
         $this->mysqli->query($insert);
     }
+    
     public function LASTID()
     {
         return $this->mysqli->insert_id;

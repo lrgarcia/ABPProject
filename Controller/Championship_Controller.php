@@ -66,6 +66,7 @@ if (!isset($_REQUEST['action'])){
 	$_REQUEST['action'] = '';
 }
 Switch ($_REQUEST['action']){
+
     case 'GENERATECHAMP':
         if (!$_REQUEST['idChampionship']){
             new Championship_ADD_View();
@@ -77,18 +78,22 @@ Switch ($_REQUEST['action']){
        
         $alphabet =array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
         $arrayCategoryGroups = $categoryGroupModel->GETCHAMPIONSHIPGROUPS($_REQUEST['idChampionship']);
+        
         for($i=0;$i<count($arrayCategoryGroups);$i++){
+            
             $arrayPair = $categoryGroupModel->GETGROUPPAIRS($arrayCategoryGroups[$i]->getIdCategoryGroup());
-            $numGroups = intdiv(count($arrayPair),8);
+            $numGroups = intdiv(count($arrayPair),8);       
             
             for($j=0;$j<$numGroups;$j++){
                 $group = new Group(null, $arrayCategoryGroups[$i]->getIdCategory(), $_REQUEST['idChampionship'], 
                     $alphabet[$j]);
+                
                 $groupModel->ADD($group);
                 $idGroup=$groupModel->LASTID();
                 $idPair=Array();
                 for($k=$j*8;$k<$j*8+8;$k++){
-                  $idPair[]=$arrayPair[$k]->getIdPair();
+                    $respuesta=$groupModel->SETGROUPPAIRS($arrayPair[$k]->getIdPair(), $idGroup);
+                    $idPair[]=$arrayPair[$k]->getIdPair();
                     
                 }
                 for($k=0;$k<8;$k++){
@@ -97,10 +102,11 @@ Switch ($_REQUEST['action']){
                         $matchModel->ADD($match);
                     }
                 }
-                $respuesta=$groupModel->SETGROUPPAIRS($idPair, $idGroup);
+                
             }
-            new MESSAGE($respuesta, '../Controller/Championship_Controller.php');
+            
         }
+        new MESSAGE($respuesta, '../Controller/Championship_Controller.php');
         break;
     
 	case 'ADD':
@@ -145,14 +151,15 @@ Switch ($_REQUEST['action']){
         new Championship_SHOWCURRENT_View($championship);
 		break;
 
-    case 'GETCHAMPIONSHIPGROUPS':
-        $id_championship= $_REQUEST['id'];
-        $championship_model= new Championship_Model();
-        $championship= $championship_model->GETBYID($id_championship);
-        require_once '../View/Championship_SHOWCURRENT_View.php';
-        new Championship_SHOWCURRENT_View($championship);
-        break;
+    case 'DELETE':
+        $id_championship= $_REQUEST['idChampionship'];
 
+        $championship_model= new Championship_Model();
+        $respuesta = $championship_model->DELETE($id_championship);
+
+        new MESSAGE($respuesta, '../Controller/Main_Controller.php?action=CHAMPIONSHIP');
+
+        break;
 
 	default: 
 		

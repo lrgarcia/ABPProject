@@ -20,8 +20,10 @@ function getFreeCourt($day,$month,$year){
   $minutes=0;
   $stringHour="12:30";
 
+
   
   $toret=array();
+  $toret["1:00"][0]['date']=$date;
   $i=0;
 
  while($hour<22){
@@ -50,6 +52,11 @@ foreach($freeCourts as $freeCourt){
   $numberCourt = $freeCourt->getNumber();
   $toret[$stringHour][$i]['idCourt'] = $idCourt;
   $toret[$stringHour][$i]['numberCourt']=$numberCourt;
+   $toret[$stringHour][$i]['date']=$date;
+   // $toret[$stringHour][$i]['idUser']=$_SESSION['idUser']
+
+
+
  
   $i++;
 }//Fin foreach
