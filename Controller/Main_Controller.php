@@ -14,6 +14,7 @@ include '../Model/Promotion_Model.php';
 include '../View/Promotion_SHOWALL_View.php';	
 include '../View/Main_View.php';
 include '../View/MESSAGE_View.php';
+require_once '../View/Court_SHOWALL_View.php';
 
 
 
