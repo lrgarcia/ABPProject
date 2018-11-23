@@ -30,7 +30,7 @@ include '../View/MESSAGE_View.php';
 // Agui se debe meter los atributos del campeonato que ha recibido de la vista para luego crear el objeto campeonato
 function get_data_championship(){
 	
-	$login_creator = $_SESSION['login'];
+	//$login_creator = $_SESSION['login'];
 	if(isset($_REQUEST['idChampionship']))
 	{
 	    $idChampionship = $_REQUEST['idChampionship'];
@@ -77,7 +77,6 @@ Switch ($_REQUEST['action']){
        
         $alphabet =array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
         $arrayCategoryGroups = $categoryGroupModel->GETCHAMPIONSHIPGROUPS($_REQUEST['idChampionship']);
-        
         for($i=0;$i<count($arrayCategoryGroups);$i++){
             
             $arrayPair = $categoryGroupModel->GETGROUPPAIRS($arrayCategoryGroups[$i]->getIdCategoryGroup());
@@ -95,10 +94,13 @@ Switch ($_REQUEST['action']){
                     $idPair[]=$arrayPair[$k]->getIdPair();
                     
                 }
-                for($k=0;$k<8;$k++){
-                    for($l=$k+1;$l<8;$l++){
-                        $match= new Match(null, null, null, $idGroup, $idPair[$k], $idPair[$l], null);
+                for($s=0;$s<8;$s++){
+                    for($l=$s+1;$l<8;$l++){
+                        
+                        $match= new Match(null, null, null, $idGroup, $idPair[$s], $idPair[$l], null);
+                        error_log("JvPoooooooooo: ".$idGroup. $idPair[$s]. $idPair[$l]);
                         $matchModel->ADD($match);
+                        
                     }
                 }
                 
