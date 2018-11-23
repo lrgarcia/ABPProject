@@ -54,4 +54,13 @@ $(document).ready(function() {
         $('input[name=idChampionship]').attr("value",idChampionship);
     });
 
+    if($('input[id=categoriasSelected]').length !== 0){
+        var values= $('input[id=categoriasSelected]').val();
+
+        $.each(values.split(","), function(i,e){
+            $("#category option[value='" + e + "']").prop("selected", true);
+        });
+    }
+
+
 });

@@ -99,6 +99,16 @@ class Championship_Model
             $this->mysqli->query($insert);
         }
     }
+
+    public function UPDATECATEGORIESBYID ($idCategories, $idChampionship)
+    {
+        $lenght = count($idCategories);
+        for($i=0; $i<$lenght; $i++)
+        {
+            $insert = "UPDATE championship_category SET idChampionship='" . $idChampionship . "', idCategory='" . $idCategories[$i] . "' WHERE idChampionship='" . $idChampionship . "';";
+            $this->mysqli->query($insert);
+        }
+    }
     
     public function LASTID() 
     {

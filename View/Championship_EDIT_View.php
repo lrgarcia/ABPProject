@@ -1,16 +1,20 @@
 <?php
-// ESTA SIN ACABAR 
-class championship_EDIT_View{
+require_once '../Model/Category.php';
+require_once '../Model/Category_Model.php';
+
+class Championship_EDIT_View{
 	var $id;
 	var $name;
 	var $dateStart;
 	var $dateInscriptions;
+    var $categorias;
 
-	function __construct($id, $nombre, $dateStart, $dateInscriptions){
+	function __construct($id, $nombre, $dateStart, $dateInscriptions, $categorias){
 		$this->id = $id;
 		$this->nombre = $nombre;
 		$this->dateStart = $dateStart;
 		$this->dateInscriptions = $dateInscriptions;
+        $this->categorias = $categorias;
 		$this->render();
 	}
 	function render(){
@@ -18,139 +22,64 @@ class championship_EDIT_View{
 	include '../View/Header.php';
 	?>
 
-	<div class="jumbotron">
-		<div class="container">
-			<h1><?php echo($strings['Editar campeonato']);?></h1>
-		</div>
-	</div>
+        <div class="jumbotron">
+            <div class="container">
+                <h1>Editar campeonato</h1>
+            </div>
+        </div>
 
-	<form action="../Controller/Championship_Controller.php" method='post'> 
+        <form action="../Controller/Championship_Controller.php" method='post'>
+            <div id="addCategory" class="container">
+                <div class="row">
+                    <div class="col-sm-3 nopadding">
+                        <div class="form-group">
+                            <label>Nombre del campeonato:</label>
+                            <input required type="text" class="form-control" id="name" name="name" value="<?php echo($this->nombre)?>">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 nopadding">
+                        <div class="form-group">
+                            <label>Fecha de inicio</label>
+                            <input required type="date" class="form-control" id="dateStart" name="dateStart" value="<?php echo($this->dateStart)?>">
+                        </div>
+                    </div>
+                    <div class="col-sm-3 nopadding">
+                        <div class="form-group">
+                            <label>Fecha de plazo</label>
+                            <input required type="date" class="form-control" id="dateInscriptions" name="dateInscriptions" value="<?php echo($this->dateInscriptions)?>">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 nopadding">
+                        <div class="form-group">
+                            <label>Categoria:</label>
+                            <select multiple required class="form-control" id="category" name="category[]" size=5>
+                                <?php
+                                $categoryModel = new Category_Model();
+                                $categoryArray = $categoryModel->GETALL();
 
-	<div id="añadir_horario" class="container">
+                                for($i=0; $i <count($categoryArray); $i++)
+                                {
+                                    echo "<option value='".$categoryArray[$i]->getIdCategory()."'>".$categoryArray[$i]->getCategory()." - Categoria ".$categoryArray[$i]->getModality()."</option>";
+                                }
+                                ?>
+                            </select>
+                            <input id="categoriasSelected" hidden value="<?php echo($this->categorias)?>">
+                        </div>
+                    </div>
 
-		<div class="row">
-			<div class="col-sm-3 nopadding">
-				<div class="form-group">
-				<label><?php echo($strings['Nombre de la encuesta']);?>:</label>
-				<input required type="text" class="form-control" id="nombre" name="nombre" value='<?php echo ($this->nombre); ?>'>
-				</div>
-			</div>
-		</div>
 
-		<input type="text" name="id" hidden value="<?php echo $this->id ?>">
+                    <input type="text" name="idChampionship" hidden value="<?php echo $this->id ?>">
+                    <input type="text" name="login_creator" hidden value="<?php echo $_SESSION['login'] ?>">
+                </div>
+            </div>
 
-<?php
-		
-		for ($i=0; $i < sizeof($this->dia) ; $i++) { 
-			
-?>
-			<div class="row<?php if($i>0) echo ("f".($i+101));?>"> 
-<?php
-			if ($i>0) echo ('<div class="row">');
-?>
-				<div class="col-sm-3 nopadding">
-					<div class="form-group">
-<?php
-			if ($i==0) echo ('<label>' . $strings['Día'] . '</label>');
-?>
-					<input type="date" class="form-control" id="dia" name="dia[]" value="<?php echo ($this->dia[$i])?>">
-					</div>
-				</div>
+            <div class="container">
+                <button type="submit" name="action" value="EDIT" class="btn btn-default"><?php echo($strings['Enviar']);?></button>
+            </div>
 
-				<div class="col-sm-3 nopadding">
-					<div class="form-group">
-<?php
-			if ($i==0) echo ('<label>'. $strings['Hora inicio'] . '</label>');
-?>
-					<input type="time" class="form-control" id="h_inicio" name="h_inicio[]" value="<?php echo ($this->h_inicio[$i])?>">
-					</div>
-				</div>
-
-				<div class="col-sm-3 nopadding">
-					<div class="form-group">
-<?php
-			if ($i==0) echo ('<label>' . $strings['Hora fin'] . '</label>');
-?>
-					<input type="time" class="form-control" id="h_fin" name="h_fin[]" value="<?php echo ($this->h_fin[$i])?>">
-					</div>
-				</div>
-<?php 
-				if ($i == 0) {
-?>
-					<div class="col-sm-3 nopadding" id="fix-btn">
-						<div class="form-group">
-						<button id="search-input btn-left" class="btn btn-success" type="button"  onclick="add_fields();"> <?php echo($strings['Añadir horario']);?> </button>
-						</div>
-					</div>
-<?php
-				}else {
-?>	
-					<div class="input-group-btn"> 
-					<button class="btn btn-danger" type="button" onclick="remove_fieldsf('<?php echo ($i+101);?>');"> <?php echo $strings['Eliminar']?> </button>
-					</div>
-				</div>
-<?php		
-				}
-?>			
-				
-		</div>
-		
-<?php
-		
-		} 
-?>
-
-		</div>
-		<div id="añadir_participantes" class="container">
-<?php
-		for ($i=-1; $i < sizeof($this->users) ; $i++) {		
-?>
-			<div class="row<?php if($i>-1) echo ("p".($i+102));?>"> 
-
-<?php
-			if ($i>-1) echo ('<div class="row">');
-?>
-
-				<div class="col-sm-3 nopadding">
-					<div class="form-group">
-					<?php
-			if ($i==-1) echo ('<label>' . $strings['Participantes'] . '</label>');
-?>
-					<input <?php if($i==-1) echo ("readonly"); ?> type="text" placeholder="Login..." class="form-control" id="users" name="users[]" value="<?php if($i==-1) {echo ($this->user_logged);} else{ echo ($this->users[$i]);} ?>">
-					</div>
-				</div>
-
-<?php 
-				if ($i == -1) {
-?>
-					<div class="col-sm-3 nopadding" id="fix-btn">
-						<div class="form-group">
-						<button id="search-input btn-left" class="btn btn-success" type="button"  onclick="add_participants();"> <?php echo $strings['Añadir participante']?> </button>
-						</div>
-					</div>
-<?php
-				}else {
-?>	
-					<div class="input-group-btn"> 
-					<button class="btn btn-danger" type="button" onclick="remove_fieldsp('<?php echo ($i+102);?> ');"> <?php echo $strings['Eliminar']?> </button>
-					</div>
-				</div>
-<?php		
-				}
-				
-?>			
-		</div>
-
-<?php		
-	} 
-?>
-	</div>
-</div>
-		<div class="container">
-			<button type="submit" name="action" value="EDIT" class="btn btn-default"><?php echo($strings['Enviar']);?></button>
-		</div>
-
-		</form>
+        </form>
 <?php
 		include '../View/Footer.php';
 	}

@@ -16,6 +16,7 @@ require_once '../Model/Group.php';
 require_once '../Model/Match.php';
 require_once '../Model/Match_Model.php';
 require_once '../View/Championship_SHOWCURRENT_View.php';
+require_once '../View/Championship_EDIT_View.php';
 
 
 
@@ -47,10 +48,33 @@ function get_data_championship(){
 	
 }
 
+function set_data_championship(){
+
+    $login_creator = $_SESSION['login'];
+
+    $idChampionship = $_POST['idChampionship'];
+    $name = $_POST['name'];
+    $dateStart = $_POST['dateStart'];
+    $dateInscriptions = $_POST['dateInscriptions'];
+    $championship = new Championship($idChampionship, $name, $dateStart, $dateInscriptions);
+
+    return $championship;
+
+}
+
 function get_data_category() 
 {
     $category = Array();
     foreach($_REQUEST['category'] as $categoryIterator){
+        $category[] = $categoryIterator;
+    }
+    return $category;
+}
+
+function set_data_category()
+{
+    $category = Array();
+    foreach($_POST['category'] as $categoryIterator){
         $category[] = $categoryIterator;
     }
     return $category;
@@ -131,20 +155,40 @@ Switch ($_REQUEST['action']){
 			new MESSAGE($respuesta, '../Controller/Championship_Controller.php');
 		}
 		break;	
-	case 'EDIT':		
-		if (!$_POST){
-			
-		}
-		else{
-			
-			$respuesta = $calendario->EDIT();
-			new MESSAGE($respuesta, '../Controller/Championship_Controller.php');
-		}
-		
+	case 'EDIT':
+        if (!$_POST){
+            $id_championship= $_REQUEST['id'];
+            $championship_model= new Championship_Model();
+            $championship= $championship_model->GETBYID($id_championship);
+            $categorias = '';
+
+            foreach($championship_model->GETCATEGORIESBYID($id_championship) as $single)
+                $categorias .= $single->idCategory.',';
+
+            $categorias = rtrim($categorias,", ");
+
+            new Championship_EDIT_View($championship->idChampionship,$championship->name,$championship->dateStart,$championship->dateInscriptions, $categorias);
+        }
+        else{
+            $championpionship = set_data_championship();
+            $category = set_data_category();
+            $championship_model = new Championship_Model();
+            $categorygroup_model = new CategoryGroup_Model();
+
+            $respuesta = $championship_model->EDIT($championpionship);
+            $idChampionship = $_POST['idChampionship'];
+            $championship_model->UPDATECATEGORIESBYID($_REQUEST['category'], $idChampionship);
+
+            for($i=0; $i<count($_REQUEST['category']); $i++)
+            {
+                $categorygroup_model->EDIT(new CategoryGroup(null, $idChampionship, $_REQUEST['category'][$i]));
+            }
+            new MESSAGE($respuesta, '../Controller/Championship_Controller.php');
+        }
 		break;
 
 	case 'SHOWCURRENT':
-	        $id_championship= $_REQUEST['id'];
+	    $id_championship= $_REQUEST['id'];
         $championship_model= new Championship_Model();
         $championship= $championship_model->GETBYID($id_championship);
         require_once '../View/Championship_SHOWCURRENT_View.php';
