@@ -39,11 +39,11 @@ if (!isset($_SESSION['idioma'])) {
 			// Si está autenticado hará referencia a un controlador distinto
 			if (IsAuthenticated()) {
 			
-			echo '<a class="navbar-brand" href="../Controller/Calendario_Controller.php">Meeting</a>';
+			echo '<a class="navbar-brand" href="../Controller/Main_Controller.php">Inicio</a>';
 			
 			}else{
 			
-			echo '<a class="navbar-brand" href="../Controller/Login_Controller.php">Meeting</a>';
+			echo '<a class="navbar-brand" href="../Controller/Login_Controller.php">Inicio</a>';
 			}
 			?>
 			<button class="navbar-toggler" type="button">

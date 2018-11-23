@@ -15,6 +15,7 @@ require_once '../Model/Group_Model.php';
 require_once '../Model/Group.php';
 require_once '../Model/Match.php';
 require_once '../Model/Match_Model.php';
+require_once '../View/Championship_SHOWCURRENT_View.php';
 
 
 
@@ -144,11 +145,18 @@ Switch ($_REQUEST['action']){
 	case 'SHOWCURRENT':
 	        $id_championship= $_REQUEST['id'];
         $championship_model= new Championship_Model();
-        $championship=$championship_model->GETBYID($id_championship);
+        $championship= $championship_model->GETBYID($id_championship);
+        require_once '../View/Championship_SHOWCURRENT_View.php';
         new Championship_SHOWCURRENT_View($championship);
-
-	
 		break;
+
+    case 'DELETE':
+        $id_championship= $_REQUEST['id'];
+        $championship_model= new Championship_Model();
+        $championship= $championship_model->GETBYID($id_championship);
+        new Championship_DELETE_View($championship);
+        break;
+
 	default: 
 		
 		$championship_model= new Championship_Model();
