@@ -63,6 +63,20 @@ class CategoryGroup_Model
         return $categoryGroup;   
         
     }
+
+     public function GETCATEGORYGROUP ($idChampionship,$idCategory)
+    {
+        $sql = "SELECT * FROM categorygroup WHERE idChampionship = '"  .$idChampionship . "'AND idCategory='".$idCategory."';";
+       
+        $result = $this->mysqli->query($sql);   
+        $array = mysqli_fetch_array($result, MYSQLI_BOTH); 
+        $categoryGroup = new CategoryGroup($array['idCategoryGroup'], $array['idChampionship'], $array['idCategory']);
+        
+        return $categoryGroup;   
+        
+    }
+    
+
     
     public function GETALL ()
     {
@@ -92,7 +106,8 @@ class CategoryGroup_Model
     
     public function SETGROUPPAIR($idPair, $idCategoryGroup) 
     {
-        $insert = "INSERT INTO pair_categorygroup (idPair, idCategoryGroup) VALUES ('".$idPair."', '".$idCategoryGroup."';";
+        $insert = "INSERT INTO pair_categorygroup (idPair, idCategoryGroup) VALUES ('".$idPair."', '".$idCategoryGroup."');";
+        echo $insert;
         if($this->mysqli->query($insert))
         {
             return "Se ha inscrito la pareja en el campeonato";    
