@@ -22,6 +22,7 @@ class Championship_Model
         } else{
             return "Lo sentimos, no se ha podido crear el campeonato";
         }
+        
     }
     
     public function DELETE ($idChampionship)
