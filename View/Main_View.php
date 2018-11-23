@@ -47,6 +47,13 @@ class Main_View{
                 echo ('<a href="../Controller/Main_Controller.php?action=RESULTS">' .'Gestionar Resultados' . '</a>');
                 ?>
             </div>
+            <div class="col-md-4">
+                <?php
+                echo ('<h2>' . 'Ver Clasificaciones' . '</h2>');
+                echo ('<p>' . 'Permite consultar la clasificación de un campeonato' . '</p>');
+                echo ('<a href="../Controller/Main_Controller.php?action=CLASIFICATION">' .'Ver Clasificaciones' . '</a>');
+                ?>
+            </div>
 	    </div>
 	</div>
 	
