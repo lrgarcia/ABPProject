@@ -107,7 +107,7 @@ class CategoryGroup_Model
     public function SETGROUPPAIR($idPair, $idCategoryGroup) 
     {
         $insert = "INSERT INTO pair_categorygroup (idPair, idCategoryGroup) VALUES ('".$idPair."', '".$idCategoryGroup."');";
-        echo $insert;
+        
         if($this->mysqli->query($insert))
         {
             return "Se ha inscrito la pareja en el campeonato";    
