@@ -18,15 +18,17 @@ class Championship_SHOWCURRENT_View{
         
     ?>
     </div>
+    <form action="../Controller/Inscription_Controller.php" method='post'> 
+    
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <a class="btn btn-outline-success" id="inscription-btn" href="../Controller/Championship_Controller.php?action=ADD" role="button">Inscribirse</a>
+                <button type="submit" name="action" value="ADD" class="btn btn-success">Inscribirse</button>
             </div>
             <div class="col-sm-3 nopadding">
                 <div class="form-group">
-                    <label>Usuario1:</label>
-                    <input required type="text" class="form-control" id="name" name="name" value="">
+                    <label>Usuario Capitan:</label>
+                    <input required type="text" class="form-control" id="name" name="name" value="<?php echo $_SESSION['login'];?>" readonly>
                 </div>
                 <div class="form-group">
                     <label>Usuario2:</label>
@@ -67,6 +69,7 @@ class Championship_SHOWCURRENT_View{
                     </td>
             </div>
     </div>
+    </form>
         
 	<?php
 	 include '../View/Footer.php';		
