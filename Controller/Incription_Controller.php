@@ -26,8 +26,18 @@ Switch ($_REQUEST['action']){
 	    $name2=$_POST['name2'];
         
 	
-		break;	
+		break;
 
+        public function SETGROUPPAIR($idPair, $idCategoryGroup)
+    {
+        $insert = "INSERT INTO pair_categorygroup (idPair, idCategoryGroup) VALUES ('".$idPair."', '".$idCategoryGroup."';";
+        if($this->mysqli->query($insert))
+        {
+            return "Se ha inscrito la pareja en el campeonato";
+        } else{
+            return "Lo sentimos, no se ha podido inscribir a la pareja";
+        }
+    }
 	default: 
 			new Main_View();
 			break;

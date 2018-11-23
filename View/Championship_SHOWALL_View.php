@@ -48,7 +48,7 @@ class Championship_SHOWALL_View{
                         <a href='../Controller/Championship_Controller.php?action=SHOWCURRENT&id=<?php echo $championship->idChampionship ?>'>
                         <div><?php echo $championship->name ?></div>
                         </a>
-                    </td>v
+                    </td>
                     <td>
                         <a href='../Controller/Championship_Controller.php?action=SHOWCURRENT&id=<?php echo $championship->idChampionship ?>'>
                             <div><?php echo $championship->dateStart ?></div>
