@@ -31,7 +31,7 @@ include '../View/MESSAGE_View.php';
 // Agui se debe meter los atributos del campeonato que ha recibido de la vista para luego crear el objeto campeonato
 function get_data_championship(){
 	
-	$login_creator = $_SESSION['login'];
+	//$login_creator = $_SESSION['login'];
 	if(isset($_REQUEST['idChampionship']))
 	{
 	    $idChampionship = $_REQUEST['idChampionship'];
@@ -62,7 +62,7 @@ function set_data_championship(){
 
 }
 
-function get_data_category() 
+function get_data_category()
 {
     $category = Array();
     foreach($_REQUEST['category'] as $categoryIterator){
@@ -90,7 +90,6 @@ if (!isset($_REQUEST['action'])){
 	$_REQUEST['action'] = '';
 }
 Switch ($_REQUEST['action']){
-
     case 'GENERATECHAMP':
         if (!$_REQUEST['idChampionship']){
             new Championship_ADD_View();
@@ -120,10 +119,13 @@ Switch ($_REQUEST['action']){
                     $idPair[]=$arrayPair[$k]->getIdPair();
                     
                 }
-                for($k=0;$k<8;$k++){
-                    for($l=$k+1;$l<8;$l++){
-                        $match= new Match(null, null, null, $idGroup, $idPair[$k], $idPair[$l], null);
+                for($s=0;$s<8;$s++){
+                    for($l=$s+1;$l<8;$l++){
+
+                        $match= new Match(null, null, null, $idGroup, $idPair[$s], $idPair[$l], null);
+                        error_log("JvPoooooooooo: ".$idGroup. $idPair[$s]. $idPair[$l]);
                         $matchModel->ADD($match);
+
                     }
                 }
                 
@@ -197,7 +199,6 @@ Switch ($_REQUEST['action']){
 
     case 'DELETE':
         $id_championship= $_REQUEST['idChampionship'];
-
         $championship_model= new Championship_Model();
         $respuesta = $championship_model->DELETE($id_championship);
 
