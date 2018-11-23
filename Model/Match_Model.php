@@ -17,7 +17,7 @@ class Match_Model
     
     public function ADD ($match){
         
-        $insert = "INSERT INTO match (date, hour, result, idGroup, idPair1, idPair2) VALUES('" . $match->getDate() . "','".$match->getHour()."','".$match->getResult()."','". $match->getIdGroup() . "','".$match->getIdPair1()."','".$match->getIdPair2()."');";
+        $insert = "INSERT INTO `match` (date, hour, result, idGroup, idPair1, idPair2) VALUES('" . $match->getDate() . "','".$match->getHour()."','".$match->getResult()."','". $match->getIdGroup() . "','".$match->getIdPair1()."','".$match->getIdPair2()."');";
         if ($this->mysqli->query($insert)) {
             return "Se ha creado el enfrentamiento";
         } else{
@@ -30,7 +30,7 @@ class Match_Model
         
         
         $this->mysqli = conectarBD();
-        $sql = "DELETE FROM match WHERE idMatch='" . $idMatch . "';";
+        $sql = "DELETE FROM `match` WHERE idMatch='" . $idMatch . "';";
         if ($this->mysqli->query($sql)) {
             
             return "Se ha eliminado correctamente el enfrentamiento";
@@ -42,7 +42,7 @@ class Match_Model
     
     public function EDIT ($match)
     {
-        $sql = "UPDATE match SET date='" . $match->getDate() . "', hour='" . $match->getHour() . "', result='" . $match->getResult() . "', idGroup='" . $match->getIdGroup() . "', idPair1='" . $match->getIdPair1() . "', idPair2='" . $match->getIdPair2() . "' WHERE idMatch='" . $match->getIdMatch() . "';";
+        $sql = "UPDATE `match` SET date='" . $match->getDate() . "', hour='" . $match->getHour() . "', result='" . $match->getResult() . "', idGroup='" . $match->getIdGroup() . "', idPair1='" . $match->getIdPair1() . "', idPair2='" . $match->getIdPair2() . "' WHERE idMatch='" . $match->getIdMatch() . "';";
         if ($this->mysqli->query($sql)) {
             return "El enfrentamiento ha sido modificado correctamente";
             
@@ -53,7 +53,7 @@ class Match_Model
     
     public function GETBYID ($idMatch)
     {
-        $sql = "SELECT * FROM match WHERE idMatch ='" . $idMatch . "';";
+        $sql = "SELECT * FROM `match` WHERE idMatch ='" . $idMatch . "';";
         $result = $this->mysqli->query($sql);
         
         $array = mysqli_fetch_array($result, MYSQLI_BOTH);
@@ -65,7 +65,7 @@ class Match_Model
     
     public function GETALL ()
     {
-        $sql = "SELECT * FROM match";
+        $sql = "SELECT * FROM `match`";
         $result = $this->mysqli->query($sql);
         
         $array = array();

@@ -29,7 +29,7 @@ class Group_Model
         
         
         $this->mysqli = conectarBD();
-        $sql = "DELETE FROM group WHERE idGroup='" . $idGroup . "';";
+        $sql = "DELETE FROM `group` WHERE idGroup='" . $idGroup . "';";
         if ($this->mysqli->query($sql)) {
             
             return "Se ha eliminado correctamente el grupo";
@@ -41,7 +41,7 @@ class Group_Model
     
     public function EDIT ($group)
     {
-        $sql = "UPDATE group SET idChampionship='" . $group->getIdChampionship() . "', letter='" . $group->getLetter() . "', idCategory='" . $group->getIdCategory() . "' WHERE idCategoryGroup='" . $group->getIdGroup() . "';";
+        $sql = "UPDATE `group` SET idChampionship='" . $group->getIdChampionship() . "', letter='" . $group->getLetter() . "', idCategory='" . $group->getIdCategory() . "' WHERE idCategoryGroup='" . $group->getIdGroup() . "';";
         if ($this->mysqli->query($sql)) {
             return "El grupo ha sido modificado correctamente";
             
@@ -52,7 +52,7 @@ class Group_Model
     
     public function GETBYID ($idGroup)
     {
-        $sql = "SELECT * FROM group WHERE idGroup ='" . $idGroup . "';";
+        $sql = "SELECT * FROM `group` WHERE idGroup ='" . $idGroup . "';";
         $result = $this->mysqli->query($sql);
         
         $array = mysqli_fetch_array($result, MYSQLI_BOTH);
@@ -64,7 +64,7 @@ class Group_Model
     
     public function GETALL ()
     {
-        $sql = "SELECT * FROM group";
+        $sql = "SELECT * FROM `group`";
         $result = $this->mysqli->query($sql);
         
         $array = array();
