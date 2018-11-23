@@ -1,18 +1,14 @@
 <?php
-
-
 class Championship_SHOWCURRENT_View{
-
-	function __construct($championship){	
-		$this->championship = $championship;
-		$this->render($championship);
-	}
-
-	function render($championship){
+    function __construct($championship){    
+        $this->championship = $championship;
+        $this->render($championship);
+    }
+    function render($championship){
     include '../View/Header.php';
-	?>
+    ?>
 
-	<div class="jumbotron">
+    <div class="jumbotron">
     <?php    
     echo "<h1>".$championship->name."</h1>";    
         
@@ -42,19 +38,19 @@ class Championship_SHOWCURRENT_View{
                         <?php
                         $categoryModel = new Category_Model();
                         $categoryArray = $categoryModel->GETALL();
-
                         for($i=0; $i <count($categoryArray); $i++)
                         {
                             echo "<option value='".$categoryArray[$i]->getIdCategory()."'>".$categoryArray[$i]->getCategory()." - Categoria ".$categoryArray[$i]->getModality()."</option>";
                         }
-
-
                         ?>
                     </select>
                 </div>
             </div>
         </div>
-
+        <?php
+        echo '<input type="text" name="idChampionship" hidden value="'.$championship->idChampionship.'">';
+        ?>
+       
         <div class="row section">
             <div class="col-md-10">
                 <h2>Inscripciones</h2>
@@ -71,10 +67,8 @@ class Championship_SHOWCURRENT_View{
     </div>
     </form>
         
-	<?php
-	 include '../View/Footer.php';		
-	}	
+    <?php
+     include '../View/Footer.php';      
+    }   
 }
-	?>
-
-     
+    ?>
