@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-require_once '../Model/Championship_Model.php'
-require_once '../Model/Category_Model.php'
-require_once '../Model/Championship_Model.php'
-require_once '../Model/Championship_Model.php'
+require_once '../Model/Championship_Model.php';
+require_once '../Model/Category_Model.php';
+require_once '../Model/Championship_Model.p;hp';
+require_once '../Model/Championship_Model.php';
     
 
 
