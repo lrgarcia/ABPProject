@@ -11,7 +11,10 @@ class Championship_SHOWALL_View{
     include '../View/Header.php';
 	?>
 
-	<div class="jumbotron">
+	<style type="text/css">
+
+    </style>
+<div class="jumbotron">
 		<div class="container">
 			<h1>VER TODOS LOS CAMPEONATOS</h1>
 		</div>
@@ -45,7 +48,7 @@ class Championship_SHOWALL_View{
                         <a href='../Controller/Championship_Controller.php?action=SHOWCURRENT&id=<?php echo $championship->idChampionship ?>'>
                         <div><?php echo $championship->name ?></div>
                         </a>
-                    </td>
+                    </td>v
                     <td>
                         <a href='../Controller/Championship_Controller.php?action=SHOWCURRENT&id=<?php echo $championship->idChampionship ?>'>
                             <div><?php echo $championship->dateStart ?></div>
