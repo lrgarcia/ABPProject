@@ -68,9 +68,9 @@ class Championship_SHOWALL_View{
                                 Eliminar
                             </a>
                            <a class="btn btn-outline-info" href="../Controller/Championship_Controller.php?action=GENERATECHAMP&idChampionship=<?php echo $championship->getIdChampionship()?>">
-                          		Generar
+                                Generar
                            </a>
-                                
+
                         </div>
                     </td>
                 </tr>
