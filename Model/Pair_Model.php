@@ -15,7 +15,8 @@ class Pair_Model
     
     public function ADD ($pair){
         
-        $insert = "INSERT INTO pair (idCaptain, idParter) VALUES('" . $pair->getIdCaptain() . "','" . $pair->getIdPartner() . "');";
+        $insert = "INSERT INTO pair (idCaptain, idPartner) VALUES('" . $pair->getIdCaptain() . "','" . $pair->getIdPartner() . "');";
+        
         if ($this->mysqli->query($insert)) {
             return "Se ha creado la pareja";
         } else{
@@ -60,6 +61,21 @@ class Pair_Model
         
         return $pair;
     }
+
+     public function GETPAIR ($idCaptain,$idPartner)
+    {
+        $sql = "SELECT * FROM pair WHERE idCaptain = '" . $idCaptain . "'AND idPartner='".$idPartner."';";
+
+        $result = $this->mysqli->query($sql);
+         $array = mysqli_fetch_array($result, MYSQLI_BOTH); 
+        $pair = new Pair($array['idPair'], $array['idCaptain'], $array['idPartner']);
+        
+        
+        return $pair;   
+        
+    }
+
+
     
     public function GETALL ()
     {
