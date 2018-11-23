@@ -78,18 +78,22 @@ Switch ($_REQUEST['action']){
        
         $alphabet =array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
         $arrayCategoryGroups = $categoryGroupModel->GETCHAMPIONSHIPGROUPS($_REQUEST['idChampionship']);
+        
         for($i=0;$i<count($arrayCategoryGroups);$i++){
+            
             $arrayPair = $categoryGroupModel->GETGROUPPAIRS($arrayCategoryGroups[$i]->getIdCategoryGroup());
-            $numGroups = intdiv(count($arrayPair),8);
+            $numGroups = intdiv(count($arrayPair),8);       
             
             for($j=0;$j<$numGroups;$j++){
                 $group = new Group(null, $arrayCategoryGroups[$i]->getIdCategory(), $_REQUEST['idChampionship'], 
                     $alphabet[$j]);
+                
                 $groupModel->ADD($group);
                 $idGroup=$groupModel->LASTID();
                 $idPair=Array();
                 for($k=$j*8;$k<$j*8+8;$k++){
-                  $idPair[]=$arrayPair[$k]->getIdPair();
+                    $respuesta=$groupModel->SETGROUPPAIRS($arrayPair[$k]->getIdPair(), $idGroup);
+                    $idPair[]=$arrayPair[$k]->getIdPair();
                     
                 }
                 for($k=0;$k<8;$k++){
@@ -98,10 +102,11 @@ Switch ($_REQUEST['action']){
                         $matchModel->ADD($match);
                     }
                 }
-                $respuesta=$groupModel->SETGROUPPAIRS($idPair, $idGroup);
+                
             }
-            new MESSAGE($respuesta, '../Controller/Championship_Controller.php');
+            
         }
+        new MESSAGE($respuesta, '../Controller/Championship_Controller.php');
         break;
     
 	case 'ADD':
