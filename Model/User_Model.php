@@ -65,6 +65,20 @@ class User_Model {
 	    
 	    return $user;
 	}
+
+		public function GETBYLOGIN ($login)
+	{
+	    $sql = "SELECT * FROM user WHERE login ='" . $login . "';";
+	    
+	    $result = $this->mysqli->query($sql);
+	    
+	    $array = mysqli_fetch_array($result, MYSQLI_BOTH);
+	    
+	    $user = new User($array['idUser'], $array['login'], $array['password'], $array['name'], $array['surname'], $array['email'], $array['type']);
+	    
+	    return $user;
+	}
+	
 	
 	public function GETALL ()
 	{
