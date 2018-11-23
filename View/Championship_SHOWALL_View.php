@@ -1,4 +1,5 @@
 <?php
+
 class Championship_SHOWALL_View{
 
 	function __construct($championships){	
