@@ -25,7 +25,7 @@ Switch ($_REQUEST['action']){
 			echo $date;
 			$idUser=$_SESSION['idUser'];
 			$freeCourts= $reservation_model->FREECOURTSBYHOUR($date,$hour);
-			$numberCourt=rand(0,sizeof($freeCourts)-1);
+			$numberCourt=sizeof($freeCourts);
 			$reservation= new Reservation(null,$numberCourt,$idUser,$date,$hour);
 			$respuesta = $reservation_model->ADD($reservation);
 			new MESSAGE($respuesta, '../Controller/Main_Controller.php');
