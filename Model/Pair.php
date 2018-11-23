@@ -4,7 +4,7 @@ class Pair {
     var $idCaptain;
     var $idPartner;
     
-    function __construct($idPair=null, $idCaptain=null, $idPartner)
+    function __construct($idPair=null, $idCaptain=null, $idPartner=null)
     {
         $this->idCaptain=$idCaptain;
         $this->idPair=$idPair;
