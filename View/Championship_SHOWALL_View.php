@@ -61,7 +61,7 @@ class Championship_SHOWALL_View{
                             <a class="btn btn-outline-success" href='../Controller/Championship_Controller.php?action=EDIT&id=<?php echo $championship->idChampionship ?>'>
                                 Editar
                             </a>
-                            <a class="btn btn-outline-danger" href="#">
+                            <a class="btn btn-outline-danger" id="deleteChampionship<?php echo($championship->idChampionship)?>" data-toggle="modal" data-target="#modalDelete">
                                 Eliminar
                             </a>
                            <a class="btn btn-outline-info" href="../Controller/Championship_Controller.php?action=GENERATECHAMP&idChampionship=<?php echo $championship->getIdChampionship()?>">
@@ -74,6 +74,29 @@ class Championship_SHOWALL_View{
                 <?php } ?>
             </table>
         </div>
+
+        <form action="../Controller/Championship_Controller.php" method='post'>
+            <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalDeleteLabel">Eliminar campeonato</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <span>¿Está seguro de eliminar el campeonato?</span>
+                        </div>
+                        <div class="modal-footer">
+                            <input  type="hidden" name="idChampionship" value="id" />
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" name="action" value="DELETE" class="btn btn-primary" id="confirmDeleteChampionship">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
 
         
         

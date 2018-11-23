@@ -66,6 +66,7 @@ if (!isset($_REQUEST['action'])){
 	$_REQUEST['action'] = '';
 }
 Switch ($_REQUEST['action']){
+
     case 'GENERATECHAMP':
         if (!$_REQUEST['idChampionship']){
             new Championship_ADD_View();
@@ -146,10 +147,13 @@ Switch ($_REQUEST['action']){
 		break;
 
     case 'DELETE':
-        $id_championship= $_REQUEST['id'];
+        $id_championship= $_REQUEST['idChampionship'];
+
         $championship_model= new Championship_Model();
-        $championship= $championship_model->GETBYID($id_championship);
-        new Championship_DELETE_View($championship);
+        $respuesta = $championship_model->DELETE($id_championship);
+
+        new MESSAGE($respuesta, '../Controller/Main_Controller.php?action=CHAMPIONSHIP');
+
         break;
 
 	default: 

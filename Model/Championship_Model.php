@@ -14,7 +14,8 @@ class Championship_Model
         $this->mysqli = ConnectDB();
     }
     
-    public function ADD ($championship){
+    public function ADD ($championship)
+    {
      
         $insert = "INSERT INTO championship (name, dateStart, dateInscriptions) VALUES('" . $championship->getName() . "','" . $championship->getDateStart() . "','" . $championship->getDateInscriptions() . "');";
         if ($this->mysqli->query($insert)) {
@@ -26,8 +27,7 @@ class Championship_Model
     
     public function DELETE ($idChampionship)
     {
-        
-        $this->mysql = conectarBD();
+
         $sql = "DELETE FROM championship WHERE idChampionship='" . $idChampionship . "';";
         if ($this->mysqli->query($sql)) {
             
