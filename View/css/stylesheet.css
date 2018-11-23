@@ -38,6 +38,10 @@ h1 {
     float: right;
 }
 
+#inscription-btn{
+    float: left;
+}
+
 .footer {
   position: absolute;
   bottom: 0;

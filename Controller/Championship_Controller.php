@@ -58,7 +58,7 @@ function get_data_category()
 
 
 
-/* En REQUEST ACTION se extrae que acción ha seleccionado el usuario. Si no ha sido seleccionada ninguna acción 
+/* En REQUEST ACTION se extrae que acciÃ³n ha seleccionado el usuario. Si no ha sido seleccionada ninguna acciÃ³n 
 Hara un showcurrent por defecto
 */
 
@@ -115,7 +115,7 @@ Switch ($_REQUEST['action']){
 		if (!$_POST){
 			new Championship_ADD_View();
 		}
-		// Aqui se meterá que datos ha pillado una vez se ha hecho introducido los datos del campeonato
+		// Aqui se meterÃ¡ que datos ha pillado una vez se ha hecho introducido los datos del campeonato
 		else{
 			$championpionship = get_data_championship();
 			$category = get_data_category();
@@ -153,10 +153,10 @@ Switch ($_REQUEST['action']){
 		break;
 
     case 'DELETE':
-        $id_championship= $_REQUEST['id'];
+        $id_championship= $_REQUEST['idChampionship'];
         $championship_model= new Championship_Model();
-        $championship= $championship_model->GETBYID($id_championship);
-        new Championship_DELETE_View($championship);
+        $respuesta = $championship_model->DELETE($id_championship);
+        new MESSAGE($respuesta, '../Controller/Main_Controller.php?action=CHAMPIONSHIP');
         break;
 
 	default: 
@@ -167,3 +167,4 @@ Switch ($_REQUEST['action']){
 		break;
 }
 ?>
+

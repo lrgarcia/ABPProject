@@ -25,7 +25,7 @@ function remove_fieldsC(rid) {
 function add_participants() {
  
     roomp++;
-    var objTo = document.getElementById('añadir_participantes')
+    var objTo = document.getElementById('añadir_participantes');
     var divtest = document.createElement("div");
     divtest.setAttribute("class", "rowp"+roomp);
     var rdiv = 'row'+roomp;
@@ -46,3 +46,12 @@ function add_roomp(){
     roomp++;
 
 }
+
+$(document).ready(function() {
+    $("a[id^=deleteChampionship]").click(function(){
+        let idChampionship = $(this).attr('id').replace('deleteChampionship','');
+        $('#confirmDeleteChampionship').attr("id","confirmDeleteChampionship" + idChampionship);
+        $('input[name=idChampionship]').attr("value",idChampionship);
+    });
+
+});
