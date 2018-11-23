@@ -16,6 +16,7 @@ include '../View/Main_View.php';
 include '../View/MESSAGE_View.php';
 include '../View/Results_SHOWALL_View.php';
 include '../View/Clasifications_SHOWALL_View.php';
+include '../View/Schedule_SHOWALL_View.php';
 
 
 
@@ -66,6 +67,11 @@ Switch ($_REQUEST['action']){
         $championship_model= new Championship_Model();
         $championships= $championship_model->GETALL();
         new Clasifications_SHOWALL_View($championships);
+        break;
+    case 'SCHEDULE':
+        $championship_model= new Championship_Model();
+        $championships= $championship_model->GETALL();
+        new Schedule_SHOWALL_View($championships);
         break;
 	default: 
 			new Main_View();

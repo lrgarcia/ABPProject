@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ea5146c2-ba93-4629-802f-84ab60c558ed" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Controller/Clasification_Controller.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/View/Clasifications_SHOWALL_View.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/View/Schedule_SHOWALL_View.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controller/Main_Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/Main_Controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/Championship_DELETE_View.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/View/Main_View.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/Main_View.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,11 +16,38 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Controller/Main_Controller.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="306">
-                  <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+                <state relative-caret-position="340">
+                  <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/View/Main_View.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="487">
+                  <caret line="58" column="44" selection-start-line="58" selection-start-column="44" selection-end-line="58" selection-end-column="44" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/View/Schedule_SHOWALL_View.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="459">
+                  <caret line="27" column="16" lean-forward="true" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="16" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/View/Results_SHOWALL_View.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state>
+                  <caret selection-end-line="50" />
                 </state>
               </provider>
             </entry>
@@ -62,9 +86,10 @@
         <option value="$PROJECT_DIR$/View/Championship_SHOWALL_View.php" />
         <option value="$PROJECT_DIR$/View/Results_SHOWALL_View.php" />
         <option value="$PROJECT_DIR$/View/PromotedMatch_SHOWALL_View.php" />
-        <option value="$PROJECT_DIR$/View/Main_View.php" />
         <option value="$PROJECT_DIR$/View/Clasifications_SHOWALL_View.php" />
+        <option value="$PROJECT_DIR$/View/Main_View.php" />
         <option value="$PROJECT_DIR$/Controller/Main_Controller.php" />
+        <option value="$PROJECT_DIR$/View/Schedule_SHOWALL_View.php" />
       </list>
     </option>
   </component>
@@ -193,11 +218,18 @@
       <option name="project" value="LOCAL" />
       <updated>1542939825041</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Visuales de clasificaciones de campeonatos añadidos al main, añadidos controladores vacios para construir">
+      <created>1542940784129</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1542940784129</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8219000" />
+    <option name="totallyTimeSpent" value="8725000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -282,7 +314,8 @@
     <MESSAGE value="Visuales de formulario de inscripcion" />
     <MESSAGE value="PISTAS FUNCIONANDO" />
     <MESSAGE value="Visuales de resultados de campeonatos añadidos al main, añadidos controladores vacios para construir" />
-    <option name="LAST_COMMIT_MESSAGE" value="Visuales de resultados de campeonatos añadidos al main, añadidos controladores vacios para construir" />
+    <MESSAGE value="Visuales de clasificaciones de campeonatos añadidos al main, añadidos controladores vacios para construir" />
+    <option name="LAST_COMMIT_MESSAGE" value="Visuales de clasificaciones de campeonatos añadidos al main, añadidos controladores vacios para construir" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/View/Login_View.php">
@@ -345,13 +378,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/View/Results_SHOWALL_View.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/View/Championship_DELETE_View.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -376,17 +402,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/View/Results_SHOWALL_View.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="50" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/View/Main_View.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="640">
-          <caret line="53" column="77" selection-start-line="53" selection-start-column="77" selection-end-line="53" selection-end-column="77" />
+        <state relative-caret-position="487">
+          <caret line="58" column="44" selection-start-line="58" selection-start-column="44" selection-end-line="58" selection-end-column="44" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Controller/Main_Controller.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+        <state relative-caret-position="340">
+          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/Schedule_SHOWALL_View.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="27" column="16" lean-forward="true" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="16" />
         </state>
       </provider>
     </entry>
