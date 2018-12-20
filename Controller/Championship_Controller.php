@@ -99,15 +99,15 @@ Switch ($_REQUEST['action']){
         $groupModel= new Group_Model();
         $matchModel= new Match_Model();
         $respuesta="";
-
         $alphabet =array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
+        //Metes en arrayCategoryGroups las categorias del torneo deseado.
         $arrayCategoryGroups = $categoryGroupModel->GETCHAMPIONSHIPGROUPS($_REQUEST['idChampionship']);
-
+        
         for($i=0;$i<count($arrayCategoryGroups);$i++){
-
+            //metes en arrayPair las parejas inscritas en la categoria seleccionada.
             $arrayPair = $categoryGroupModel->GETGROUPPAIRS($arrayCategoryGroups[$i]->getIdCategoryGroup());
             $numGroups = intdiv(count($arrayPair),8);
-
+            $peñaRelativa=$arrayPair;
             for($j=0;$j<$numGroups;$j++){
                 $group = new Group(null, $arrayCategoryGroups[$i]->getIdCategory(), $_REQUEST['idChampionship'],
                     $alphabet[$j]);
@@ -115,11 +115,21 @@ Switch ($_REQUEST['action']){
                 $groupModel->ADD($group);
                 $idGroup=$groupModel->LASTID();
                 $idPair=Array();
+                if(($numGroups*8)<count($peñaRelativa)){
+                    for ($b = 0; $b < 4; $b++) {
+                        if(($numGroups*8)<count($peñaRelativa)){
+                            $respuesta=$groupModel->SETGROUPPAIRS($arrayPair[count($peñaRelativa)-1]->getIdPair(), $idGroup);
+                            $idPair[]=$arrayPair[count($peñaRelativa)-1]->getIdPair();
+                            array_pop($peñaRelativa);
+                        }
+                    }
+                }
                 for($k=$j*8;$k<$j*8+8;$k++){
                     $respuesta=$groupModel->SETGROUPPAIRS($arrayPair[$k]->getIdPair(), $idGroup);
                     $idPair[]=$arrayPair[$k]->getIdPair();
-
                 }
+                
+                
                 for($s=0;$s<8;$s++){
                     for($l=$s+1;$l<8;$l++){
 
@@ -129,7 +139,7 @@ Switch ($_REQUEST['action']){
 
                     }
                 }
-
+                //
             }
 
         }
