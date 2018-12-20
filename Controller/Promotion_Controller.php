@@ -1,4 +1,75 @@
 <?php
+
+session_start();
+include '../Functions/Authentication.php';
+if (!IsAuthenticated()){
+	header('Location:../index.php');
+}
+
+require_once '../Model/Promotion_Model.php';
+require_once '../Model/Championship_Model.php';
+require_once '../Model/Game.php';
+require_once '../Model/Game_Model.php';
+require_once '../View/Promotion_SHOWALL_View.php';
+require_once '../View/Promotion_ADD_VIEW.php';
+require_once '../View/Promotion_EDIT_View.php';
+
+
+include '../View/MESSAGE_View.php';
+
+
+// Agui se debe meter los atributos del campeonato que ha recibido de la vista para luego crear el objeto campeonato
+function get_data_championship(){
+
+	//$login_creator = $_SESSION['login'];
+	if(isset($_REQUEST['idChampionship']))
+	{
+	    $idChampionship = $_REQUEST['idChampionship'];
+	} else {
+	    $idChampionship = null;
+	}
+
+	$name = $_REQUEST['name'];
+	$dateStart = $_REQUEST['dateStart'];
+	$dateInscriptions = $_REQUEST['dateInscriptions'];
+    $championship = new Championship($idChampionship, $name, $dateStart,$dateInscriptions);
+
+    return $championship;
+
+}
+
+function set_data_championship(){
+
+    $login_creator = $_SESSION['login'];
+
+    $idChampionship = $_POST['idChampionship'];
+    $name = $_POST['name'];
+    $dateStart = $_POST['dateStart'];
+    $dateInscriptions = $_POST['dateInscriptions'];
+    $championship = new Championship($idChampionship, $name, $dateStart, $dateInscriptions);
+
+    return $championship;
+
+}
+
+function get_data_category()
+{
+    $category = Array();
+    foreach($_REQUEST['category'] as $categoryIterator){
+        $category[] = $categoryIterator;
+    }
+    return $category;
+}
+
+function set_data_category()
+{
+    $category = Array();
+    foreach($_POST['category'] as $categoryIterator){
+        $category[] = $categoryIterator;
+    }
+    return $category;
+}
+
 if (!isset($_REQUEST['action'])){
     $_REQUEST['action'] = '';
 }
@@ -26,14 +97,13 @@ Switch ($_REQUEST['action']){
 	    new Promotion_SHOWALL_View($games);
 		break;
 }
-case 'GENERATEPROMOTION':
-    if (!$_REQUEST['idChampionship']){
+    case 'GENERATEPROMOTION':
+    if (!$_REQUEST['idPromotion']){
         new Promotion_ADD_View();
     }
 
-    $categoryGroupModel=new CategoryGroup_Model();
-    $groupModel= new Group_Model();
-    $matchModel= new Match_Model();
+   $promotion_model= new Promotion_Model();
+	    $game_Model=new Game_Model();
     $respuesta="";
 
     $alphabet =array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
@@ -69,13 +139,13 @@ case 'GENERATEPROMOTION':
         }
 
     }
-    new MESSAGE($respuesta, '../Controller/Championship_Controller.php');
+    new MESSAGE($respuesta, '../Controller/Promotion_Controller.php');
     break;
 
 case 'ADD':
     // Si no se ha introducido el campeonato
     if (!$_POST){
-        new Championship_ADD_View();
+        new Promotion_ADD_View();
     }
     // Aqui se meterá que datos ha pillado una vez se ha hecho introducido los datos del campeonato
     else{
