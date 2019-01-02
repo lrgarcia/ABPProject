@@ -15,7 +15,7 @@ require_once '../Model/Group_Model.php';
 require_once '../Model/Group.php';
 require_once '../Model/Match.php';
 require_once '../Model/Match_Model.php';
-require_once '../View/Championship_SHOWCURRENT_View.php';
+//require_once '../View/Championship_SHOWCURRENT_View.php';
 require_once '../View/Championship_EDIT_View.php';
 
 
@@ -23,6 +23,17 @@ require_once '../View/Championship_EDIT_View.php';
 
 include '../View/MESSAGE_View.php';
 
+
+// function AlreadyInscribed($arrayCategorys,$idChampionship){
+
+//     $user=$_SESSION['login'];
+//     $categorySuscribed=array();
+
+//     //Devuelve todos las parejas de un determidado idCATEGORYGroup
+//     GETGROUPPAIRS($idCategoryGroup)
+//     GETCHAMPIONSHIPGROUPS($idChampionship)
+
+// }
 
 
 
@@ -94,42 +105,32 @@ Switch ($_REQUEST['action']){
         if (!$_REQUEST['idChampionship']){
             new Championship_ADD_View();
         }
-
+        
         $categoryGroupModel=new CategoryGroup_Model();
         $groupModel= new Group_Model();
         $matchModel= new Match_Model();
         $respuesta="";
+       
         $alphabet =array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
-        //Metes en arrayCategoryGroups las categorias del torneo deseado.
         $arrayCategoryGroups = $categoryGroupModel->GETCHAMPIONSHIPGROUPS($_REQUEST['idChampionship']);
         
         for($i=0;$i<count($arrayCategoryGroups);$i++){
-            //metes en arrayPair las parejas inscritas en la categoria seleccionada.
+            
             $arrayPair = $categoryGroupModel->GETGROUPPAIRS($arrayCategoryGroups[$i]->getIdCategoryGroup());
-            $numGroups = intdiv(count($arrayPair),8);
-            $peñaRelativa=$arrayPair;
+            $numGroups = intdiv(count($arrayPair),8);       
+            
             for($j=0;$j<$numGroups;$j++){
-                $group = new Group(null, $arrayCategoryGroups[$i]->getIdCategory(), $_REQUEST['idChampionship'],
+                $group = new Group(null, $arrayCategoryGroups[$i]->getIdCategory(), $_REQUEST['idChampionship'], 
                     $alphabet[$j]);
-
+                
                 $groupModel->ADD($group);
                 $idGroup=$groupModel->LASTID();
                 $idPair=Array();
-                if(($numGroups*8)<count($peñaRelativa)){
-                    for ($b = 0; $b < 4; $b++) {
-                        if(($numGroups*8)<count($peñaRelativa)){
-                            $respuesta=$groupModel->SETGROUPPAIRS($arrayPair[count($peñaRelativa)-1]->getIdPair(), $idGroup);
-                            $idPair[]=$arrayPair[count($peñaRelativa)-1]->getIdPair();
-                            array_pop($peñaRelativa);
-                        }
-                    }
-                }
                 for($k=$j*8;$k<$j*8+8;$k++){
                     $respuesta=$groupModel->SETGROUPPAIRS($arrayPair[$k]->getIdPair(), $idGroup);
                     $idPair[]=$arrayPair[$k]->getIdPair();
+                    
                 }
-                
-                
                 for($s=0;$s<8;$s++){
                     for($l=$s+1;$l<8;$l++){
 
@@ -139,36 +140,36 @@ Switch ($_REQUEST['action']){
 
                     }
                 }
-                //
+                
             }
-
+            
         }
         new MESSAGE($respuesta, '../Controller/Championship_Controller.php');
         break;
-
-    case 'ADD':
-        // Si no se ha introducido el campeonato
-        if (!$_POST){
-            new Championship_ADD_View();
-        }
-        // Aqui se meterÃ¡ que datos ha pillado una vez se ha hecho introducido los datos del campeonato
-        else{
-            $championpionship = get_data_championship();
-            $category = get_data_category();
-            $championship_model = new Championship_Model();
-            $categorygroup_model = new CategoryGroup_Model();
-
-            $respuesta = $championship_model->ADD($championpionship);
-            $idChampionship = $championship_model->LASTID();
-            $respuesta = $championship_model->SETCATEGORIESBYID($_REQUEST['category'], $idChampionship);
-            for($i=0; $i<count($_REQUEST['category']); $i++)
-            {
-                $categorygroup_model->ADD(new CategoryGroup(null, $idChampionship, $_REQUEST['category'][$i]));
-            }
-            new MESSAGE($respuesta, '../Controller/Championship_Controller.php');
-        }
-        break;
-    case 'EDIT':
+    
+	case 'ADD':
+	// Si no se ha introducido el campeonato
+		if (!$_POST){
+			new Championship_ADD_View();
+		}
+		// Aqui se meterÃ¡ que datos ha pillado una vez se ha hecho introducido los datos del campeonato
+		else{
+			$championpionship = get_data_championship();
+			$category = get_data_category();
+			$championship_model = new Championship_Model();
+			$categorygroup_model = new CategoryGroup_Model();
+			
+			$respuesta = $championship_model->ADD($championpionship);
+			$idChampionship = $championship_model->LASTID();
+			$respuesta = $championship_model->SETCATEGORIESBYID($_REQUEST['category'], $idChampionship);
+			for($i=0; $i<count($_REQUEST['category']); $i++)
+			{
+			    $categorygroup_model->ADD(new CategoryGroup(null, $idChampionship, $_REQUEST['category'][$i]));
+			}
+			new MESSAGE($respuesta, '../Controller/Championship_Controller.php');
+		}
+		break;	
+	case 'EDIT':
         if (!$_POST){
             $id_championship= $_REQUEST['id'];
             $championship_model= new Championship_Model();
@@ -198,15 +199,26 @@ Switch ($_REQUEST['action']){
             }
             new MESSAGE($respuesta, '../Controller/Championship_Controller.php');
         }
-        break;
+		break;
 
-    case 'SHOWCURRENT':
+	case 'SHOWCURRENT':
+    //Se obtiene el campeonato seleccionado
         $id_championship= $_REQUEST['id'];
         $championship_model= new Championship_Model();
         $championship= $championship_model->GETBYID($id_championship);
+    //Se obtiene las categorias asignadas a ese campeonato
+      
+        $category_model = new Category_Model();
+        // $arrayCategorys = array();
+        $arrayCategorys= $championship_model->GETCATEGORIESBYID($id_championship);
+
+
+
         require_once '../View/Championship_SHOWCURRENT_View.php';
-        new Championship_SHOWCURRENT_View($championship);
-        break;
+        new Championship_SHOWCURRENT_View($arrayCategorys,$championship);
+
+
+		break;
 
     case 'DELETE':
         $id_championship= $_REQUEST['idChampionship'];
@@ -217,11 +229,12 @@ Switch ($_REQUEST['action']){
 
         break;
 
-    default:
 
-        $championship_model= new Championship_Model();
-        $championships= $championship_model->GETALL();
-        new Championship_SHOWALL_View($championships);
-        break;
+	default: 
+		
+		$championship_model= new Championship_Model();
+		$championships= $championship_model->GETALL();
+		new Championship_SHOWALL_View($championships);
+		break;
 }
 ?>
