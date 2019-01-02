@@ -1,71 +1,90 @@
 <?php
+require_once '../Model/Category.php';
+require_once '../Model/Category_Model.php';
+require_once '../Model/Championship.php';
+require_once '../Model/Championship_Model.php';
 class Championship_SHOWCURRENT_View{
-    function __construct($championship){    
+
+
+
+    function __construct($arrayCategorys,$championship){  
+         $this->arrayCategorys = $arrayCategorys; 
         $this->championship = $championship;
-        $this->render($championship);
+        $this->render($arrayCategorys,$championship);
+
     }
-    function render($championship){
+
+    function render($arrayCategorys,$championship){
     include '../View/Header.php';
     ?>
 
-    <div class="jumbotron">
-    <?php    
-    echo "<h1>".$championship->name."</h1>";    
-        
-    ?>
+    <style type="text/css">
+
+    </style>
+<div class="jumbotron">
+        <div class="container">
+            <h1></h1>
+            <?php
+            echo "<h1>".$championship->name."</h1>";
+            ?>
+        </div>
     </div>
-    <form action="../Controller/Inscription_Controller.php" method='post'> 
-    
     <div class="container">
-        <div class="row">
+
+    
+<!--         <div class="row">
             <div class="col-md-12">
-                <button type="submit" name="action" value="ADD" class="btn btn-success">Inscribirse</button>
-            </div>
-            <div class="col-sm-3 nopadding">
-                <div class="form-group">
-                    <label>Usuario Capitan:</label>
-                    <input required type="text" class="form-control" id="name" name="name" value="<?php echo $_SESSION['login'];?>" readonly>
-                </div>
-                <div class="form-group">
-                    <label>Usuario2:</label>
-                    <input required type="text" class="form-control" id="name2" name="name2" value="">
-                </div>
-            </div>
-            <div class="col-sm-6 nopadding">
-                <div class="form-group">
-                    <label>Categoria:</label>
-                    <select multiple required class="form-control" id="category[]" name="category[]" size=5>
-                        <?php
-                        $categoryModel = new Category_Model();
-                        $categoryArray = $categoryModel->GETALL();
-                        for($i=0; $i <count($categoryArray); $i++)
-                        {
-                            echo "<option value='".$categoryArray[$i]->getIdCategory()."'>".$categoryArray[$i]->getCategory()." - Categoria ".$categoryArray[$i]->getModality()."</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
+                <a class="btn btn-outline-success" id="search-input" href="../Controller/Championship_Controller.php?action=ADD" role="button">Crear campeonato</a>
             </div>
         </div>
-        <?php
-        echo '<input type="text" name="idChampionship" hidden value="'.$championship->idChampionship.'">';
-        ?>
-       
-        <div class="row section">
+ -->
+<!--         <div class="row section">
             <div class="col-md-10">
-                <h2>Inscripciones</h2>
+                <h2>Campeonatos</h2>
             </div>
-        </div>
-            <div class="row">
-                <table id="championships">
+        </div> -->
+
+        <div class="row">
+            <table id="championships">
+                <tr>
+                    <th width="60%">Categoria</th>
+                    <th width="20%">Modalidad</th>
+         
+                    <th width="20%"></th>
+                </tr>
+                <?php foreach ($this->arrayCategorys as $category) { ?>
+                <tr>
                     <td>
-                        <a href='../Controller/Championship_Controller.php?action=GETCHAMPIONSHIPGROUPS&id=<?php echo $championship->idChampionship ?>'>
-                            <div><?php echo "AQUI VAN LOS INSCRITOS"?></div>
+                        <a>
+                        <div><?php echo $category->category ?></div>
                         </a>
                     </td>
-            </div>
-    </div>
-    </form>
+                    <td>
+                        <a>
+                            <div><?php echo $category->modality ?></div>
+                        </a>
+                    </td>
+      
+                    <td>
+                        <div class="btn-group" role="group" aria-label="groupbuttons">
+                            <a class="btn btn-outline-success" href='../Controller/Category_Controller.php?action=INSCRIPTION&idChampionship=<?php echo $championship->idChampionship?>&idCategory=<?php echo $category->idCategory?>'>
+                                Inscribirse
+                            </a>
+
+                            <a class="btn btn-outline-success" href='../Controller/Category_Controller.php?action=Clasification&idChampionship=<?php echo $championship->idChampionship?>&idCategory=<?php echo $category->idCategory?>'>
+                                Ver clasificación
+                           </a>
+
+                        </div>
+                    </td>
+                </tr>
+                <?php } ?>
+            </table>
+        </div>
+
+      
+
+        
         
     <?php
      include '../View/Footer.php';      
