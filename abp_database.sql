@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-11-2018 a las 19:33:41
--- Versión del servidor: 10.1.28-MariaDB
--- Versión de PHP: 7.1.10
+-- Tiempo de generación: 23-11-2018 a las 04:22:54
+-- Versión del servidor: 10.1.36-MariaDB
+-- Versión de PHP: 7.2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `abp_database`
 --
+CREATE DATABASE IF NOT EXISTS `abp_database` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci;
+USE `abp_database`;
 
 -- --------------------------------------------------------
 
@@ -33,6 +35,14 @@ CREATE TABLE `assistance` (
   `idUser` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- RELACIONES PARA LA TABLA `assistance`:
+--   `idClass`
+--       `class` -> `idClass`
+--   `idUser`
+--       `user` -> `idUser`
+--
+
 -- --------------------------------------------------------
 
 --
@@ -44,6 +54,10 @@ CREATE TABLE `category` (
   `category` varchar(10) NOT NULL,
   `modality` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELACIONES PARA LA TABLA `category`:
+--
 
 --
 -- Volcado de datos para la tabla `category`
@@ -72,6 +86,24 @@ CREATE TABLE `categorygroup` (
   `idCategory` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- RELACIONES PARA LA TABLA `categorygroup`:
+--   `idCategory`
+--       `category` -> `idCategory`
+--   `idChampionship`
+--       `championship` -> `idChampionship`
+--
+
+--
+-- Volcado de datos para la tabla `categorygroup`
+--
+
+INSERT INTO `categorygroup` (`idCategoryGroup`, `idChampionship`, `idCategory`) VALUES
+(1, 3, 1),
+(2, 3, 2),
+(3, 3, 3),
+(4, 3, 4);
+
 -- --------------------------------------------------------
 
 --
@@ -86,12 +118,17 @@ CREATE TABLE `championship` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- RELACIONES PARA LA TABLA `championship`:
+--
+
+--
 -- Volcado de datos para la tabla `championship`
 --
 
 INSERT INTO `championship` (`idChampionship`, `name`, `dateStart`, `dateInscriptions`) VALUES
 (1, 'Campeonato de Navidad', '02/02/2018', '28/01/2018'),
-(2, 'Campeonato Veroño', '24/09/2018', '20/09/2018');
+(2, 'Campeonato Veroño', '24/09/2018', '20/09/2018'),
+(3, 'CAMPEONATO DE INVIERANO', '2018-11-09', '2018-11-15');
 
 -- --------------------------------------------------------
 
@@ -105,6 +142,14 @@ CREATE TABLE `championship_category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- RELACIONES PARA LA TABLA `championship_category`:
+--   `idCategory`
+--       `category` -> `idCategory`
+--   `idChampionship`
+--       `championship` -> `idChampionship`
+--
+
+--
 -- Volcado de datos para la tabla `championship_category`
 --
 
@@ -114,7 +159,11 @@ INSERT INTO `championship_category` (`idChampionship`, `idCategory`) VALUES
 (1, 9),
 (2, 1),
 (2, 4),
-(2, 7);
+(2, 7),
+(3, 1),
+(3, 2),
+(3, 3),
+(3, 4);
 
 -- --------------------------------------------------------
 
@@ -132,6 +181,14 @@ CREATE TABLE `class` (
   `idCourt` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- RELACIONES PARA LA TABLA `class`:
+--   `idCourt`
+--       `court` -> `idCourt`
+--   `idMonitor`
+--       `user` -> `idUser`
+--
+
 -- --------------------------------------------------------
 
 --
@@ -142,6 +199,10 @@ CREATE TABLE `court` (
   `idCourt` int(11) NOT NULL,
   `number` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELACIONES PARA LA TABLA `court`:
+--
 
 --
 -- Volcado de datos para la tabla `court`
@@ -176,6 +237,20 @@ CREATE TABLE `game` (
   `idUser4` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- RELACIONES PARA LA TABLA `game`:
+--   `idCourt`
+--       `court` -> `idCourt`
+--   `idUser1`
+--       `user` -> `idUser`
+--   `idUser2`
+--       `user` -> `idUser`
+--   `idUser3`
+--       `user` -> `idUser`
+--   `idUser4`
+--       `user` -> `idUser`
+--
+
 -- --------------------------------------------------------
 
 --
@@ -188,6 +263,21 @@ CREATE TABLE `group` (
   `idCategory` int(11) NOT NULL,
   `idChampionship` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELACIONES PARA LA TABLA `group`:
+--   `idCategory`
+--       `category` -> `idCategory`
+--   `idChampionship`
+--       `championship` -> `idChampionship`
+--
+
+--
+-- Volcado de datos para la tabla `group`
+--
+
+INSERT INTO `group` (`idGroup`, `letter`, `idCategory`, `idChampionship`) VALUES
+(19, 'a', 1, 3);
 
 -- --------------------------------------------------------
 
@@ -205,6 +295,50 @@ CREATE TABLE `match` (
   `idPair2` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- RELACIONES PARA LA TABLA `match`:
+--   `idGroup`
+--       `group` -> `idGroup`
+--   `idPair1`
+--       `pair` -> `idPair`
+--   `idPair2`
+--       `pair` -> `idPair`
+--
+
+--
+-- Volcado de datos para la tabla `match`
+--
+
+INSERT INTO `match` (`idMatch`, `date`, `hour`, `result`, `idGroup`, `idPair1`, `idPair2`) VALUES
+(57, '', '', '', 19, 1, 2),
+(58, '', '', '', 19, 1, 3),
+(59, '', '', '', 19, 1, 4),
+(60, '', '', '', 19, 1, 5),
+(61, '', '', '', 19, 1, 6),
+(62, '', '', '', 19, 1, 7),
+(63, '', '', '', 19, 1, 8),
+(64, '', '', '', 19, 2, 3),
+(65, '', '', '', 19, 2, 4),
+(66, '', '', '', 19, 2, 5),
+(67, '', '', '', 19, 2, 6),
+(68, '', '', '', 19, 2, 7),
+(69, '', '', '', 19, 2, 8),
+(70, '', '', '', 19, 3, 4),
+(71, '', '', '', 19, 3, 5),
+(72, '', '', '', 19, 3, 6),
+(73, '', '', '', 19, 3, 7),
+(74, '', '', '', 19, 3, 8),
+(75, '', '', '', 19, 4, 5),
+(76, '', '', '', 19, 4, 6),
+(77, '', '', '', 19, 4, 7),
+(78, '', '', '', 19, 4, 8),
+(79, '', '', '', 19, 5, 6),
+(80, '', '', '', 19, 5, 7),
+(81, '', '', '', 19, 5, 8),
+(82, '', '', '', 19, 6, 7),
+(83, '', '', '', 19, 6, 8),
+(84, '', '', '', 19, 7, 8);
+
 -- --------------------------------------------------------
 
 --
@@ -217,6 +351,38 @@ CREATE TABLE `pair` (
   `idPartner` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- RELACIONES PARA LA TABLA `pair`:
+--   `idCaptain`
+--       `user` -> `idUser`
+--   `idPartner`
+--       `user` -> `idUser`
+--
+
+--
+-- Volcado de datos para la tabla `pair`
+--
+
+INSERT INTO `pair` (`idPair`, `idCaptain`, `idPartner`) VALUES
+(1, 1, 2),
+(2, 3, 4),
+(3, 4, 5),
+(4, 5, 6),
+(5, 4, 1),
+(6, 7, 2),
+(7, 2, 3),
+(8, 7, 3),
+(9, 10, 6),
+(10, 4, 9),
+(11, 8, 3),
+(12, 3, 9),
+(13, 3, 8),
+(14, 10, 9),
+(15, 2, 6),
+(16, 9, 8),
+(17, 7, 4),
+(18, 1, 5);
+
 -- --------------------------------------------------------
 
 --
@@ -227,6 +393,14 @@ CREATE TABLE `pair_category` (
   `idPair` int(11) NOT NULL,
   `idCategory` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELACIONES PARA LA TABLA `pair_category`:
+--   `idCategory`
+--       `category` -> `idCategory`
+--   `idPair`
+--       `pair` -> `idPair`
+--
 
 -- --------------------------------------------------------
 
@@ -239,6 +413,51 @@ CREATE TABLE `pair_categorygroup` (
   `idCategoryGroup` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- RELACIONES PARA LA TABLA `pair_categorygroup`:
+--   `idPair`
+--       `pair` -> `idPair`
+--   `idCategoryGroup`
+--       `categorygroup` -> `idCategoryGroup`
+--
+
+--
+-- Volcado de datos para la tabla `pair_categorygroup`
+--
+
+INSERT INTO `pair_categorygroup` (`idPair`, `idCategoryGroup`) VALUES
+(1, 1),
+(1, 2),
+(2, 1),
+(2, 2),
+(3, 1),
+(3, 2),
+(4, 1),
+(4, 2),
+(5, 1),
+(5, 2),
+(6, 1),
+(6, 2),
+(7, 1),
+(8, 1),
+(9, 1),
+(9, 2),
+(10, 1),
+(10, 2),
+(11, 1),
+(11, 2),
+(12, 1),
+(13, 1),
+(14, 1),
+(15, 1),
+(15, 2),
+(16, 1),
+(16, 2),
+(17, 1),
+(17, 2),
+(18, 1),
+(18, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -250,6 +469,28 @@ CREATE TABLE `pair_group` (
   `idGroup` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- RELACIONES PARA LA TABLA `pair_group`:
+--   `idGroup`
+--       `group` -> `idGroup`
+--   `idPair`
+--       `pair` -> `idPair`
+--
+
+--
+-- Volcado de datos para la tabla `pair_group`
+--
+
+INSERT INTO `pair_group` (`idPair`, `idGroup`) VALUES
+(1, 19),
+(2, 19),
+(3, 19),
+(4, 19),
+(5, 19),
+(6, 19),
+(7, 19),
+(8, 19);
+
 -- --------------------------------------------------------
 
 --
@@ -260,6 +501,12 @@ CREATE TABLE `promotion` (
   `idPromotion` int(11) NOT NULL,
   `idGame` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELACIONES PARA LA TABLA `promotion`:
+--   `idGame`
+--       `game` -> `idGame`
+--
 
 -- --------------------------------------------------------
 
@@ -276,12 +523,35 @@ CREATE TABLE `reservation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- RELACIONES PARA LA TABLA `reservation`:
+--   `idCourt`
+--       `court` -> `idCourt`
+--   `idUser`
+--       `user` -> `idUser`
+--
+
+--
 -- Volcado de datos para la tabla `reservation`
 --
 
 INSERT INTO `reservation` (`idReservation`, `idCourt`, `idUser`, `date`, `hour`) VALUES
 (5, 2, 7, '02/02/2018', '12:30'),
-(6, 4, 2, '02/02/2018', '12:30');
+(6, 4, 2, '02/02/2018', '12:30'),
+(7, 1, 1, '26/11/2018', '8:00'),
+(10, 2, 5, '26/11/2018', '8:00'),
+(11, 3, 1, '26/11/2018', '8:00'),
+(12, 4, 7, '26/11/2018', '8:00'),
+(13, 5, 1, '26/11/2018', '8:00'),
+(14, 6, 7, '26/11/2018', '8:00'),
+(15, 7, 1, '26/11/2018', '8:00'),
+(16, 7, 1, '26/11/2018', '8:00'),
+(17, 8, 7, '26/11/2018', '8:00'),
+(18, 9, 4, '26/11/2018', '8:00'),
+(19, 10, 4, '26/11/2018', '8:00'),
+(33, 2, 1, '26/11/2018', '9:30'),
+(34, 1, 1, '26/11/2018', '9:30'),
+(35, 3, 1, '26/11/2018', '9:30'),
+(36, 7, 1, '24/11/2018', '21:30');
 
 -- --------------------------------------------------------
 
@@ -300,17 +570,24 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- RELACIONES PARA LA TABLA `user`:
+--
+
+--
 -- Volcado de datos para la tabla `user`
 --
 
 INSERT INTO `user` (`idUser`, `login`, `password`, `name`, `surname`, `email`, `type`) VALUES
-(1, 'gatitoTravieso', '5555', 'Luisa Maria', 'Bernardez', 'loquilla@hotmail.com', 'user'),
+(1, 'gatitoTravieso', '5555', 'Luisa Maria', 'Bernardez', 'luisamaria@hotmail.com', 'user'),
 (2, 'marilo', 'omvormeabv', 'Marilo', 'Montero', 'MMtero@club.com', 'user'),
 (3, 'faleT', 'gfnfdjdfn', 'Josefa', 'Lete', 'josef@lete.com', 'user'),
 (4, 'DaRA', 'sgbsdn', 'David', 'Ramos', 'davidR@gmail.com', 'admin'),
-(5, 'OloV', 'jlbhkjvh', 'Olora', 'Vagina', 'OloVagi88@mail.fresh.com', 'user'),
-(6, 'Mujote', 'wghejhe', 'Maria', 'Umpajote', 'mujote5@yahoo.com', 'instructor'),
-(7, 'LaMari', 'thisisnofake', 'Marife', 'Lacion', 'sexyGatita69@ajax.es', 'instructor');
+(5, 'OloV', 'jlbhkjvh', 'Lora', 'Partner', 'Olo88@mail.fresh.com', 'user'),
+(6, 'Mute', 'wghejhe', 'Maria', 'Mote', 'mote5@yahoo.com', 'instructor'),
+(7, 'LaMari', 'thisisnofake', 'Marife', 'Garcia', 'html@ajax.es', 'instructor'),
+(8, 'conejomalo', 'jhbshbsga', 'Bad ', 'Bunnie', 'badBu@heha.com', 'admin'),
+(9, 'yuya', 'hsrjmsjn', 'Yurena', 'Lorenzo', 'yuyu@nml.com', 'user'),
+(10, 'lita3', 'hgsrj', 'Lita', 'Romirez', 'lito@nsv.com', 'user');
 
 --
 -- Índices para tablas volcadas
@@ -457,13 +734,13 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT de la tabla `categorygroup`
 --
 ALTER TABLE `categorygroup`
-  MODIFY `idCategoryGroup` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idCategoryGroup` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `championship`
 --
 ALTER TABLE `championship`
-  MODIFY `idChampionship` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idChampionship` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `class`
@@ -487,31 +764,31 @@ ALTER TABLE `game`
 -- AUTO_INCREMENT de la tabla `group`
 --
 ALTER TABLE `group`
-  MODIFY `idGroup` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idGroup` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `match`
 --
 ALTER TABLE `match`
-  MODIFY `idMatch` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idMatch` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT de la tabla `pair`
 --
 ALTER TABLE `pair`
-  MODIFY `idPair` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPair` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `idReservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idReservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Restricciones para tablas volcadas
