@@ -64,6 +64,23 @@ class CategoryGroup_Model
         
     }
 
+        public function GETCATEGORYGROUPBYPAIR ($idPair,$idChampionship)
+    {
+        /*`idCategory``idChampionship``idCategoryGroup*/
+        
+        $sql = "SELECT * FROM pair_categorygroup WHERE idPair ='" . $idPair . "';";
+        $result = $this->mysqli->query($sql);
+        
+        $array = mysqli_fetch_array($result, MYSQLI_BOTH);
+        
+        $categoryGroup = new CategoryGroup($array['idCategoryGroup'], $array['idChampionship'], $array['idCategory']);
+        
+        return $categoryGroup;   
+        
+    }
+
+
+
      public function GETCATEGORYGROUP ($idChampionship,$idCategory)
     {
         $sql = "SELECT * FROM categorygroup WHERE idChampionship = '"  .$idChampionship . "'AND idCategory='".$idCategory."';";

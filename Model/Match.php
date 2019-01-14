@@ -9,8 +9,9 @@ class Match
     var $idGroup;
     var $idPair1;
     var $idPair2;
+    var $round;
     
-    function __construct($idMatch=null, $date=null, $result=null, $idGroup=null, $idPair1=null, $idPair2=null, $hour=null) 
+    function __construct($idMatch=null, $date=null, $result=null, $idGroup=null, $idPair1=null, $idPair2=null, $hour=null,$round=1) 
     {
         $this->date=$date;
         $this->hour=$hour;
@@ -19,6 +20,7 @@ class Match
         $this->idPair1=$idPair1;
         $this->idPair2=$idPair2;
         $this->result=$result;
+        $this->round=$round;
     }
     
     public function getIdMatch()
@@ -55,7 +57,10 @@ class Match
     {
         return $this->idPair2;
     }
-    
+    public function getRound()
+    {
+        return $this->round;
+    }
     public function setIdMatch($idMatch)
     {
         $this->idMatch = $idMatch;
@@ -89,6 +94,10 @@ class Match
     public function setIdPair2($idPair2)
     {
         $this->idPair2 = $idPair2;
+    }
+    public function setRound($round)
+    {
+        $this->round = $round;
     }
 
 }

@@ -1,7 +1,8 @@
 <?php
 require_once ('../Model/CategoryGroup.php');
 require_once ('../Model/Access_DB.php');
-
+require_once ('../Model/Match.php');
+require_once ('../Model/Match_Model.php');
 class Group_Model
 {
     var $mysqli;
@@ -81,7 +82,16 @@ class Group_Model
         $sql = "SELECT * FROM pair WHERE idPair IN (SELECT idPair FROM pair_group WHERE idGroup='".$idGroup."');";
         
         $result =$this->mysqli->query($sql);
-        return $result;
+
+
+
+         $array = array();
+        while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
+        {
+            $array[] = new Pair($row['idPair'], $row['idCaptain'], $row['idPartner']);
+        }
+        return $array;        
+     
     }
     
     public function SETGROUPPAIRS($idPair, $idGroup)
@@ -94,5 +104,38 @@ class Group_Model
     {
         return $this->mysqli->insert_id;
     }
+
+
+    public function GETGROUPMATCHS($idGroup){
+
+        $sql = "SELECT * FROM `match` WHERE idGroup = '".$idGroup."';";
+        
+        $result =$this->mysqli->query($sql);
+
+         $array = array();
+        while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
+        {
+            $array[] = new Match($row['idMatch'], $row['date'], $row['result'], $row['idGroup'], $row['idPair1'], $row['idPair2'], $row['hour']);
+        }
+        return $array;
+
+
+
+    }
+
+    public function GETGROUPBYCATEGORY($idChampionship,$idCategory)
+    {
+        $sql = "SELECT * FROM `group` WHERE idChampionship = '".$idChampionship."' AND idCategory ='".$idCategory."';";
+       
+        
+        $result =$this->mysqli->query($sql);
+
+         $array = array();
+        while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
+        {
+            $array[] = new Group($row['idGroup'], $row['idCategory'], $row['idChampionship'], $row['letter']);
+        }
+        return $array;        
+
+    }
 }
-?>

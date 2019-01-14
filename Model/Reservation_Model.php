@@ -14,6 +14,8 @@ class Reservation_Model
         $this->mysqli = ConnectDB();
     }
     
+    
+
     public function ADD ($reservation){
         
         $sql= "SELECT * FROM reservation WHERE idCourt='".$reservation->getIdCourt()."' AND date='".$reservation->getDate()."' AND hour='".$reservation->getHour()."';";
