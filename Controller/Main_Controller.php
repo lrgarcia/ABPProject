@@ -27,9 +27,9 @@ if (!isset($_REQUEST['action'])){
 
 Switch ($_REQUEST['action']){
 	
-	case 'COURT':
-        require_once '../View/Court_SHOWALL_View.php';
-		new Court_SHOWALL_View();
+	case 'RESERVATION':
+        require_once '../View/Reservation_SHOWALL_View.php';
+		new Reservation_SHOWALL_View();
 		break;	
 
 	case 'CHAMPIONSHIP':
