@@ -20,6 +20,11 @@ body{
     margin-bottom: 5px;
 }
 
+a.disabled {
+   pointer-events: none;
+   cursor: default;
+}
+
 h1 {
     color: #FFFFFF;
 }
@@ -119,6 +124,63 @@ h1 {
 #championships tr:hover {background-color: #ddd;}
 
 #championships th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#clasification {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+#clasification td, #clasification th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#clasification tr th {
+    text-align: center;
+}
+
+#clasification tr td, #clasification tr td:last-child .row .col-sm-6 {
+    text-align: center;
+}
+
+#clasification tr td a div, #clasification tr td a:hover div{
+    width: 100%;
+    height: 100%;
+    color: black;
+}
+
+#clasification tr td a:hover{
+    text-decoration: none;
+}
+
+#clasification tr:nth-child(even){background-color: #f2f2f2;}
+
+#clasification td:hover {background-color: #ddd;}
+
+#clasification th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;

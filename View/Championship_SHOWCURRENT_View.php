@@ -71,8 +71,8 @@ class Championship_SHOWCURRENT_View{
                                 Inscribirse
                             </a>
 
-                            <a class="btn btn-outline-success" href='../Controller/Category_Controller.php?action=Clasification&idChampionship=<?php echo $championship->idChampionship?>&idCategory=<?php echo $category->idCategory?>'>
-                                Ver clasificación
+                            <a class="btn btn-outline-success" href='../Controller/Category_Controller.php?action=SHOWALLGROUPS&idChampionship=<?php echo $championship->idChampionship?>&idCategory=<?php echo $category->idCategory?>'>
+                                Ver Grupos
                            </a>
 
                         </div>
