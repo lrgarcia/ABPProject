@@ -135,7 +135,7 @@ Switch ($_REQUEST['action']){
                     for($l=$s+1;$l<8;$l++){
 
                         $match= new Match(null, null, null, $idGroup, $idPair[$s], $idPair[$l], null);
-                        error_log("JvPoooooooooo: ".$idGroup. $idPair[$s]. $idPair[$l]);
+                        //error_log("JvPoooooooooo: ".$idGroup. $idPair[$s]. $idPair[$l]);
                         $matchModel->ADD($match);
 
                     }
