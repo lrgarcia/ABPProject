@@ -37,7 +37,7 @@ class Main_View{
 				<?php
 				echo ('<h2>' . $strings['TituloReserva'] . '</h2>');
 				echo ('<p>' . $strings['TextoReserva'] . '</p>');
-				echo ('<a href="../Controller/Main_Controller.php?action=COURT">' . $strings['TituloReserva'] . '</a>');
+				echo ('<a href="../Controller/Main_Controller.php?action=RESERVATION">' . $strings['TituloReserva'] . '</a>');
 				?>
 			</div>
             <div class="col-md-4">
