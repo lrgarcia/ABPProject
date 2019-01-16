@@ -15,7 +15,9 @@ class ProposedMatch_Model
     
     public function ADD ($proposedMatch){
         
-        $insert = "INSERT INTO proposedmatch (idMatch, idPair,date,hour,) VALUES('" . $proposedmatch->getIdProposedMatch() . "','" . $proposedMatch->getIdMatch() . "','".$proposedMatch->getIdPair()."','".$proposedMatch->getDate(). "','".$proposedMatch->getHour(). "');";
+        $insert = "INSERT INTO proposedmatch (idProposedMatch, idMatch, idPair,date,hour,available) VALUES('" . $proposedMatch->getIdProposedMatch() . "','" . $proposedMatch->getIdMatch() . "','".$proposedMatch->getIdPair()."','".$proposedMatch->getDate(). "','".$proposedMatch->getHour(). "','".$proposedMatch->getAvailable(). "');";
+
+        error_log($insert,0);
         
         if ($this->mysqli->query($insert)) {
             return "Se ha creado la pareja";
@@ -28,7 +30,7 @@ class ProposedMatch_Model
     {
         
         
-        $this->mysqli = conectarBD();
+       
         $sql = "DELETE FROM proposedmatch WHERE idPair='" . $idPair . "' AND date='".$date."' AND hour='".$hour."';";
         if ($this->mysqli->query($sql)) {
             
@@ -38,7 +40,32 @@ class ProposedMatch_Model
             return "Lo sentimos, no se ha podido eliminar la pareja";
         }
     }
+
+
+    public function SETAVAILABLE($idMatch,$idPair,$date,$hour,$available){
+        $sql = "UPDATE proposedmatch SET available='".$available."' WHERE idMatch='".$idMatch."' AND idPair='" . $idPair . "' AND date='".$date."' AND hour='".$hour."';";
+
+        error_log($sql,0);
+         if($this->mysqli->query($sql)) {
+            return "Cambio hecho";
+        }else{
+            return "No se ha podido cambiar";
+        }
+    }
     
+
+
+    public function GETCOMMONDATE($idMatch){
+
+        $sql='SELECT p.date, p.hour  FROM proposedmatch p INNER JOIN proposedmatch r ON p.date=r.date AND p.hour=r.hour AND p.idMatch=r.idMatch AND r.idMatch='.$idMatch.' AND r.available=p.available AND r.available=`DISPONIBLE` AND p.idPair!=r.idPair;';
+
+
+        $array = array();
+        
+        return $array;
+
+
+    }
     // public function EDIT ($proposedMatch)
     // {
     //     $sql = "UPDATE pair SET idCaptain='" . $proposedMatch->getIdCaptain() . "', idPartner='" . $proposedMatch->getIdPartner() . "' WHERE idproposedMatch='" . $pair->getIdPair() . "';";
@@ -86,7 +113,7 @@ class ProposedMatch_Model
         while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
         {
 
-         $array[] = new ProposedMatch($row['idProposedMatch'], $row['idMatch'], $row['idPair'], $row['date'], $row['hour']);
+         $array[] = new ProposedMatch($row['idProposedMatch'], $row['idMatch'], $row['idPair'], $row['date'], $row['hour'], $row['available']);
         }
         return $array;
     }

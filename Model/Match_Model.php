@@ -78,8 +78,21 @@ class Match_Model
 
     public function GETMATCHBYPAIR($idGroup,$idPair1,$idPair2,$round){
 
-        $sql = "SELECT * FROM `match` WHERE idGroup ='" . $idGroup . "' AND idPair1 = '".$idPair1."' AND idPair2 = '".$idPair2."' AND round='".$round."';";
+        $sql = "SELECT * FROM `match` WHERE (idGroup ='" . $idGroup . "' AND idPair1 = '".$idPair1."' AND idPair2 = '".$idPair2."' AND round='".$round."') OR (idGroup ='" . $idGroup . "' AND idPair1 = '".$idPair2."' AND idPair2 = '".$idPair1."' AND round='".$round."');";
 
+        $result = $this->mysqli->query($sql);
+        
+        $array = mysqli_fetch_array($result, MYSQLI_BOTH);
+        
+        $match = new Match($array['idMatch'], $array['date'], $array['result'], $array['idGroup'], $array['idPair1'], $array['idPair2'], $array['hour'],$array['round']);
+
+        return $match;
+
+    }
+
+     public function LASTID()
+    {
+        return $this->mysqli->insert_id;
     }
 
 }

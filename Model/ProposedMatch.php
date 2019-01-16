@@ -5,14 +5,16 @@ class ProposedMatch {
     var $idPair;
     var $date;
     var $hour;
+    var $available;
     
-    function __construct($idProposedMatch=null, $idMatch=null, $idPair=null, $date=null, $hour=null)
+    function __construct($idProposedMatch=null, $idMatch=null, $idPair=null, $date=null, $hour=null,$available=null)
     {
         $this->idProposedMatch=$idProposedMatch;
-        $this->idMatch=$idPair;
-        $this->idPair=$idPartner;
+        $this->idMatch=$idMatch;
+        $this->idPair=$idPair;
         $this->date=$date;
         $this->hour=$hour;
+        $this->available=$available;
     }
     public function getIdProposedMatch()
     {
@@ -35,6 +37,10 @@ class ProposedMatch {
     public function getHour()
     {
         return $this->hour;
+    }
+    public function getAvailable()
+    {
+        return $this->available;
     }
     
     public function setProposedMatch($idProposedMatch)
@@ -59,6 +65,12 @@ class ProposedMatch {
     {
         $this->hour = $hour;
     }
+
+    public function setAvailable($available)
+    {
+        $this->available = $available;
+    }
+    
 
 }
 ?>
