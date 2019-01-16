@@ -15,6 +15,10 @@ require_once '../Model/Group_Model.php';
 require_once '../Model/Group.php';
 require_once '../Model/Match.php';
 require_once '../Model/Match_Model.php';
+require_once '../Model/Reservation.php';
+require_once '../Model/Reservation_Model.php';
+require_once '../Model/ProposedMatch.php';
+require_once '../Model/ProposedMatch_Model.php';
 //require_once '../View/Championship_SHOWCURRENT_View.php';
 require_once '../View/Championship_EDIT_View.php';
 
@@ -105,14 +109,61 @@ Switch ($_REQUEST['action']){
         if (!$_REQUEST['idChampionship']){
             new Championship_ADD_View();
         }
-        
+        $championship_model = new Championship_Model();
         $categoryGroupModel=new CategoryGroup_Model();
         $groupModel= new Group_Model();
         $matchModel= new Match_Model();
+        $reservation = new Reservation_Model();
+        $proposedMatch_model= new ProposedMatch_Model();
         $respuesta="";
+
        
         $alphabet =array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
         $arrayCategoryGroups = $categoryGroupModel->GETCHAMPIONSHIPGROUPS($_REQUEST['idChampionship']);
+        $championship=$championship_model->GETBYID($_REQUEST['idChampionship']);
+
+
+        $dateStart=$championship->getDateStart();
+        $hours=array();
+
+     
+      //  $dateStart=date('d/m/Y', strtotime($dateStart));
+
+
+
+        /////////////////////////////Generacion de horas disponibles//////////////////////////////
+
+        $hour=11;
+         $minutes=0;
+         while($hour<22){
+
+          if($minutes==60){
+            $minutes=0;
+            $hour++;
+          }
+
+
+        if($minutes==30){
+            $stringHour=$hour.":".$minutes;
+        }else{
+  //En caso que lo minutos sean igual a 0, añado un 0 mas para que tenga dos digitos siempre
+            $stringHour=$hour.":".$minutes."0";
+
+         }//Fin creacion de stringHour
+
+
+          array_push($hours,$stringHour);
+          $hour++;
+          $minutes=$minutes+30;
+
+        }
+
+
+
+
+
+
+
         
         for($i=0;$i<count($arrayCategoryGroups);$i++){
             
@@ -133,10 +184,54 @@ Switch ($_REQUEST['action']){
                 }
                 for($s=0;$s<8;$s++){
                     for($l=$s+1;$l<8;$l++){
+                        
 
                         $match= new Match(null, null, null, $idGroup, $idPair[$s], $idPair[$l], null);
                         //error_log("JvPoooooooooo: ".$idGroup. $idPair[$s]. $idPair[$l]);
                         $matchModel->ADD($match);
+
+                        $idMatch=$matchModel->LASTID();
+
+                        for($day=1;$day<=8;$day++){
+                            $proposed1=false;
+                             $proposed2=false;
+
+                            $cont=0;
+                                                       
+                            $dateStartTime= strtotime("+1 day",strtotime($dateStart));
+                              $dateStart=date("Y-m-d", $dateStartTime);
+                              $dateStartFormatCourt=date("d/m/Y", $dateStartTime);
+                              
+
+  
+                            while(!$proposed1){
+
+                            $freeCourts = $reservation->FREECOURTSBYHOUR($dateStartFormatCourt,$hours[$cont]);
+                            if(sizeof($freeCourts)==0){
+                                $cont++;
+
+                            }else{
+                               $proposedMatch1= new ProposedMatch(null,$idMatch,$idPair[$s],$dateStart,$hours[$cont],'NO DISPONIBLE');
+
+                               $result= $proposedMatch_model->ADD($proposedMatch1);
+
+
+                               $proposedMatch2= new ProposedMatch(null,$idMatch,$idPair[$l],$dateStart,$hours[$cont],'NO DISPONIBLE');
+                               $result= $proposedMatch_model->ADD($proposedMatch2);
+                               $proposed1=true;
+
+
+                            }
+                        }
+
+
+
+                            
+
+                        }
+
+
+
 
                     }
                 }
