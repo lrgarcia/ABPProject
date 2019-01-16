@@ -26,7 +26,6 @@ class Court_Model
     
     public function DELETE ($idCourt)
     {
-        $this->mysqli = conectarBD();
         $sql = "DELETE FROM court WHERE idCourt='" . $idCourt . "';";
         if ($this->mysqli->query($sql)) {
             
@@ -60,6 +59,18 @@ class Court_Model
         return $court;
     }
     
+    public function GETBYNUMBER ($number)
+    {
+        $sql = "SELECT * FROM court WHERE number ='" . $number . "';";
+        $result = $this->mysqli->query($sql);
+        
+        $array = mysqli_fetch_array($result, MYSQLI_BOTH);
+        
+        $court = new Court($array['idCourt'], $array['number']);
+        
+        return $court;
+    }
+    
     public function GETALL ()
     {
         $sql = "SELECT * FROM court";
@@ -71,6 +82,11 @@ class Court_Model
             $array[] = new Court($row['idCourt'], $row['number']);
         }
         return $array;
+    }
+    
+    public function LASTID()
+    {
+        return $this->mysqli->insert_id;
     }
     
 }

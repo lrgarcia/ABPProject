@@ -27,7 +27,7 @@ class Promotion_Model
     public function DELETE ($idPromotion)
     {
         
-        $this->mysqli = conectarBD();
+        $this->mysqli = ConnectDB();
         $sql = "DELETE FROM promotion WHERE idPromotion='" . $idPromotion . "';";
         if ($this->mysqli->query($sql)) {
             
@@ -37,6 +37,21 @@ class Promotion_Model
             return "Lo sentimos, no se ha podido eliminar la promocion";
         }
     }
+    
+    public function DELETEBYGAME ($idGame)
+    {
+        
+        $this->mysqli = ConnectDB();
+        $sql = "DELETE FROM promotion WHERE idGame='" . $idGame . "';";
+        if ($this->mysqli->query($sql)) {
+            
+            return "Se ha eliminado correctamente la promocion";
+            
+        } else {
+            return "Lo sentimos, no se ha podido eliminar la promocion";
+        }
+    }
+    
     
     public function EDIT ($promotion)
     {

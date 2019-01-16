@@ -62,6 +62,20 @@ class Game_Model
         return $game;
     }
     
+    public function NOPROMOTED (){
+        $this->mysqli = ConnectDB();
+        $sql = "SELECT * FROM game WHERE idGame NOT IN (SELECT idGame FROM promotion)";
+        $result = $this->mysqli->query($sql);
+        
+        $array = array();
+        while( $row = mysqli_fetch_array($result, MYSQLI_BOTH))
+        {
+            $array[] = new Game($row['idGame'], $row['date'], $row['hour'], $row['idCourt'], $row['idUser1'], $row['idUser2'], $row['idUser3'], $row['idUser4']);
+        }
+        return $array;
+        
+    }
+    
     public function GETALL ()
     {
         $sql = "SELECT * FROM game";
