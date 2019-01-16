@@ -27,7 +27,7 @@ class Court_ADD_View{
 			<div class="col-sm-3 nopadding">
 				<div class="form-group">
 				<label>Numero de pista</label>
-				<input required type="number" class="form-control" id="number" min="0" name="number" value="">
+				<input required type="text" class="form-control" id="number" name="number" value="">
 				</div>
 			</div>
 		</div>

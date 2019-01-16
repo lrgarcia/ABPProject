@@ -135,7 +135,9 @@ class Match_SHOWDATEPROPOSAL_View{
 
 
 <?php
-echo '<button class="btn btn-outline-primary mr-2" id="editAll-input" type="submit" href="../Controller/Match_Controller.php?action=CONFIRMDATE&idMatch='.$match->idMatch.'&proposedMatchsPairLogged='.$proposedMatchsPairLogged.'&proposedMatchsPair2='.$proposedMatchsPair2.'">Confirmar</button>';
+
+
+echo '<a href="../Controller/Match_Controller.php?action=CONFIRMDATE&idMatch='.$match->idMatch.'" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Confirmar</a>';
 ?>
 
 

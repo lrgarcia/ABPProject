@@ -7,6 +7,8 @@ require_once '../Model/Group.php';
 require_once '../Model/Group_Model.php';
 require_once '../Model/Pair.php';
 require_once '../Model/Pair_Model.php';
+require_once '../Model/Match.php';
+require_once '../Model/Match_Model.php';
 class Group_SHOWCLASIFICATION_View{
 
 
@@ -85,10 +87,14 @@ class Group_SHOWCLASIFICATION_View{
                         $idCaptain2=$pair2->idCaptain;
                         $idPair1=$pair->idPair;
                         $idPair2=$pair2->idPair;
+                        $match_model = new Match_Model();
+
+                        $match = $match_model->GETMATCHBYPAIR($group->idGroup,$idPair1,$idPair2,1);
 
 
 
                       //  echo '<td>'.$idPair1.' '.$idPair2.'</td>';
+
 
 
                         if($_SESSION['type']=='admin'){
@@ -96,6 +102,7 @@ class Group_SHOWCLASIFICATION_View{
 
                         echo '<td><a href="../Controller/Match_Controller.php?action=EDITRESULT&idChampionship='. $championship->idChampionship.'&idCategory='.$category->idCategory.'&idGroup='.$group->idGroup.'&idPair1='.$idPair1.'&idPair2='.$idPair2.'"><i class="far fa-edit"></i></a></td>';
                         }
+                        if($match->date==''){
 
                         if($idUser==$idCaptain1 || $idUser==$idCaptain2){
 
@@ -107,6 +114,10 @@ class Group_SHOWCLASIFICATION_View{
                         }else{
                              echo '<td><a href="../Controller/Match_Controller.php?action=SHOWMATCH&idChampionship='. $championship->idChampionship.'&idCategory='.$category->idCategory.'&idGroup='.$group->idGroup.'&idPair1='.$idPair1.'&idPair2='.$idPair2.'"><i class="far fa-eye"></i></a></td>';
                         }
+                    }else{
+                        echo '<td><a href="../Controller/Match_Controller.php?action=SHOWMATCH&idChampionship='. $championship->idChampionship.'&idCategory='.$category->idCategory.'&idGroup='.$group->idGroup.'&idPair1='.$idPair1.'&idPair2='.$idPair2.'"><i class="far fa-eye"></i></a></td>';
+
+                    }
 
                     }
 
