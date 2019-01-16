@@ -17,7 +17,8 @@ require_once '../Model/CategoryGroup_Model.php';
 require_once '../View/MESSAGE_View.php';
 require_once '../View/Category_INSCRIPTION_View.php';
 require_once '../View/Group_SHOWALL_View.php';
-require_once '../View/Group_SHOWCLASIFICATION_View.php';    
+require_once '../View/Group_SHOWCLASIFICATION_View.php';   
+require_once '../View/Match_SHOWDATEPROPOSAL_View.php';   
  
 
 
@@ -43,6 +44,11 @@ switch ($_REQUEST['action']){
 		    $user_model = new User_Model();
 
 		    $user= $user_model->GETBYLOGIN($_SESSION['login']);
+		    $idUser= $user->getIdUser();
+
+
+
+		    
 		    
 		//
 		    //Carga los login del capitan (que es el usuario) y su compañero
@@ -60,21 +66,48 @@ switch ($_REQUEST['action']){
 		    $match_model = new Match_Model();
 		    $proposedMatch_model = new ProposedMatch_Model();
 
-		    /////////////////////////////////////////////////////
-		    $pair1=$pair_model->GETBYID($idPair1);
-		    $pair2=$pair_model->GETBYID($idPair2);
+
+
+
+
+
 
 		    $championship = $championship_model->GETBYID($idChampionship);
 		    
 		    $category = $category_model->GETBYID($idCategory);
 		    $group = $group_model->GETBYID($idGroup);
 		    $match = $match_model->GETMATCHBYPAIR($idGroup,$idPair1,$idPair2,1);
+		    $idMatch=$match->idMatch;
+		    //echo $idMatch;
 
 		   $matchs=$group_model->GETGROUPMATCHS($idGroup);
 
 
-		   $proposedMatchPair1= $proposedMatch_model->GETPROPOSEDMATCH($idMatch,$idPair1);
-		   $proposedMatchPair2= $proposedMatch_model->GETPROPOSEDMATCH($idMatch,$idPair2);
+
+		    /////////////////////////////////////////////////////
+		    $pair1=$pair_model->GETBYID($idPair1);
+		    $pair2=$pair_model->GETBYID($idPair2);
+
+		    //La propuesta 1 debera ser SIEMPRE del usuario logeado
+		    $idCaptain1=$pair1->getIdCaptain();
+		    $idCaptain2=$pair2->getIdCaptain();
+
+		    if($idUser==$idCaptain1){
+		    	$proposedMatchsPairLogged= $proposedMatch_model->GETPROPOSEDMATCH($idMatch,$idPair1);
+		    	$proposedMatchsPair2= $proposedMatch_model->GETPROPOSEDMATCH($idMatch,$idPair2);
+
+		    }else if($idUser==$idCaptain2){
+		    	$proposedMatchsPairLogged= $proposedMatch_model->GETPROPOSEDMATCH($idMatch,$idPair2);
+		    	$proposedMatchsPair2= $proposedMatch_model->GETPROPOSEDMATCH($idMatch,$idPair1);
+
+
+		    }
+
+
+
+
+		   // $proposedMatchsPair1= $proposedMatch_model->GETPROPOSEDMATCH($idMatch,$idPair1);
+		   // $proposedMatchsPair2= $proposedMatch_model->GETPROPOSEDMATCH($idMatch,$idPair2);
 
 
 		   
@@ -91,7 +124,7 @@ switch ($_REQUEST['action']){
 
 
 
-		    new Group_SHOWDATEPROPOSAL_View($group,$category,$championship,$matchs,$user,$proposedMatchPair1,$proposedMatchPair1);
+		    new Match_SHOWDATEPROPOSAL_View($group,$category,$championship,$match,$user,$proposedMatchsPairLogged,$proposedMatchsPair2);
 
 
 		    //Obtienes la pareja

@@ -4,6 +4,8 @@
 
 require_once '../Model/Reservation.php';
 require_once '../Model/Reservation_Model.php';
+require_once '../Model/ProposedMatch.php';
+require_once '../Model/ProposedMatch_Model.php';
 require_once '../Model/Court.php';
 require_once '../Model/Court_Model.php';
 
@@ -83,6 +85,33 @@ foreach($freeCourts as $freeCourt){
 
 }
 
+
+
+function setAvailable($idMatch,$idPair,$date,$hour,$available){
+  $proposedMatch_model = new ProposedMatch_Model();
+  $toret= $proposedMatch_model->SETAVAILABLE($idMatch,$idPair,$date,$hour,$available);
+  return $toret;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     $aResult = array();
 
     if( !isset($_POST['functionname']) ) { $aResult['error'] = 'No function name!'; }
@@ -100,6 +129,24 @@ foreach($freeCourts as $freeCourt){
                    $aResult['result'] =  getFreeCourt($_POST['arguments'][0], $_POST['arguments'][1],$_POST['arguments'][2]);
                }
                break;
+
+
+
+
+
+
+
+
+            case 'setAvailable':
+
+             if( !is_array($_POST['arguments']) || (count($_POST['arguments']) < 5) ) {
+                   $aResult['error'] = 'Error in arguments!';
+               }
+               else {
+                   $aResult['result'] =  setAvailable($_POST['arguments'][0], $_POST['arguments'][1],$_POST['arguments'][2], $_POST['arguments'][3], $_POST['arguments'][4]);
+               }
+               break;
+
 
             default:
                $aResult['error'] = 'Not found function '.$_POST['functionname'].'!';
