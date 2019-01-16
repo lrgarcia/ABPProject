@@ -11,6 +11,8 @@ require_once '../Model/Pair.php';
 require_once '../Model/ProposedMatch_Model.php';
 require_once '../Model/ProposedMatch.php';
 require_once '../Model/User_Model.php';
+require_once '../Model/Reservation.php';
+require_once '../Model/Reservation_Model.php';
 require_once '../Model/User.php';
 require_once '../Model/CategoryGroup.php';
 require_once '../Model/CategoryGroup_Model.php';
@@ -19,6 +21,10 @@ require_once '../View/Category_INSCRIPTION_View.php';
 require_once '../View/Group_SHOWALL_View.php';
 require_once '../View/Group_SHOWCLASIFICATION_View.php';   
 require_once '../View/Match_SHOWDATEPROPOSAL_View.php';   
+require_once '../View/Match_SHOWMATCH_View.php';   
+require_once '../View/Match_EDITRESULT_View.php';   
+
+require_once '../View/MESSAGE_View.php';
  
 
 
@@ -136,5 +142,109 @@ switch ($_REQUEST['action']){
 
 
 		break;
+
+		case 'CONFIRMDATE':
+		$idMatch=$_REQUEST['idMatch'];
+		//echo($idMatch);
+		$proposedMatch_model = new ProposedMatch_Model();
+		$match_model = new Match_Model();
+		$reservation_model = new Reservation_Model();
+		$match = $match_model->GETBYID($idMatch);
+
+		$proposedDate= $proposedMatch_model->GETCOMMONDATE($idMatch);
+		if(sizeof($proposedDate)==0){
+			$respuesta="Se han subido sus horas disponibles. Por favor espere la confirmación de su contrincante";
+			new MESSAGE($respuesta, '../Controller/Championship_Controller.php');
+			
+		}else{
+			$firstProposedDate=$proposedDate[0];
+			echo $firstProposedDate['date']."      ";
+			$date=$firstProposedDate['date'];
+			$hour=$firstProposedDate['hour'];
+			
+
+			$dateStartFormatCourt=date("d/m/Y", strtotime($date));
+			echo $dateStartFormatCourt;
+
+			//DE PROPOSEDMATCH 2018-11-10
+			// DE RESERVATION 02/02/2018
+
+			$idUser=$_SESSION['idUser'];
+			$freeCourts= $reservation_model->FREECOURTSBYHOUR($date,$hour);
+			$numberCourt=sizeof($freeCourts);
+			$reservation= new Reservation(null,$numberCourt,$idUser,$dateStartFormatCourt,$hour);
+			$response = $reservation_model->ADD($reservation);
+			$match->setDate($date);
+			$match->setHour($hour);
+			$responseEdit = $match_model->EDIT($match);
+
+
+
+			$respuesta="Su partido está preparado! La fecha será el ".$date." a las ".$hour." en la pista ".$numberCourt;
+			new MESSAGE($respuesta, '../Controller/Championship_Controller.php');
+		}
+
+		break;
+
+
+
+		case 'SHOWMATCH':
+		$idChampionship=$_REQUEST['idChampionship'];
+		$idCategory=$_REQUEST['idCategory'];
+		    $idGroup=$_REQUEST['idGroup'];
+		    $idPair1=$_REQUEST['idPair1'];
+		    $idPair2=$_REQUEST['idPair2'];
+
+		$idChampionship=$_REQUEST['idChampionship'];
+		new Match_SHOWMATCH_View($championship);
+
+
+		break;
+
+
+		case 'EDITRESULT':
+		if (!$_POST){
+			$idGroup=$_REQUEST['idGroup'];
+		    $idPair1=$_REQUEST['idPair1'];
+		    $idPair2=$_REQUEST['idPair2'];
+			
+		    
+		    new Match_EDITRESULT_View($idGroup,$idPair1,$idPair2);
+
+
+
+			
+		}else{
+
+			$set1Pareja1=$_REQUEST['set1Pareja1'];
+		    $set1Pareja2=$_REQUEST['set1Pareja2'];
+		    $set2Pareja1=$_REQUEST['set2Pareja1'];
+		    $set2Pareja2=$_REQUEST['set2Pareja2'];
+		    $set3Pareja1=$_REQUEST['set3Pareja1'];
+		    $set3Pareja2=$_REQUEST['set3Pareja2'];
+
+		    $idGroup=$_REQUEST['idGroup'];
+		    $idPair1=$_REQUEST['idPair1'];
+		    $idPair2=$_REQUEST['idPair2'];
+		    $match_model = new Match_Model();
+		    $match = $match_model->GETMATCHBYPAIR($idGroup,$idPair1,$idPair2,1);
+			
+
+
+		    $result="".$set1Pareja1."-".$set1Pareja2."/"."set2Pareja1"."-".$set2Pareja2."/".$set3Pareja1."-".$set3Pareja2;
+
+		    $match->setResult($result);
+		    $responseEdit = $match_model->EDIT($match);
+		    new MESSAGE($responseEdit, '../Controller/Championship_Controller.php');
+
+
+
+
+		}
+
+		break;
+
+
+
 
 }
