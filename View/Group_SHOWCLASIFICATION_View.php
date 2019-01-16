@@ -94,18 +94,18 @@ class Group_SHOWCLASIFICATION_View{
                         if($_SESSION['type']=='admin'){
 
 
-                        echo '<td><a href="../Controller/Group_Controller.php?action=EDITRESULT&idChampionship='. $championship->idChampionship.'&idCategory='.$category->idCategory.'&idGroup='.$group->idGroup.'&idPair1='.$idPair1.'&idPair2='.$idPair2.'"><i class="far fa-edit"></i></a></td>';
+                        echo '<td><a href="../Controller/Match_Controller.php?action=EDITRESULT&idChampionship='. $championship->idChampionship.'&idCategory='.$category->idCategory.'&idGroup='.$group->idGroup.'&idPair1='.$idPair1.'&idPair2='.$idPair2.'"><i class="far fa-edit"></i></a></td>';
                         }
 
                         if($idUser==$idCaptain1 || $idUser==$idCaptain2){
 
-                         echo '<td><a href="../Controller/Group_Controller.php?action=SETCALENDAR&idChampionship='. $championship->idChampionship.'&idCategory='.$category->idCategory.'&idGroup='.$group->idGroup.'&idPair1='.$idPair1.'&idPair2='.$idPair2.'"><i class="far fa-calendar"></i></a>
+                         echo '<td><a href="../Controller/Match_Controller.php?action=SHOWDATEPROPOSAL&idChampionship='. $championship->idChampionship.'&idCategory='.$category->idCategory.'&idGroup='.$group->idGroup.'&idPair1='.$idPair1.'&idPair2='.$idPair2.'"><i class="far fa-calendar"></i></a>
 
-                         <a href="../Controller/Group_Controller.php?action=SHOWMATCH&idChampionship='. $championship->idChampionship.'&idCategory='.$category->idCategory.'&idGroup='.$group->idGroup.'&idPair1='.$idPair1.'&idPair2='.$idPair2.'"><i class="far fa-eye"></i></a>
+                         <a href="../Controller/Match_Controller.php?action=SHOWMATCH&idChampionship='. $championship->idChampionship.'&idCategory='.$category->idCategory.'&idGroup='.$group->idGroup.'&idPair1='.$idPair1.'&idPair2='.$idPair2.'"><i class="far fa-eye"></i></a>
                          </td>';
 
                         }else{
-                             echo '<td><a href="../Controller/Group_Controller.php?action=SHOWMATCH&idChampionship='. $championship->idChampionship.'&idCategory='.$category->idCategory.'&idGroup='.$group->idGroup.'&idPair1='.$idPair1.'&idPair2='.$idPair2.'"><i class="far fa-eye"></i></a></td>';
+                             echo '<td><a href="../Controller/Match_Controller.php?action=SHOWMATCH&idChampionship='. $championship->idChampionship.'&idCategory='.$category->idCategory.'&idGroup='.$group->idGroup.'&idPair1='.$idPair1.'&idPair2='.$idPair2.'"><i class="far fa-eye"></i></a></td>';
                         }
 
                     }
