@@ -4,6 +4,7 @@ session_start();
 include '../Functions/Authentication.php';
 require_once '../Model/Game_Model.php';
 require_once '../Model/Championship_Model.php';
+require_once '../Model/Court_Model.php';
 require_once '../View/Championship_SHOWALL_View.php';
 if (!IsAuthenticated()){
 	header('Location:../index.php');
@@ -27,9 +28,11 @@ if (!isset($_REQUEST['action'])){
 
 Switch ($_REQUEST['action']){
 	
-	case 'RESERVATION':
-        require_once '../View/Reservation_SHOWALL_View.php';
-		new Reservation_SHOWALL_View();
+	case 'COURT':
+        require_once '../View/Court_SHOWALL_View.php';
+        $court_model = new Court_Model();
+        $courts = $court_model->GETALL();
+		new Court_SHOWALL_View($courts);
 		break;	
 
 	case 'CHAMPIONSHIP':
@@ -44,15 +47,25 @@ Switch ($_REQUEST['action']){
 	    $games=array();
 	    foreach($promotions as $promotion)
 	    {
-	        $idPromotionGame=$promotion->getTdGame();
+	        $idPromotionGame=$promotion->getIdGame();
 	        $game=$game_Model->GETBYID($idPromotionGame);
 	        $date=$game->getDate();
 	        $arrayDate= explode("/", $date);
-	        $date=$arrayDate[2] . $arrayDate[1] . $arrayDate[0];
+	        $date=$arrayDate[0] . $arrayDate[1] . $arrayDate[2];
 	        $actualDate=getdate();
-	        $actualDate=$actualDate['year'] . $actualDate['mon'] . $actualDate['wday'];
-	        if($actualDate<=$date){
-	        array_push($games, $game);
+	        $parsedActualDate=$actualDate['year'];
+	        if($actualDate['mon']<10){
+	            $parsedActualDate = $parsedActualDate . '0' . $actualDate['mon'];
+	        } else {
+	            $parsedActualDate = $parsedActualDate . $actualDate['mon'];
+	        }
+	        if($actualDate['mday'] < 10){
+	            $parsedActualDate = $parsedActualDate . '0' . $actualDate['mday'];
+	        } else {
+	            $parsedActualDate = $parsedActualDate . $actualDate['mday'];
+	        }
+	        if($parsedActualDate<=$date){
+	            array_push($games, $game);
 	        }
 	    }
 	    new Promotion_SHOWALL_View($games);
