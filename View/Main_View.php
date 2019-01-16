@@ -66,7 +66,7 @@ class Main_View{
 				<?php
 				echo ('<h2>' . 'Gestionar pistas' . '</h2>');
 				echo ('<p>' . 'Podras agregar y eliminar pistas del club' . '</p>');
-				echo ('<a href="../Controller/Main_Controller.php?action=COURT">' . 'Ver pistas . '</a>');
+				echo ('<a href="../Controller/Main_Controller.php?action=COURT">' . 'Ver pistas' . '</a>');
 				?>
 			</div>
 	    </div>
