@@ -53,6 +53,18 @@ $(document).ready(function() {
         $('#confirmDeleteChampionship').attr("id","confirmDeleteChampionship" + idChampionship);
         $('input[name=idChampionship]').attr("value",idChampionship);
     });
+    
+    $("a[id^=deleteCourt]").click(function(){
+        let idCourt = $(this).attr('id').replace('deleteCourt','');
+        $('#confirmDeleteCourt').attr("id","confirmDeleteCourt" + idCourt);
+        $('input[name=idCourt]').attr("value",idCourt);
+    });
+    
+    $("a[id^=deletePromotion]").click(function(){
+        let idPromotion = $(this).attr('id').replace('deletePromotion','');
+        $('#confirmDeletePromotion').attr("id","confirmDeletePromotion" + idPromotion);
+        $('input[name=idPromotion]').attr("value",idPromotion);
+    });
 
     if($('input[id=categoriasSelected]').length !== 0){
         var values= $('input[id=categoriasSelected]').val();
@@ -60,7 +72,12 @@ $(document).ready(function() {
         $.each(values.split(","), function(i,e){
             $("#category option[value='" + e + "']").prop("selected", true);
         });
+        
+        
     }
+    
+
+       
 
 
 });
