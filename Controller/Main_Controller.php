@@ -28,6 +28,11 @@ if (!isset($_REQUEST['action'])){
 
 Switch ($_REQUEST['action']){
 	
+	case 'RESERVATION':
+        require_once '../View/Reservation_SHOWALL_View.php';
+		new Reservation_SHOWALL_View();
+		break;	
+	
 	case 'COURT':
         require_once '../View/Court_SHOWALL_View.php';
         $court_model = new Court_Model();
